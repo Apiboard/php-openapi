@@ -1,5 +1,9 @@
 <?php
 
+use Apiboard\OpenAPI\Structure\Specification;
+use Apiboard\OpenAPI\Support\Json;
+use Apiboard\OpenAPI\Support\Yaml;
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -39,7 +43,21 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function fixture(string $path): string
 {
-    // ..
+    return __DIR__ . "/__fixtures__/{$path}";
+}
+
+function jsonSpecification(string $json): Specification
+{
+    $contents = new Json($json);
+
+    return new Specification($contents);
+}
+
+function yamlSpecification(string $yaml): Specification
+{
+    $contents = new Yaml($yaml);
+
+    return new Specification($contents);
 }

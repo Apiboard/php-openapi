@@ -19,4 +19,9 @@ final class Yaml
 
         return \Symfony\Component\Yaml\Yaml::parse($this->value);
     }
+
+    public function toString()
+    {
+        return $this->value;
+    }
 }

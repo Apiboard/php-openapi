@@ -19,4 +19,9 @@ final class Json
 
         return json_decode($this->value, true, 512, JSON_THROW_ON_ERROR);
     }
+
+    public function toString(): string
+    {
+        return $this->value;
+    }
 }

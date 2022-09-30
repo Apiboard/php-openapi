@@ -1,10 +1,11 @@
 {
     "name": "apiboard/php-openapi",
-    "description": "OpenAPI Specification parser for PHP 8",
+    "description": "OpenAPI Specification parser for PHP 8.X. Supports both OAS 3.0.X and 3.1.X",
     "type": "library",
     "require-dev": {
         "pestphp/pest": "^1.22",
-        "brianium/paratest": "^6.6"
+        "brianium/paratest": "^6.6",
+        "spatie/invade": "^1.1"
     },
     "license": "MIT",
     "autoload": {
