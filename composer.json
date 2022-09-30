@@ -9,7 +9,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Apiboard\\PhpOpenapi\\": "src/"
+            "Apiboard\\Openapi\\": "src/"
         }
     },
     "authors": [
