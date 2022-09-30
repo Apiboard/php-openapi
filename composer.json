@@ -1,6 +1,6 @@
 {
     "name": "apiboard/php-openapi",
-    "description": "Zero dependency OpenAPI Specification parser for PHP 8",
+    "description": "OpenAPI Specification parser for PHP 8",
     "type": "library",
     "require-dev": {
         "pestphp/pest": "^1.22",
@@ -9,7 +9,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Apiboard\\Openapi\\": "src/"
+            "Apiboard\\OpenAPI\\": "src/"
         }
     },
     "authors": [
@@ -19,7 +19,8 @@
         }
     ],
     "require": {
-        "php": ">=8.0"
+        "php": ">=8.0",
+        "symfony/yaml": "^6.1"
     },
     "config": {
         "allow-plugins": {
