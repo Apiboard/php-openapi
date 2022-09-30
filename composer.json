@@ -1,6 +1,6 @@
 {
     "name": "apiboard/php-openapi",
-    "description": "Opinionated OpenAPI Specification parser for PHP",
+    "description": "Zero dependency OpenAPI Specification parser for PHP 8",
     "type": "library",
     "require-dev": {
         "pestphp/pest": "^1.22",
@@ -18,7 +18,9 @@
             "email": "laurens@apiboard.dev"
         }
     ],
-    "require": {},
+    "require": {
+        "php": ">=8.0"
+    },
     "config": {
         "allow-plugins": {
             "pestphp/pest-plugin": true
