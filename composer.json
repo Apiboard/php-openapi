@@ -1,0 +1,27 @@
+{
+    "name": "apiboard/php-openapi",
+    "description": "Opinionated OpenAPI Specification parser for PHP",
+    "type": "library",
+    "require-dev": {
+        "pestphp/pest": "^1.22",
+        "brianium/paratest": "^6.6"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Apiboard\\PhpOpenapi\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Laurens Bultynck",
+            "email": "laurens@apiboard.dev"
+        }
+    ],
+    "require": {},
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
