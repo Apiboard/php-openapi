@@ -85,26 +85,14 @@ test('it can return the security', function () {
     expect($result)->toBeInstanceOf(Security::class);
 });
 
-test('it returns null when the servers are not defined', function () {
+test('it returns null when data is unavailable', function (string $data) {
     $spec = jsonSpecification('{}');
 
-    $result = $spec->servers();
+    $result = $spec->{$data}();
 
     expect($result)->toBeNull();
-});
-
-test('it returns null when the components are not defined', function () {
-    $spec = jsonSpecification('{}');
-
-    $result = $spec->components();
-
-    expect($result)->toBeNull();
-});
-
-test('it returns null when the security are not defined', function () {
-    $spec = jsonSpecification('{}');
-
-    $result = $spec->security();
-
-    expect($result)->toBeNull();
-});
+})->with([
+    'servers',
+    'components',
+    'security',
+]);
