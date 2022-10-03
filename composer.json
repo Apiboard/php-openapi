@@ -4,7 +4,6 @@
     "type": "library",
     "require-dev": {
         "pestphp/pest": "^1.22",
-        "brianium/paratest": "^6.6",
         "spatie/invade": "^1.1"
     },
     "license": "MIT",
