@@ -2,8 +2,8 @@
 
 namespace Apiboard\OpenAPI\Structure;
 
-use Apiboard\OpenAPI\Support\Json;
-use Apiboard\OpenAPI\Support\Yaml;
+use Apiboard\OpenAPI\Contents\Json;
+use Apiboard\OpenAPI\Contents\Yaml;
 use Stringable;
 
 final class Specification implements Stringable

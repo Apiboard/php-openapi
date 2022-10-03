@@ -1,9 +1,9 @@
 <?php
 
+use Apiboard\OpenAPI\Contents\Json;
+use Apiboard\OpenAPI\Contents\Yaml;
 use Apiboard\OpenAPI\OpenAPI;
 use Apiboard\OpenAPI\Structure\Specification;
-use Apiboard\OpenAPI\Support\Json;
-use Apiboard\OpenAPI\Support\Yaml;
 
 test('it can parse from JSON', function () {
     $jsonFile = fixture('example.json');

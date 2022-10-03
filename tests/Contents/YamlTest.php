@@ -1,6 +1,6 @@
 <?php
 
-use Apiboard\OpenAPI\Support\Yaml;
+use Apiboard\OpenAPI\Contents\Yaml;
 
 test('it can cast empty strings to an array', function () {
     $contents = "";

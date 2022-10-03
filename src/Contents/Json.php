@@ -1,6 +1,6 @@
 <?php
 
-namespace Apiboard\OpenAPI\Support;
+namespace Apiboard\OpenAPI\Contents;
 
 final class Json
 {

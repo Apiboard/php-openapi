@@ -1,6 +1,6 @@
 <?php
 
-use Apiboard\OpenAPI\Support\Json;
+use Apiboard\OpenAPI\Contents\Json;
 
 test('it can cast empty strings to an array', function () {
     $contents = "";

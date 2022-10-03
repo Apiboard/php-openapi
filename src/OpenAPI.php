@@ -2,9 +2,9 @@
 
 namespace Apiboard\OpenAPI;
 
+use Apiboard\OpenAPI\Contents\Json;
+use Apiboard\OpenAPI\Contents\Yaml;
 use Apiboard\OpenAPI\Structure\Specification;
-use Apiboard\OpenAPI\Support\Json;
-use Apiboard\OpenAPI\Support\Yaml;
 use InvalidArgumentException;
 
 final class OpenAPI
@@ -13,12 +13,12 @@ final class OpenAPI
     {
         $extension = pathinfo($filePath, PATHINFO_EXTENSION);
 
-        $parser = match ($extension) {
+        $contents = match ($extension) {
             'json' => new Json(file_get_contents($filePath)),
             'yaml' => new Yaml(file_get_contents($filePath)),
             default => throw new InvalidArgumentException('Can only parse JSON or YAML files'),
         };
 
-        return new Specification($parser);
+        return new Specification($contents);
     }
 }

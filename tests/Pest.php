@@ -1,8 +1,8 @@
 <?php
 
 use Apiboard\OpenAPI\Structure\Specification;
-use Apiboard\OpenAPI\Support\Json;
-use Apiboard\OpenAPI\Support\Yaml;
+use Apiboard\OpenAPI\Contents\Json;
+use Apiboard\OpenAPI\Contents\Yaml;
 
 /*
 |--------------------------------------------------------------------------
