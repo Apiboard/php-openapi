@@ -2,7 +2,7 @@
 
 namespace Apiboard\OpenAPI\Concerns;
 
-trait HasArrayAccess
+trait AsCountableArray
 {
     public function offsetGet(mixed $offset): mixed
     {
@@ -22,5 +22,10 @@ trait HasArrayAccess
     public function offsetExists(mixed $offset): bool
     {
         return (bool) $this->data[$offset] ?? false;
+    }
+
+    public function count(): int
+    {
+        return count($this->data);
     }
 }

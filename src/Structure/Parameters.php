@@ -2,13 +2,13 @@
 
 namespace Apiboard\OpenAPI\Structure;
 
-use Apiboard\OpenAPI\Concerns\HasArrayAccess;
+use Apiboard\OpenAPI\Concerns\AsCountableArray;
 use ArrayAccess;
 use Countable;
 
 final class Parameters implements ArrayAccess, Countable
 {
-    use HasArrayAccess;
+    use AsCountableArray;
 
     private array $data;
 
@@ -21,11 +21,6 @@ final class Parameters implements ArrayAccess, Countable
 
             return new Parameter($value);
         }, $data);
-    }
-
-    public function count(): int
-    {
-        return count($this->data);
     }
 
     public function offsetGet(mixed $offset): ?Parameter
