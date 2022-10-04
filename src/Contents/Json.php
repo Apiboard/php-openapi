@@ -17,7 +17,7 @@ final class Json
             return [];
         }
 
-        return json_decode($this->value, true, 512, JSON_THROW_ON_ERROR);
+        return json_decode($this->value, true, 512, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES);
     }
 
     public function toString(): string

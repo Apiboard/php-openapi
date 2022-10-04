@@ -4,8 +4,8 @@
     "type": "library",
     "require-dev": {
         "pestphp/pest": "^1.22",
-        "spatie/invade": "^1.1",
-        "symfony/var-dumper": "^6.1"
+        "symfony/var-dumper": "^6.1",
+        "spatie/invade": "^1.1"
     },
     "license": "MIT",
     "autoload": {
@@ -21,7 +21,8 @@
     ],
     "require": {
         "php": ">=8.0",
-        "symfony/yaml": "^6.1"
+        "symfony/yaml": "^6.1",
+        "justinrainbow/json-schema": "^5.2"
     },
     "config": {
         "allow-plugins": {
