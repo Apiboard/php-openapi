@@ -24,4 +24,11 @@ final class Yaml
     {
         return $this->value;
     }
+
+    public function toObject(): object
+    {
+        $json = json_encode($this->toArray(), JSON_THROW_ON_ERROR);
+
+        return json_decode($json, false, 512, JSON_FORCE_OBJECT | JSON_THROW_ON_ERROR);
+    }
 }

@@ -24,4 +24,9 @@ final class Json
     {
         return $this->value;
     }
+
+    public function toObject(): object
+    {
+        return json_decode($this->value, false, 512, JSON_FORCE_OBJECT | JSON_THROW_ON_ERROR);
+    }
 }

@@ -41,7 +41,7 @@ final class OpenAPI
         };
 
         $schema = json_decode(file_get_contents(__DIR__ . "/Validation/v{$version}.json"));
-        $structure = json_decode($contents->toString(), false, 512, JSON_FORCE_OBJECT | JSON_UNESCAPED_SLASHES);
+        $structure = $contents->toObject();
 
         $validator = new \JsonSchema\Validator();
         $validator->validate($structure, $schema);

@@ -43,11 +43,9 @@ test('it can validate OpenAPI specification v3.0.X', function () {
 });
 
 test('it can validate OpenAPI specification v3.1.X', function () {
-    $json = new Json('{
-        "openapi": "3.1.0"
-    }');
+    $yaml = new Yaml('openapi: 3.1.0');
 
-    $errors = OpenAPI::validate($json);
+    $errors = OpenAPI::validate($yaml);
 
     expect($errors)->toBe([
         '/info' => 'The property info is required',
@@ -58,19 +56,15 @@ test('it can validate OpenAPI specification v3.1.X', function () {
 });
 
 test('it cannot validate OpenAPI specification v2.X.X', function () {
-    $json = new Json('{
-        "openapi": "2.0.0"
-    }');
+    $yaml = new Yaml('openapi: 2.0.0');
 
-    OpenAPI::validate($json);
+    OpenAPI::validate($yaml);
 })->throws('Can only validate OpenAPI v3.0.X or v3.1.X');
 
 test('it cannot validate OpenAPI specification v1.2', function () {
-    $json = new Json('{
-        "openapi": "1.2.0"
-    }');
+    $yaml = new Yaml('openapi: 1.2.0');
 
-    OpenAPI::validate($json);
+    OpenAPI::validate($yaml);
 })->throws('Can only validate OpenAPI v3.0.X or v3.1.X');
 
 test('it throws when parsing invalid files', function () {
