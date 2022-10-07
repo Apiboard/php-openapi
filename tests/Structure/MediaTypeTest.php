@@ -33,7 +33,7 @@ test('it can return the example', function () {
 
     $result = $mediaType->example();
 
-    expect($result)->toBeInstanceOf(Example::class);
+    expect($result)->toBe([]);
 });
 
 test('it can return the examples', function () {

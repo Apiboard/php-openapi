@@ -41,15 +41,9 @@ final class MediaType
         return new Encoding($encoding);
     }
 
-    public function example(): ?Example
+    public function example(): mixed
     {
-        $example = $this->data['example'] ?? null;
-
-        if ($example === null) {
-            return null;
-        }
-
-        return new Example($example);
+        return $this->data['example'] ?? null;
     }
 
     public function examples(): ?Examples
