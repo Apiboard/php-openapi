@@ -2,8 +2,12 @@
 
 namespace Apiboard\OpenAPI\Structure;
 
+use Apiboard\OpenAPI\Concerns\CanBeDescribed;
+
 final class Info
 {
+    use CanBeDescribed;
+
     private array $data;
 
     public function __construct(array $data)
@@ -19,11 +23,6 @@ final class Info
     public function version(): string
     {
         return $this->data['version'];
-    }
-
-    public function description(): ?string
-    {
-        return $this->data['description'] ?? null;
     }
 
     public function termsOfService(): ?string

@@ -2,8 +2,12 @@
 
 namespace Apiboard\OpenAPI\Structure;
 
+use Apiboard\OpenAPI\Concerns\CanBeDescribed;
+
 final class Example
 {
+    use CanBeDescribed;
+
     private array $data;
 
     public function __construct(array $data)
@@ -14,11 +18,6 @@ final class Example
     public function summary(): ?string
     {
         return $this->data['summary'] ?? null;
-    }
-
-    public function description(): ?string
-    {
-        return $this->data['description'] ?? null;
     }
 
     public function value(): mixed

@@ -2,8 +2,14 @@
 
 namespace Apiboard\OpenAPI\Structure;
 
+use Apiboard\OpenAPI\Concerns\CanBeDeprecated;
+use Apiboard\OpenAPI\Concerns\CanBeDescribed;
+
 final class Operation
 {
+    use CanBeDeprecated;
+    use CanBeDescribed;
+
     private string $method;
 
     private array $data;
@@ -24,19 +30,9 @@ final class Operation
         return $this->data['summary'] ?? null;
     }
 
-    public function description(): ?string
-    {
-        return $this->data['description'] ?? null;
-    }
-
     public function operationId(): ?string
     {
         return $this->data['operationId'] ?? null;
-    }
-
-    public function deprecated(): bool
-    {
-        return $this->data['deprecated'] ?? false;
     }
 
     public function parameters(): ?Parameters

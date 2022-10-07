@@ -2,8 +2,14 @@
 
 namespace Apiboard\OpenAPI\Structure;
 
+use Apiboard\OpenAPI\Concerns\CanBeDescribed;
+use Apiboard\OpenAPI\Concerns\HasASchema;
+
 final class Header
 {
+    use HasASchema;
+    use CanBeDescribed;
+
     private string $name;
 
     private array $data;
@@ -17,15 +23,5 @@ final class Header
     public function name(): string
     {
         return $this->name;
-    }
-
-    public function description(): ?string
-    {
-        return $this->data['description'] ?? null;
-    }
-
-    public function schema(): Schema
-    {
-        return new Schema($this->data['schema']);
     }
 }

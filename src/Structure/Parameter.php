@@ -2,8 +2,18 @@
 
 namespace Apiboard\OpenAPI\Structure;
 
+use Apiboard\OpenAPI\Concerns\CanBeDeprecated;
+use Apiboard\OpenAPI\Concerns\CanBeDescribed;
+use Apiboard\OpenAPI\Concerns\CanBeRequired;
+use Apiboard\OpenAPI\Concerns\HasASchema;
+
 final class Parameter
 {
+    use CanBeRequired;
+    use CanBeDescribed;
+    use CanBeDeprecated;
+    use HasASchema;
+
     private array $data;
 
     public function __construct(array $data)
@@ -16,29 +26,9 @@ final class Parameter
         return $this->data['name'];
     }
 
-    public function description(): ?string
-    {
-        return $this->data['description'] ?? null;
-    }
-
     public function in(): string
     {
         return $this->data['in'];
-    }
-
-    public function required(): bool
-    {
-        return $this->data['required'] ?? false;
-    }
-
-    public function deprecated(): bool
-    {
-        return $this->data['deprecated'] ?? false;
-    }
-
-    public function schema(): Schema
-    {
-        return new Schema($this->data['schema']);
     }
 
     public function style(): string

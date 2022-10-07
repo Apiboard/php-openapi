@@ -2,8 +2,12 @@
 
 namespace Apiboard\OpenAPI\Structure;
 
+use Apiboard\OpenAPI\Concerns\CanBeDescribed;
+
 final class PathItem
 {
+    use CanBeDescribed;
+
     private string $uri;
 
     private array $data;
@@ -22,11 +26,6 @@ final class PathItem
     public function summary(): ?string
     {
         return $this->data['summary'] ?? null;
-    }
-
-    public function description(): ?string
-    {
-        return $this->data['description'] ?? null;
     }
 
     public function parameters(): ?Parameters
