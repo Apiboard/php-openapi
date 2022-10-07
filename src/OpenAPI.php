@@ -40,11 +40,11 @@ final class OpenAPI
             default => throw new InvalidArgumentException('Can only validate OpenAPI v3.0.X or v3.1.X'),
         };
 
-        $schema = json_decode(file_get_contents(__DIR__ . "/Validation/v{$version}.json"));
+        $schema = new Json(file_get_contents(__DIR__ . "/Validation/v{$version}.json"));
         $structure = $contents->toObject();
 
         $validator = new \JsonSchema\Validator();
-        $validator->validate($structure, $schema);
+        $validator->validate($structure, $schema->toObject());
 
         $errors = array_reduce($validator->getErrors(), function (array $errors, array $error) {
             if ($error['pointer']) {
