@@ -6,6 +6,7 @@ use Apiboard\OpenAPI\Structure\Parameters;
 use Apiboard\OpenAPI\Structure\RequestBodies;
 use Apiboard\OpenAPI\Structure\Responses;
 use Apiboard\OpenAPI\Structure\Schemas;
+use Apiboard\OpenAPI\Structure\SecuritySchemes;
 
 test('it can return schemas', function () {
     $components = new Components([
@@ -55,6 +56,16 @@ test('it can return headers', function () {
     $result = $components->headers();
 
     expect($result)->toBeInstanceOf(Headers::class);
+});
+
+test('it can return security schemes', function () {
+    $components = new Components([
+        'securitySchemes' => [],
+    ]);
+
+    $result = $components->securitySchemes();
+
+    expect($result)->toBeInstanceOf(SecuritySchemes::class);
 });
 
 test('it returns null when data is unavailable', function (string $data) {
