@@ -6,7 +6,7 @@ use Apiboard\OpenAPI\Concerns\AsCountableArray;
 use ArrayAccess;
 use Countable;
 
-final class Schemas implements ArrayAccess, Countable
+final class DataTypes implements ArrayAccess, Countable
 {
     use AsCountableArray;
 
@@ -14,11 +14,16 @@ final class Schemas implements ArrayAccess, Countable
 
     public function __construct(array $data)
     {
-        $this->data = array_map(fn(array $value) => new Schema($value), $data);
+        $this->data = $data;
     }
 
-    public function offsetGet(mixed $offset): ?Schema
+    public function offsetGet(mixed $offset): ?string
     {
         return $this->data[$offset] ?? null;
+    }
+
+    public function isNullable(): bool
+    {
+        return in_array('null', $this->data);
     }
 }
