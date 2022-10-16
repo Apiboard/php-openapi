@@ -1,5 +1,7 @@
 <?php
 
+use Apiboard\OpenAPI\Structure\Callback;
+use Apiboard\OpenAPI\Structure\Callbacks;
 use Apiboard\OpenAPI\Structure\Headers;
 use Apiboard\OpenAPI\Structure\Links;
 use Apiboard\OpenAPI\Structure\MediaTypes;

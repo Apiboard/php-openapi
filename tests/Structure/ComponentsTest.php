@@ -1,5 +1,6 @@
 <?php
 
+use Apiboard\OpenAPI\Structure\Callbacks;
 use Apiboard\OpenAPI\Structure\Components;
 use Apiboard\OpenAPI\Structure\Headers;
 use Apiboard\OpenAPI\Structure\Parameters;
@@ -68,6 +69,16 @@ test('it can return security schemes', function () {
     expect($result)->toBeInstanceOf(SecuritySchemes::class);
 });
 
+test('it can return callbacks', function () {
+    $components = new Components([
+        'callbacks' => [],
+    ]);
+
+    $result = $components->callbacks();
+
+    expect($result)->toBeInstanceOf(Callbacks::class);
+});
+
 test('it returns null when data is unavailable', function (string $data) {
     $components = new Components([]);
 
@@ -81,4 +92,5 @@ test('it returns null when data is unavailable', function (string $data) {
     'requestBodies',
     'headers',
     'securitySchemes',
+    'callbacks',
 ]);

@@ -83,4 +83,15 @@ final class Operation
 
         return new Security($security);
     }
+
+    public function callbacks(): ?Callbacks
+    {
+        $callbacks = $this->data['callbacks'] ?? null;
+
+        if ($callbacks === null) {
+            return null;
+        }
+
+        return new Callbacks($callbacks);
+    }
 }

@@ -76,4 +76,15 @@ final class Components
 
         return new SecuritySchemes($securitySchemes);
     }
+
+    public function callbacks(): ?Callbacks
+    {
+        $callbacks = $this->data['callbacks'] ?? null;
+
+        if ($callbacks === null) {
+            return null;
+        }
+
+        return new Callbacks($callbacks);
+    }
 }

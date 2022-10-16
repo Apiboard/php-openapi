@@ -1,5 +1,6 @@
 <?php
 
+use Apiboard\OpenAPI\Structure\Callbacks;
 use Apiboard\OpenAPI\Structure\Operation;
 use Apiboard\OpenAPI\Structure\Parameters;
 use Apiboard\OpenAPI\Structure\RequestBody;
@@ -113,6 +114,17 @@ test('it returns false as deprecated state when not available', function () {
     expect($result)->toBeFalse();
 });
 
+
+test('it can return the callbacks', function () {
+    $operation = new Operation('get', [
+        'callbacks' => [],
+    ]);
+
+    $result = $operation->callbacks();
+
+    expect($result)->toBeInstanceOf(Callbacks::class);
+});
+
 test('it returns null when data is unavailable', function (string $data) {
     $path = new Operation('get', []);
 
@@ -127,4 +139,5 @@ test('it returns null when data is unavailable', function (string $data) {
     'requestBody',
     'servers',
     'security',
+    'callbacks'
 ]);
