@@ -13,12 +13,6 @@
             "Apiboard\\OpenAPI\\": "src/"
         }
     },
-    "authors": [
-        {
-            "name": "Laurens Bultynck",
-            "email": "laurens@apiboard.dev"
-        }
-    ],
     "require": {
         "php": ">=8.0",
         "symfony/yaml": "^6.1",
