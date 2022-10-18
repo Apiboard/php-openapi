@@ -9,7 +9,7 @@ use InvalidArgumentException;
 
 final class OpenAPI
 {
-    public static function parse(string $filePath): Specification
+    public static function parse(string $filePath, ?ReferenceResolver $referenceResolver = null): Specification
     {
         $extension = pathinfo($filePath, PATHINFO_EXTENSION);
 
@@ -18,6 +18,8 @@ final class OpenAPI
             'yaml' => new Yaml(file_get_contents($filePath)),
             default => throw new InvalidArgumentException('Can only parse JSON or YAML files'),
         };
+
+        $contents = $referenceResolver?->resolve($contents) ?? $contents;
 
         $errorMessage = '';
 

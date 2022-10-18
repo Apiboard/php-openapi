@@ -3,6 +3,7 @@
 use Apiboard\OpenAPI\Contents\Json;
 use Apiboard\OpenAPI\Contents\Yaml;
 use Apiboard\OpenAPI\OpenAPI;
+use Apiboard\OpenAPI\ReferenceResolver;
 use Apiboard\OpenAPI\Structure\Specification;
 
 test('it can parse from JSON', function () {
@@ -28,6 +29,28 @@ test('it cannot parse from invalid files', function () {
 
     OpenAPI::parse($textFile);
 })->throws('Can only parse JSON or YAML files');
+
+test('it can parse with a reference resolver', function () {
+    $jsonFile = fixture('example.json');
+    $resolver = new class () implements ReferenceResolver {
+        private bool $called = false;
+
+        public function resolve(Json|Yaml $contents): Json|Yaml
+        {
+            $this->called = true;
+            return $contents;
+        }
+
+        public function wasCalled(): bool
+        {
+            return $this->called;
+        }
+    };
+
+    OpenAPI::parse($jsonFile, $resolver);
+
+    expect($resolver->wasCalled())->toBeTrue();
+});
 
 test('it can validate OpenAPI specification v3.0.X', function () {
     $json = new Json('{
