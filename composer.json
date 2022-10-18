@@ -1,6 +1,6 @@
 {
     "name": "apiboard/php-openapi",
-    "description": "OpenAPI Specification parser for PHP 8.X. Supports both OAS 3.0.X and 3.1.X",
+    "description": "OpenAPI Specification parser for PHP 8. Supports both OAS 3.0 and 3.1.",
     "type": "library",
     "require-dev": {
         "pestphp/pest": "^1.22",
