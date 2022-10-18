@@ -40,7 +40,11 @@ final class Link
             return null;
         }
 
-        return array_map(fn ($expression) => new RuntimeExpression($expression), $parameters);
+        foreach ($parameters as $name=>$expression) {
+            $parameters[$name] = new RuntimeExpression($name, $expression);
+        }
+
+        return $parameters;
     }
 
     public function requestBody(): ?RuntimeExpression
@@ -51,7 +55,7 @@ final class Link
             return null;
         }
 
-        return new RuntimeExpression($requestBody);
+        return new RuntimeExpression('requestBody', $requestBody);
     }
 
     public function server(): ?Server

@@ -40,19 +40,19 @@ test('it can return the operation reference', function () {
 test('it can return the parameters', function () {
     $link = new Link([
         'parameters' => [
-            ['some' => 'expression']
+            'some' => 'expression',
         ],
     ]);
 
     $result = $link->parameters();
 
     expect($result)->toBeArray();
-    expect($result[0])->toBeInstanceOf(RuntimeExpression::class);
+    expect($result['some'])->toBeInstanceOf(RuntimeExpression::class);
 });
 
 test('it can return the request body', function () {
     $link = new Link([
-        'requestBody' => [],
+        'requestBody' => 'expression',
     ]);
 
     $result = $link->requestBody();
