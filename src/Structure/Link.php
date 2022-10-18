@@ -3,7 +3,6 @@
 namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\CanBeDescribed;
-use JsonSchema\Entity\JsonPointer;
 
 final class Link
 {
@@ -21,7 +20,7 @@ final class Link
         return $this->data['operationId'] ?? null;
     }
 
-    public function operationRef(): ?JsonPointer
+    public function operationRef(): ?\JsonSchema\Entity\JsonPointer
     {
         $operationRef = $this->data['operationRef'] ?? null;
 
@@ -29,7 +28,7 @@ final class Link
             return null;
         }
 
-        return new JsonPointer($operationRef);
+        return new \JsonSchema\Entity\JsonPointer($operationRef);
     }
 
     public function parameters(): ?array
