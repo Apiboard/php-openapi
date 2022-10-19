@@ -2,8 +2,12 @@
 
 namespace Apiboard\OpenAPI\Contents;
 
+use Apiboard\OpenAPI\Concerns\HasReferences;
+
 final class Json
 {
+    use HasReferences;
+
     private string $value;
 
     public function __construct(string $value)

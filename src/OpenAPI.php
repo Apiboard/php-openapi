@@ -9,21 +9,31 @@ use InvalidArgumentException;
 
 final class OpenAPI
 {
-    public static function parse(string $filePath, ?ReferenceResolver $referenceResolver = null): Specification
+    private ReferenceResolver $resolver;
+
+    private \JsonSchema\Validator $validator;
+
+    public function __construct(?ReferenceRetriever $referenceRetriever = null)
+    {
+        $this->resolver = new ReferenceResolver($referenceRetriever);
+        $this->validator = new \JsonSchema\Validator();
+    }
+
+    public function build(string $filePath): Specification
     {
         $extension = pathinfo($filePath, PATHINFO_EXTENSION);
 
         $contents = match ($extension) {
             'json' => new Json(file_get_contents($filePath)),
             'yaml' => new Yaml(file_get_contents($filePath)),
-            default => throw new InvalidArgumentException('Can only parse JSON or YAML files'),
+            default => throw new InvalidArgumentException('Can only build JSON or YAML files'),
         };
 
-        $contents = $referenceResolver?->resolve($contents) ?? $contents;
+        $resolvedContents = $this->resolver->resolve($contents);
 
         $errorMessage = '';
 
-        foreach (self::validate($contents) as $pointer=>$error) {
+        foreach ($this->validate($resolvedContents) as $pointer=>$error) {
             $errorMessage .= "\n" . $error . " (~{$pointer})";
         }
 
@@ -31,10 +41,10 @@ final class OpenAPI
             throw new InvalidArgumentException($errorMessage);
         }
 
-        return new Specification($contents);
+        return new Specification($resolvedContents);
     }
 
-    public static function validate(Json|Yaml $contents): array
+    public function validate(Json|Yaml $contents): array
     {
         $version = match ($contents->toArray()['openapi'] ?? '') {
             '3.0.0', '3.0.1', '3.0.2', '3.0.3' => '3.0',
@@ -45,10 +55,9 @@ final class OpenAPI
         $schema = new Json(file_get_contents(__DIR__ . "/Validation/v{$version}.json"));
         $structure = $contents->toObject();
 
-        $validator = new \JsonSchema\Validator();
-        $validator->validate($structure, $schema->toObject());
+        $this->validator->validate($structure, $schema->toObject());
 
-        $errors = array_reduce($validator->getErrors(), function (array $errors, array $error) {
+        $errors = array_reduce($this->validator->getErrors(), function (array $errors, array $error) {
             if ($error['pointer']) {
                 $errors[$error['pointer']] = $error['message'];
             }

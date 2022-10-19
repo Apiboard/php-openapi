@@ -1,5 +1,6 @@
 <?php
 
+use Apiboard\OpenAPI\Contents\Reference;
 use Apiboard\OpenAPI\Contents\Yaml;
 
 test('it can cast empty strings to an array', function () {
@@ -25,4 +26,20 @@ EOD;
             'it seems',
         ]
     ]);
+});
+
+test('it can return all external references', function () {
+    $json = new Yaml(<<<EOD
+info:
+  \$ref: '#/some/internal-json-pointer'
+paths:
+  /:
+    \$ref: './some-externa-ref.yml'
+EOD);
+
+    $result = $json->references();
+
+    expect($result)
+        ->toHaveCount(2)
+        ->toBeArrayOf(Reference::class);
 });

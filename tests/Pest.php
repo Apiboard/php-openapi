@@ -1,8 +1,11 @@
 <?php
 
-use Apiboard\OpenAPI\Structure\Specification;
 use Apiboard\OpenAPI\Contents\Json;
 use Apiboard\OpenAPI\Contents\Yaml;
+use Apiboard\OpenAPI\OpenAPI;
+use Apiboard\OpenAPI\ReferenceRetriever;
+use Apiboard\OpenAPI\Structure\Specification;
+use PHPUnit\Framework\Assert;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,8 +31,13 @@ use Apiboard\OpenAPI\Contents\Yaml;
 |
 */
 
-expect()->extend('toBeOne', function () {
-    return $this->toBe(1);
+expect()->extend('toBeArrayOf', function (string $class) {
+    /** @var array */
+    $items = $this->value;
+
+    foreach ($items as $value) {
+        Assert::assertInstanceOf($class, $value);
+    }
 });
 
 /*
@@ -42,6 +50,11 @@ expect()->extend('toBeOne', function () {
 | global functions to help you to reduce the number of lines of code in your test files.
 |
 */
+
+function openAPI(?ReferenceRetriever $retriever = null): OpenAPI
+{
+    return new OpenAPI($retriever);
+}
 
 function fixture(string $path): string
 {

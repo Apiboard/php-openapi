@@ -5,7 +5,25 @@ namespace Apiboard\OpenAPI;
 use Apiboard\OpenAPI\Contents\Json;
 use Apiboard\OpenAPI\Contents\Yaml;
 
-interface ReferenceResolver
+final class ReferenceResolver
 {
-    public function resolve(Json|Yaml $contents): Json|Yaml;
+    private ?ReferenceRetriever $retriever;
+
+    public function __construct(?ReferenceRetriever $retriever = null)
+    {
+        $this->retriever = $retriever;
+    }
+
+    public function resolve(Json|Yaml $contents): Json|Yaml
+    {
+        if ($this->retriever === null) {
+            return $contents;
+        }
+
+        foreach ($contents->references() as $reference) {
+            $this->retriever->retrieve($reference);
+        }
+
+        return $contents;
+    }
 }

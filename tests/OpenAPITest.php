@@ -1,44 +1,58 @@
 <?php
 
 use Apiboard\OpenAPI\Contents\Json;
+use Apiboard\OpenAPI\Contents\Reference;
 use Apiboard\OpenAPI\Contents\Yaml;
-use Apiboard\OpenAPI\OpenAPI;
-use Apiboard\OpenAPI\ReferenceResolver;
+use Apiboard\OpenAPI\ReferenceRetriever;
 use Apiboard\OpenAPI\Structure\Specification;
 
-test('it can parse from JSON', function () {
+test('it can build from JSON', function () {
     $jsonFile = fixture('example.json');
 
-    $result = OpenAPI::parse($jsonFile);
+    $result = openAPI()->build($jsonFile);
 
     expect($result)->toBeInstanceOf(Specification::class);
     expect(invade($result)->contents)->toBeInstanceOf(Json::class);
 });
 
-test('it can parse from YAML', function () {
+test('it can build from YAML', function () {
     $yamlFile = fixture('example.yaml');
 
-    $result = OpenAPI::parse($yamlFile);
+    $result = openAPI()->build($yamlFile);
 
     expect($result)->toBeInstanceOf(Specification::class);
     expect(invade($result)->contents)->toBeInstanceOf(Yaml::class);
 });
 
-test('it cannot parse from invalid files', function () {
+test('it cannot build from invalid files', function () {
     $textFile = fixture('example.txt');
 
-    OpenAPI::parse($textFile);
-})->throws('Can only parse JSON or YAML files');
+    openAPI()->build($textFile);
+})->throws('Can only build JSON or YAML files');
 
-test('it can parse with a reference resolver', function () {
-    $jsonFile = fixture('example.json');
-    $resolver = new class () implements ReferenceResolver {
+test('it can validate OpenAPI specification v3.0.X', function () {
+    $json = new Json('{
+        "openapi": "3.0.0"
+    }');
+
+    $errors = openAPI()->validate($json);
+
+    expect($errors)->toBe([
+        '/info' => 'The property info is required',
+        '/paths' => 'The property paths is required',
+    ]);
+});
+
+test('it resolves references when building', function () {
+    $jsonFile = fixture('references.json');
+    $retriever = new class () implements ReferenceRetriever {
         private bool $called = false;
 
-        public function resolve(Json|Yaml $contents): Json|Yaml
+        public function retrieve(Reference $reference): Json|Yaml
         {
             $this->called = true;
-            return $contents;
+
+            return new Json('');
         }
 
         public function wasCalled(): bool
@@ -47,28 +61,15 @@ test('it can parse with a reference resolver', function () {
         }
     };
 
-    OpenAPI::parse($jsonFile, $resolver);
+    openAPI($retriever)->build($jsonFile);
 
-    expect($resolver->wasCalled())->toBeTrue();
-});
-
-test('it can validate OpenAPI specification v3.0.X', function () {
-    $json = new Json('{
-        "openapi": "3.0.0"
-    }');
-
-    $errors = OpenAPI::validate($json);
-
-    expect($errors)->toBe([
-        '/info' => 'The property info is required',
-        '/paths' => 'The property paths is required',
-    ]);
+    expect($retriever->wasCalled())->toBeTrue();
 });
 
 test('it can validate OpenAPI specification v3.1.X', function () {
     $yaml = new Yaml('openapi: 3.1.0');
 
-    $errors = OpenAPI::validate($yaml);
+    $errors = openAPI()->validate($yaml);
 
     expect($errors)->toBe([
         '/info' => 'The property info is required',
@@ -81,25 +82,25 @@ test('it can validate OpenAPI specification v3.1.X', function () {
 test('it cannot validate OpenAPI specification v2.X.X', function () {
     $yaml = new Yaml('openapi: 2.0.0');
 
-    OpenAPI::validate($yaml);
+    openAPI()->validate($yaml);
 })->throws('Can only validate OpenAPI v3.0.X or v3.1.X');
 
 test('it cannot validate OpenAPI specification v1.2', function () {
     $yaml = new Yaml('openapi: 1.2.0');
 
-    OpenAPI::validate($yaml);
+    openAPI()->validate($yaml);
 })->throws('Can only validate OpenAPI v3.0.X or v3.1.X');
 
-test('it throws when parsing invalid files', function () {
+test('it throws when building invalid files', function () {
     $jsonFile = fixture('invalid.json');
 
-    OpenAPI::parse($jsonFile);
+    openAPI()->build($jsonFile);
 })->throws('Can only validate OpenAPI v3.0.X or v3.1.X');
 
-test('it throws when parsing incomplete files', function () {
+test('it throws when building incomplete files', function () {
     $jsonFile = fixture('incomplete.json');
 
-    OpenAPI::parse($jsonFile);
+    openAPI()->build($jsonFile);
 })->throws('
 The property info is required (~/info)
 The property paths is required (~/paths)
