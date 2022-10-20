@@ -9,16 +9,9 @@
             "get": {
                 "responses": {
                     "200": {
-                        "$ref": "#/components/responses/200"
+                        "$ref": "./some-external-ref.json"
                     }
                 }
-            }
-        }
-    },
-    "components": {
-        "responses": {
-            "200": {
-                "description": "OK"
             }
         }
     }

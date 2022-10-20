@@ -6,31 +6,26 @@ final class Reference
 {
     private string $value;
 
+    private \JsonSchema\Entity\JsonPointer $pointer;
+
     public function __construct(string $value)
     {
         $this->value = $value;
-    }
-
-    public function value(): string
-    {
-        return $this->value;
+        $this->pointer = new \JsonSchema\Entity\JsonPointer($value);
     }
 
     public function path(): string
     {
-        $parts = explode('#', $this->value);
-
-        return $parts[0];
+        return $this->value;
     }
 
-    public function pointer(): ?\JsonSchema\Entity\JsonPointer
+    public function isInternal(): bool
     {
-        $parts = explode('#', $this->value);
+        return $this->pointer->getFilename() === '';
+    }
 
-        if (count($parts) === 1) {
-            return null;
-        }
-
-        return new \JsonSchema\Entity\JsonPointer($parts[1]);
+    public function properties(): array
+    {
+        return $this->pointer->getPropertyPaths();
     }
 }

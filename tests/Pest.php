@@ -3,7 +3,7 @@
 use Apiboard\OpenAPI\Contents\Json;
 use Apiboard\OpenAPI\Contents\Yaml;
 use Apiboard\OpenAPI\OpenAPI;
-use Apiboard\OpenAPI\ReferenceRetriever;
+use Apiboard\OpenAPI\References\Retriever;
 use Apiboard\OpenAPI\Structure\Specification;
 use PHPUnit\Framework\Assert;
 
@@ -51,7 +51,7 @@ expect()->extend('toBeArrayOf', function (string $class) {
 |
 */
 
-function openAPI(?ReferenceRetriever $retriever = null): OpenAPI
+function openAPI(?Retriever $retriever = null): OpenAPI
 {
     return new OpenAPI($retriever);
 }

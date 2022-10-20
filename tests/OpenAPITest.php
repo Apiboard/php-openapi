@@ -3,7 +3,7 @@
 use Apiboard\OpenAPI\Contents\Json;
 use Apiboard\OpenAPI\Contents\Reference;
 use Apiboard\OpenAPI\Contents\Yaml;
-use Apiboard\OpenAPI\ReferenceRetriever;
+use Apiboard\OpenAPI\References\Retriever;
 use Apiboard\OpenAPI\Structure\Specification;
 
 test('it can build from JSON', function () {
@@ -45,14 +45,14 @@ test('it can validate OpenAPI specification v3.0.X', function () {
 
 test('it resolves references when building', function () {
     $jsonFile = fixture('references.json');
-    $retriever = new class () implements ReferenceRetriever {
+    $retriever = new class () implements Retriever {
         private bool $called = false;
 
-        public function retrieve(Reference $reference): Json|Yaml
+        public function retrieve(string $filePath): Json|Yaml
         {
             $this->called = true;
 
-            return new Json('');
+            return new Json('{ "description": "OK" }');
         }
 
         public function wasCalled(): bool

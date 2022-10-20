@@ -4,18 +4,20 @@ namespace Apiboard\OpenAPI;
 
 use Apiboard\OpenAPI\Contents\Json;
 use Apiboard\OpenAPI\Contents\Yaml;
+use Apiboard\OpenAPI\References\Resolver;
+use Apiboard\OpenAPI\References\Retriever;
 use Apiboard\OpenAPI\Structure\Specification;
 use InvalidArgumentException;
 
 final class OpenAPI
 {
-    private ReferenceResolver $resolver;
+    private Resolver $resolver;
 
     private \JsonSchema\Validator $validator;
 
-    public function __construct(?ReferenceRetriever $referenceRetriever = null)
+    public function __construct(?Retriever $referenceRetriever = null)
     {
-        $this->resolver = new ReferenceResolver($referenceRetriever);
+        $this->resolver = new Resolver($referenceRetriever);
         $this->validator = new \JsonSchema\Validator();
     }
 
