@@ -2,8 +2,11 @@
 
 use Apiboard\OpenAPI\Structure\Callbacks;
 use Apiboard\OpenAPI\Structure\Components;
+use Apiboard\OpenAPI\Structure\Examples;
 use Apiboard\OpenAPI\Structure\Headers;
+use Apiboard\OpenAPI\Structure\Links;
 use Apiboard\OpenAPI\Structure\Parameters;
+use Apiboard\OpenAPI\Structure\Paths;
 use Apiboard\OpenAPI\Structure\RequestBodies;
 use Apiboard\OpenAPI\Structure\Responses;
 use Apiboard\OpenAPI\Structure\Schemas;
@@ -39,6 +42,16 @@ test('it can return parameters', function () {
     expect($result)->toBeInstanceOf(Parameters::class);
 });
 
+test('it can return examples', function () {
+    $components = new Components([
+        'examples' => [],
+    ]);
+
+    $result = $components->examples();
+
+    expect($result)->toBeInstanceOf(Examples::class);
+});
+
 test('it can return request bodies', function () {
     $components = new Components([
         'requestBodies' => [],
@@ -69,6 +82,16 @@ test('it can return security schemes', function () {
     expect($result)->toBeInstanceOf(SecuritySchemes::class);
 });
 
+test('it can return links', function () {
+    $components = new Components([
+        'links' => [],
+    ]);
+
+    $result = $components->links();
+
+    expect($result)->toBeInstanceOf(Links::class);
+});
+
 test('it can return callbacks', function () {
     $components = new Components([
         'callbacks' => [],
@@ -77,6 +100,16 @@ test('it can return callbacks', function () {
     $result = $components->callbacks();
 
     expect($result)->toBeInstanceOf(Callbacks::class);
+});
+
+test('it can return path items', function () {
+    $components = new Components([
+        'pathItems' => [],
+    ]);
+
+    $result = $components->pathItems();
+
+    expect($result)->toBeInstanceOf(Paths::class);
 });
 
 test('it returns null when data is unavailable', function (string $data) {
@@ -89,8 +122,11 @@ test('it returns null when data is unavailable', function (string $data) {
     'schemas',
     'responses',
     'parameters',
+    'examples',
     'requestBodies',
     'headers',
     'securitySchemes',
+    'links',
     'callbacks',
+    'pathItems',
 ]);

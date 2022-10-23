@@ -44,6 +44,17 @@ final class Components
         return new Parameters($parameters);
     }
 
+    public function examples(): ?Examples
+    {
+        $examples = $this->data['examples'] ?? null;
+
+        if ($examples === null) {
+            return null;
+        }
+
+        return new Examples($examples);
+    }
+
     public function requestBodies(): ?RequestBodies
     {
         $requestBodies = $this->data['requestBodies'] ?? null;
@@ -77,6 +88,17 @@ final class Components
         return new SecuritySchemes($securitySchemes);
     }
 
+    public function links(): ?Links
+    {
+        $links = $this->data['links'] ?? null;
+
+        if ($links === null) {
+            return null;
+        }
+
+        return new Links($links);
+    }
+
     public function callbacks(): ?Callbacks
     {
         $callbacks = $this->data['callbacks'] ?? null;
@@ -86,5 +108,16 @@ final class Components
         }
 
         return new Callbacks($callbacks);
+    }
+
+    public function pathItems(): ?Paths
+    {
+        $pathItems = $this->data['pathItems'] ?? null;
+
+        if ($pathItems === null) {
+            return null;
+        }
+
+        return new Paths($pathItems);
     }
 }
