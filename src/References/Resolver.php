@@ -72,20 +72,18 @@ final class Resolver
         foreach ($contents as $key=>$value) {
             if ($key !== '$ref') {
                 $this->replacedKeys[] = $key;
-            }
 
-            if (is_array($value)) {
-                $resolved[$key] =  $this->replaceReferences([], $value);
-            }
-
-            if (is_string($value)) {
-                $resolvedValue = $this->retrievedReferences[$value] ?? null;
-
-                // The value was not a reference string, don't replace this key
-                if ($resolvedValue === null) {
+                if (is_string($value)) {
                     $resolved[$key] = $value;
-                    continue;
                 }
+
+                if (is_array($value)) {
+                    $resolved[$key] = $this->replaceReferences([], $value);
+                }
+            }
+
+            if ($key === '$ref') {
+                $resolvedValue = $this->retrievedReferences[$value] ?? $value;
 
                 // We're most likely going to enter an infinite replacement loop.
                 // Let's just stop here and use a JSON pointer reference here.
