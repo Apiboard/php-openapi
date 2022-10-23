@@ -4,11 +4,14 @@ namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\CanBeDeprecated;
 use Apiboard\OpenAPI\Concerns\CanBeDescribed;
+use Apiboard\OpenAPI\Concerns\HasReferences;
+use Apiboard\OpenAPI\Contents\Reference;
 
 final class Operation
 {
     use CanBeDeprecated;
     use CanBeDescribed;
+    use HasReferences;
 
     private string $method;
 
@@ -46,12 +49,16 @@ final class Operation
         return new Parameters($parameters);
     }
 
-    public function requestBody(): ?RequestBody
+    public function requestBody(): RequestBody|Reference|null
     {
         $requestBody = $this->data['requestBody'] ?? null;
 
         if ($requestBody === null) {
             return null;
+        }
+
+        if ($this->isReference($requestBody)) {
+            return new Reference($requestBody['$ref']);
         }
 
         return new RequestBody($requestBody);
@@ -84,7 +91,7 @@ final class Operation
         return new Security($security);
     }
 
-    public function callbacks(): ?Callbacks
+    public function callbacks(): Callbacks|Reference|null
     {
         $callbacks = $this->data['callbacks'] ?? null;
 
@@ -92,6 +99,15 @@ final class Operation
             return null;
         }
 
+        if ($this->isReference($callbacks)) {
+            return new Reference($callbacks['$ref']);
+        }
+
         return new Callbacks($callbacks);
+    }
+
+    public function toArray(): array
+    {
+        return $this->data;
     }
 }
