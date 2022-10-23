@@ -5,6 +5,7 @@ use Apiboard\OpenAPI\Structure\Info;
 use Apiboard\OpenAPI\Structure\Paths;
 use Apiboard\OpenAPI\Structure\Security;
 use Apiboard\OpenAPI\Structure\Servers;
+use Apiboard\OpenAPI\Structure\Webhooks;
 
 test('it can be cast to string', function () {
     $jsonSpec = jsonSpecification('{}');
@@ -85,6 +86,16 @@ test('it can return the security', function () {
     expect($result)->toBeInstanceOf(Security::class);
 });
 
+test('it can return the webhooks', function () {
+    $spec = jsonSpecification('{
+        "webhooks": {}
+    }');
+
+    $result = $spec->webhooks();
+
+    expect($result)->toBeInstanceOf(Webhooks::class);
+});
+
 test('it returns null when data is unavailable', function (string $data) {
     $spec = jsonSpecification('{}');
 
@@ -95,4 +106,5 @@ test('it returns null when data is unavailable', function (string $data) {
     'servers',
     'components',
     'security',
+    'webhooks',
 ]);

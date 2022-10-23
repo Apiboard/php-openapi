@@ -75,4 +75,15 @@ final class Specification implements Stringable
 
         return new Security($security);
     }
+
+    public function webhooks(): ?Webhooks
+    {
+        $webhooks = $this->data['webhooks'] ?? null;
+
+        if ($webhooks === null) {
+            return null;
+        }
+
+        return new Webhooks($webhooks);
+    }
 }
