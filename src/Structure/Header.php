@@ -24,4 +24,9 @@ final class Header
     {
         return $this->name;
     }
+
+    public function toArray(): array
+    {
+        return $this->data;
+    }
 }

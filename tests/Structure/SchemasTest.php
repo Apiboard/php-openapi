@@ -1,5 +1,6 @@
 <?php
 
+use Apiboard\OpenAPI\Contents\Reference;
 use Apiboard\OpenAPI\Structure\Schema;
 use Apiboard\OpenAPI\Structure\Schemas;
 
@@ -11,6 +12,18 @@ test('it retrieve schemas by key', function () {
     $result = $schemas[0];
 
     expect($result)->toBeInstanceOf(Schema::class);
+});
+
+test('it retrieve referenced schemas by key', function () {
+    $schemas = new Schemas([
+        0 => [
+            '$ref' => '#/some/ref',
+        ],
+    ]);
+
+    $result = $schemas[0];
+
+    expect($result)->toBeInstanceOf(Reference::class);
 });
 
 test('it can count the schemas', function () {

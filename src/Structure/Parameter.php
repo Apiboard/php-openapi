@@ -68,4 +68,9 @@ final class Parameter
 
         return false;
     }
+
+    public function toArray(): array
+    {
+        return $this->data;
+    }
 }
