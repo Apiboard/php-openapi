@@ -10,7 +10,7 @@ final class Resolver
 {
     private ?Retriever $retriever;
 
-    private array $resolvedRefs = [];
+    private array $retrievedReferences = [];
 
     private array $replacedKeys = [];
 
@@ -45,7 +45,7 @@ final class Resolver
                 continue;
             }
 
-            if (array_key_exists($reference->path(), $this->resolvedRefs)) {
+            if (array_key_exists($reference->path(), $this->retrievedReferences)) {
                 continue;
             }
 
@@ -57,7 +57,7 @@ final class Resolver
                 $resolvedContents = $resolvedContents[$property];
             }
 
-            $this->resolvedRefs[$reference->path()] = $resolvedContents;
+            $this->retrievedReferences[$reference->path()] = $resolvedContents;
 
             $this->retrieveReferences($contents->references());
         }
@@ -79,7 +79,7 @@ final class Resolver
             }
 
             if (is_string($value)) {
-                $resolvedValue = $this->resolvedRefs[$value] ?? null;
+                $resolvedValue = $this->retrievedReferences[$value] ?? null;
 
                 // The value was not a reference string, don't replace this key
                 if ($resolvedValue === null) {
