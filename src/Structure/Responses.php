@@ -15,12 +15,8 @@ final class Responses implements ArrayAccess, Countable
 
     private array $data;
 
-    private array $responses;
-
     public function __construct(array $data)
     {
-        $this->data = $data;
-
         foreach ($data as $statusCode=>$value) {
             $data[$statusCode] = match ($this->isReference($value)) {
                 true => new Reference($value['$ref']),
@@ -28,11 +24,11 @@ final class Responses implements ArrayAccess, Countable
             };
         }
 
-        $this->responses = $data;
+        $this->data = $data;
     }
 
     public function offsetGet(mixed $statusCode): Response|Reference|null
     {
-        return $this->responses[$statusCode] ?? null;
+        return $this->data[$statusCode] ?? null;
     }
 }

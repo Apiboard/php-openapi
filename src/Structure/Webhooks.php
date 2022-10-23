@@ -15,12 +15,8 @@ final class Webhooks implements ArrayAccess, Countable
 
     private array $data;
 
-    private array $webhooks;
-
     public function __construct(array $data)
     {
-        $this->data = $data;
-
         foreach ($data as $uri=>$value) {
             $data[$uri] = match ($this->isReference($value)) {
                 true => new Reference($value['$ref']),
@@ -28,11 +24,11 @@ final class Webhooks implements ArrayAccess, Countable
             };
         }
 
-        $this->webhooks = $data;
+        $this->data = $data;
     }
 
     public function offsetGet(mixed $offset): PathItem|Reference|null
     {
-        return $this->webhooks[$offset] ?? null;
+        return $this->data[$offset] ?? null;
     }
 }

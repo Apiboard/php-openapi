@@ -15,12 +15,9 @@ final class Schemas implements ArrayAccess, Countable
 
     private array $data;
 
-    private array $schemas;
-
     public function __construct(array $data)
     {
-        $this->data = $data;
-        $this->schemas = array_map(function (array $value) {
+        $this->data = array_map(function (array $value) {
             return match ($this->isReference($value)) {
                 true => new Reference($value['$ref']),
                 default => new Schema($value),
@@ -30,6 +27,6 @@ final class Schemas implements ArrayAccess, Countable
 
     public function offsetGet(mixed $offset): Schema|Reference|null
     {
-        return $this->schemas[$offset] ?? null;
+        return $this->data[$offset] ?? null;
     }
 }

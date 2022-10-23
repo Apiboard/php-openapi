@@ -15,24 +15,19 @@ final class Examples implements ArrayAccess, Countable
 
     private array $data;
 
-    private array $examples;
-
     public function __construct(array $data)
     {
-        $this->data = $data;
-
         foreach ($data as $key=>$value) {
             $data[$key] = match ($this->isReference($value)) {
                 true => new Reference($value['$ref']),
                 default => new Example($value),
             };
         }
-
-        $this->examples = $data;
+        $this->data = $data;
     }
 
     public function offsetGet(mixed $offset): Example|Reference|null
     {
-        return $this->examples[$offset] ?? null;
+        return $this->data[$offset] ?? null;
     }
 }

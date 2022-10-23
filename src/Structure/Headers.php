@@ -15,12 +15,8 @@ final class Headers implements ArrayAccess, Countable
 
     private array $data;
 
-    private array $headers;
-
     public function __construct(array $data)
     {
-        $this->data = $data;
-
         foreach ($data as $name=>$value) {
             $data[$name] = match ($this->isReference($value)) {
                 true => new Reference($value['$ref']),
@@ -28,11 +24,11 @@ final class Headers implements ArrayAccess, Countable
             };
         }
 
-        $this->headers = $data;
+        $this->data = $data;
     }
 
     public function offsetGet(mixed $name): Header|Reference|null
     {
-        return $this->headers[$name] ?? null;
+        return $this->data[$name] ?? null;
     }
 }

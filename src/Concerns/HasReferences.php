@@ -18,6 +18,10 @@ trait HasReferences
         $references = [];
 
         array_walk_recursive($properties, function (mixed $value, string $key) use (&$references) {
+            if ($value instanceof Reference) {
+                $references[] = $value;
+            }
+
             if ($key === '$ref') {
                 $references[] = new Reference($value);
             }

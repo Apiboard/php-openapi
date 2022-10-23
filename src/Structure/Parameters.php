@@ -15,12 +15,9 @@ final class Parameters implements ArrayAccess, Countable
 
     private array $data;
 
-    private array $parameters;
-
     public function __construct(array $data)
     {
-        $this->data = $data;
-        $this->parameters = array_map(function (array|Parameter $value) {
+        $this->data = array_map(function (array|Parameter $value) {
             if ($value instanceof Parameter) {
                 return $value;
             }
@@ -35,7 +32,7 @@ final class Parameters implements ArrayAccess, Countable
 
     public function offsetGet(mixed $offset): Parameter|Reference|null
     {
-        return $this->parameters[$offset] ?? null;
+        return $this->data[$offset] ?? null;
     }
 
     public function inQuery(): self
@@ -60,7 +57,7 @@ final class Parameters implements ArrayAccess, Countable
 
     private function filter(callable $callback): array
     {
-        return array_filter($this->parameters, function (Parameter|Reference $value) use ($callback) {
+        return array_filter($this->data, function (Parameter|Reference $value) use ($callback) {
             if ($value instanceof Reference) {
                 return false;
             }
