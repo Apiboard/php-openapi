@@ -3,29 +3,39 @@
 namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\AsCountableArray;
+use Apiboard\OpenAPI\Concerns\HasReferences;
+use Apiboard\OpenAPI\Contents\Reference;
 use ArrayAccess;
 use Countable;
 
 final class Parameters implements ArrayAccess, Countable
 {
     use AsCountableArray;
+    use HasReferences;
 
     private array $data;
 
+    private array $parameters;
+
     public function __construct(array $data)
     {
-        $this->data = array_map(function (array|Parameter $value) {
+        $this->data = $data;
+        $this->parameters = array_map(function (array|Parameter $value) {
             if ($value instanceof Parameter) {
                 return $value;
+            }
+
+            if ($this->isReference($value)) {
+                return new Reference($value['$ref']);
             }
 
             return new Parameter($value);
         }, $data);
     }
 
-    public function offsetGet(mixed $offset): ?Parameter
+    public function offsetGet(mixed $offset): Parameter|Reference|null
     {
-        return $this->data[$offset] ?? null;
+        return $this->parameters[$offset] ?? null;
     }
 
     public function inQuery(): self
@@ -50,6 +60,12 @@ final class Parameters implements ArrayAccess, Countable
 
     private function filter(callable $callback): array
     {
-        return array_filter($this->data, fn (Parameter $parameter) => $callback($parameter));
+        return array_filter($this->parameters, function (Parameter|Reference $value) use ($callback) {
+            if ($value instanceof Reference) {
+                return false;
+            }
+
+            return $callback($value);
+        });
     }
 }

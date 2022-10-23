@@ -28,4 +28,9 @@ trait AsCountableArray
     {
         return count($this->data);
     }
+
+    public function toArray(): array
+    {
+        return $this->data;
+    }
 }

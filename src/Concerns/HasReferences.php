@@ -25,4 +25,12 @@ trait HasReferences
 
         return $references;
     }
+
+    private function isReference(mixed $value): bool
+    {
+        return is_array($value)
+            && count($value) === 1
+            && array_key_exists('$ref', $value)
+        ;
+    }
 }
