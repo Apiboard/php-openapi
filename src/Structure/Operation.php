@@ -91,16 +91,12 @@ final class Operation
         return new Security($security);
     }
 
-    public function callbacks(): Callbacks|Reference|null
+    public function callbacks(): ?Callbacks
     {
         $callbacks = $this->data['callbacks'] ?? null;
 
         if ($callbacks === null) {
             return null;
-        }
-
-        if ($this->isReference($callbacks)) {
-            return new Reference($callbacks['$ref']);
         }
 
         return new Callbacks($callbacks);
