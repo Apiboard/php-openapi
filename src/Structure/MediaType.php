@@ -2,8 +2,13 @@
 
 namespace Apiboard\OpenAPI\Structure;
 
+use Apiboard\OpenAPI\Concerns\HasReferences;
+use Apiboard\OpenAPI\Contents\Reference;
+
 final class MediaType
 {
+    use HasReferences;
+
     private string $contentType;
 
     private array $data;
@@ -19,12 +24,16 @@ final class MediaType
         return $this->contentType;
     }
 
-    public function schema(): ?Schema
+    public function schema(): Schema|Reference|null
     {
         $schema = $this->data['schema'] ?? null;
 
         if ($schema === null) {
             return null;
+        }
+
+        if ($this->isReference($schema)) {
+            return new Reference($schema['$ref']);
         }
 
         return new Schema($schema);
@@ -55,5 +64,10 @@ final class MediaType
         }
 
         return new Examples($encoding);
+    }
+
+    public function toArray(): array
+    {
+        return $this->data;
     }
 }

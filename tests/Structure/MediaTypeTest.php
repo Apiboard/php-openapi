@@ -1,7 +1,7 @@
 <?php
 
+use Apiboard\OpenAPI\Contents\Reference;
 use Apiboard\OpenAPI\Structure\Encoding;
-use Apiboard\OpenAPI\Structure\Example;
 use Apiboard\OpenAPI\Structure\Examples;
 use Apiboard\OpenAPI\Structure\MediaType;
 use Apiboard\OpenAPI\Structure\Schema;
@@ -14,6 +14,18 @@ test('it can return the schema', function () {
     $result = $mediaType->schema();
 
     expect($result)->toBeInstanceOf(Schema::class);
+});
+
+test('it can return the referenced schema', function () {
+    $mediaType = new MediaType('application/json', [
+        'schema' => [
+            '$ref' => '#/some/ref',
+        ],
+    ]);
+
+    $result = $mediaType->schema();
+
+    expect($result)->toBeInstanceOf(Reference::class);
 });
 
 test('it can return the encoding', function () {
