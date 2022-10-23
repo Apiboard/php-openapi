@@ -5,6 +5,7 @@ use Apiboard\OpenAPI\Structure\Info;
 use Apiboard\OpenAPI\Structure\Paths;
 use Apiboard\OpenAPI\Structure\Security;
 use Apiboard\OpenAPI\Structure\Servers;
+use Apiboard\OpenAPI\Structure\Tags;
 use Apiboard\OpenAPI\Structure\Webhooks;
 
 test('it can be cast to string', function () {
@@ -94,6 +95,16 @@ test('it can return the webhooks', function () {
     $result = $spec->webhooks();
 
     expect($result)->toBeInstanceOf(Webhooks::class);
+});
+
+test('it can return the tags', function () {
+    $spec = jsonSpecification('{
+        "tags": []
+    }');
+
+    $result = $spec->tags();
+
+    expect($result)->toBeInstanceOf(Tags::class);
 });
 
 test('it returns null when data is unavailable', function (string $data) {

@@ -126,6 +126,20 @@ test('it can return the callbacks', function () {
     expect($result)->toBeInstanceOf(Callbacks::class);
 });
 
+test('it can return the tags', function () {
+    $operation = new Operation('get', [
+        'tags' => [
+            'tag-1'
+        ],
+    ]);
+
+    $result = $operation->tags();
+
+    expect($result)->toBe([
+        'tag-1',
+    ]);
+});
+
 test('it returns null when data is unavailable', function (string $data) {
     $path = new Operation('get', []);
 

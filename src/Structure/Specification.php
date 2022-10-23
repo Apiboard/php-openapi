@@ -86,4 +86,15 @@ final class Specification implements Stringable
 
         return new Webhooks($webhooks);
     }
+
+    public function tags(): ?Tags
+    {
+        $tags = $this->data['tags'] ?? null;
+
+        if ($tags === null) {
+            return null;
+        }
+
+        return new Tags($tags);
+    }
 }

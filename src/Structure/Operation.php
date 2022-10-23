@@ -102,6 +102,11 @@ final class Operation
         return new Callbacks($callbacks);
     }
 
+    public function tags(): array
+    {
+        return $this->data['tags'] ?? [];
+    }
+
     public function toArray(): array
     {
         return $this->data;
