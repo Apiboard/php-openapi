@@ -19,8 +19,6 @@ final class Paths implements ArrayAccess, Countable
         }
 
         $this->data = $data;
-
-        $this->data = $data;
     }
 
     public function offsetGet(mixed $uri): ?PathItem
