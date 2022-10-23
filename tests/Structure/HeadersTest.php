@@ -1,5 +1,6 @@
 <?php
 
+use Apiboard\OpenAPI\Contents\Reference;
 use Apiboard\OpenAPI\Structure\Header;
 use Apiboard\OpenAPI\Structure\Headers;
 
@@ -11,6 +12,18 @@ test('it can retrieve headers by their name', function () {
     $result = $headers['X-My-Header'];
 
     expect($result)->toBeInstanceOf(Header::class);
+});
+
+test('it can retrieve referenced headers by their name', function () {
+    $headers = new Headers([
+        'X-My-Header' => [
+            '$ref' => '#/some/ref',
+        ],
+    ]);
+
+    $result = $headers['X-My-Header'];
+
+    expect($result)->toBeInstanceOf(Reference::class);
 });
 
 test('it returns null for unknown header names', function () {
