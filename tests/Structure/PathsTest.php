@@ -1,5 +1,6 @@
 <?php
 
+use Apiboard\OpenAPI\Contents\Reference;
 use Apiboard\OpenAPI\Structure\PathItem;
 use Apiboard\OpenAPI\Structure\Paths;
 
@@ -11,6 +12,18 @@ test('it can retrieve paths by their uri', function () {
     $result = $paths['/my-path'];
 
     expect($result)->toBeInstanceOf(PathItem::class);
+});
+
+test('it can retrieve referenced paths by their uri', function () {
+    $paths = new Paths([
+        '/my-path' => [
+            '$ref' => '#/some/ref',
+        ],
+    ]);
+
+    $result = $paths['/my-path'];
+
+    expect($result)->toBeInstanceOf(Reference::class);
 });
 
 test('it returns null for unknown paths', function () {
@@ -30,4 +43,17 @@ test('paths can be counted', function () {
     $result = count($paths);
 
     expect($result)->toBe(2);
+});
+
+test('it can return all its references', function () {
+    $paths = new Paths([
+        '/my-path' => [
+            '$ref' => '#/some/ref',
+        ],
+    ]);
+
+    $result = $paths->references();
+
+    expect($result)->toHaveCount(1);
+    expect($result[0])->toBeInstanceOf(Reference::class);
 });
