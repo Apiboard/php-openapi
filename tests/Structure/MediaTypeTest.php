@@ -18,12 +18,15 @@ test('it can return the schema', function () {
 
 test('it can return the encoding', function () {
     $mediaType = new MediaType('application/json', [
-        'encoding' => [],
+        'encoding' => [
+            'something' => [],
+        ],
     ]);
 
     $result = $mediaType->encoding();
 
-    expect($result)->toBeInstanceOf(Encoding::class);
+    expect($result)->toBeArray();
+    expect($result['something'])->toBeInstanceOf(Encoding::class);
 });
 
 test('it can return the example', function () {

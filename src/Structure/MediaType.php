@@ -30,7 +30,7 @@ final class MediaType
         return new Schema($schema);
     }
 
-    public function encoding(): ?Encoding
+    public function encoding(): ?array
     {
         $encoding = $this->data['encoding'] ?? null;
 
@@ -38,7 +38,7 @@ final class MediaType
             return null;
         }
 
-        return new Encoding($encoding);
+        return array_map(fn (array $value) => new Encoding($value), $encoding);
     }
 
     public function example(): mixed
