@@ -6,7 +6,7 @@ use Apiboard\OpenAPI\Contents\Json;
 use Apiboard\OpenAPI\Contents\Yaml;
 use Apiboard\OpenAPI\References\Resolver;
 use Apiboard\OpenAPI\References\Retriever;
-use Apiboard\OpenAPI\Structure\Specification;
+use Apiboard\OpenAPI\Structure\Document;
 use InvalidArgumentException;
 
 final class OpenAPI
@@ -21,7 +21,7 @@ final class OpenAPI
         $this->validator = new \JsonSchema\Validator();
     }
 
-    public function build(string $filePath): Specification
+    public function build(string $filePath): Document
     {
         $extension = pathinfo($filePath, PATHINFO_EXTENSION);
 
@@ -43,7 +43,7 @@ final class OpenAPI
             throw new InvalidArgumentException($errorMessage);
         }
 
-        return new Specification($resolvedContents);
+        return new Document($resolvedContents);
     }
 
     public function validate(Json|Yaml $contents): array

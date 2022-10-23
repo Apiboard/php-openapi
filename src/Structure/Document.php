@@ -6,7 +6,7 @@ use Apiboard\OpenAPI\Contents\Json;
 use Apiboard\OpenAPI\Contents\Yaml;
 use Stringable;
 
-final class Specification implements Stringable
+final class Document implements Stringable
 {
     private Yaml|Json $contents;
 

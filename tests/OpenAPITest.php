@@ -4,14 +4,14 @@ use Apiboard\OpenAPI\Contents\Json;
 use Apiboard\OpenAPI\Contents\Reference;
 use Apiboard\OpenAPI\Contents\Yaml;
 use Apiboard\OpenAPI\References\Retriever;
-use Apiboard\OpenAPI\Structure\Specification;
+use Apiboard\OpenAPI\Structure\Document;
 
 test('it can build from JSON', function () {
     $jsonFile = fixture('example.json');
 
     $result = openAPI()->build($jsonFile);
 
-    expect($result)->toBeInstanceOf(Specification::class);
+    expect($result)->toBeInstanceOf(Document::class);
     expect(invade($result)->contents)->toBeInstanceOf(Json::class);
 });
 
@@ -20,7 +20,7 @@ test('it can build from YAML', function () {
 
     $result = openAPI()->build($yamlFile);
 
-    expect($result)->toBeInstanceOf(Specification::class);
+    expect($result)->toBeInstanceOf(Document::class);
     expect(invade($result)->contents)->toBeInstanceOf(Yaml::class);
 });
 

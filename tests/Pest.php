@@ -4,7 +4,7 @@ use Apiboard\OpenAPI\Contents\Json;
 use Apiboard\OpenAPI\Contents\Yaml;
 use Apiboard\OpenAPI\OpenAPI;
 use Apiboard\OpenAPI\References\Retriever;
-use Apiboard\OpenAPI\Structure\Specification;
+use Apiboard\OpenAPI\Structure\Document;
 use PHPUnit\Framework\Assert;
 
 /*
@@ -61,16 +61,16 @@ function fixture(string $path): string
     return __DIR__ . "/__fixtures__/{$path}";
 }
 
-function jsonSpecification(string $json): Specification
+function jsonDocument(string $json): Document
 {
     $contents = new Json($json);
 
-    return new Specification($contents);
+    return new Document($contents);
 }
 
-function yamlSpecification(string $yaml): Specification
+function yamlDocument(string $yaml): Document
 {
     $contents = new Yaml($yaml);
 
-    return new Specification($contents);
+    return new Document($contents);
 }

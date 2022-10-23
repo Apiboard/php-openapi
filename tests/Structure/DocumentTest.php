@@ -9,23 +9,23 @@ use Apiboard\OpenAPI\Structure\Tags;
 use Apiboard\OpenAPI\Structure\Webhooks;
 
 test('it can be cast to string', function () {
-    $jsonSpec = jsonSpecification('{}');
-    $yamlSpec = yamlSpecification('');
+    $jsonSpec = jsonDocument('{}');
+    $yamlSpec = yamlDocument('');
 
     expect((string) $jsonSpec)->toBe('{}');
     expect((string) $yamlSpec)->toBe('');
 });
 
 test('it can be cast to array', function () {
-    $jsonSpec = jsonSpecification('{}');
-    $yamlSpec = yamlSpecification('');
+    $jsonSpec = jsonDocument('{}');
+    $yamlSpec = yamlDocument('');
 
     expect($jsonSpec->toArray())->toBe([]);
     expect($yamlSpec->toArray())->toBe([]);
 });
 
 test('it can return the OpenAPI version', function () {
-    $spec = jsonSpecification('{
+    $spec = jsonDocument('{
         "openapi": "3.1.0"
     }');
 
@@ -35,7 +35,7 @@ test('it can return the OpenAPI version', function () {
 });
 
 test('it can return the info', function () {
-    $spec = jsonSpecification('{
+    $spec = jsonDocument('{
         "info": {
             "title": "Example API",
             "version": "0"
@@ -48,7 +48,7 @@ test('it can return the info', function () {
 });
 
 test('it can return the paths', function () {
-    $spec = jsonSpecification('{
+    $spec = jsonDocument('{
         "paths": {}
     }');
 
@@ -58,7 +58,7 @@ test('it can return the paths', function () {
 });
 
 test('it can return the servers', function () {
-    $spec = jsonSpecification('{
+    $spec = jsonDocument('{
         "servers": []
     }');
 
@@ -68,7 +68,7 @@ test('it can return the servers', function () {
 });
 
 test('it can return the components', function () {
-    $spec = jsonSpecification('{
+    $spec = jsonDocument('{
         "components": {}
     }');
 
@@ -78,7 +78,7 @@ test('it can return the components', function () {
 });
 
 test('it can return the security', function () {
-    $spec = jsonSpecification('{
+    $spec = jsonDocument('{
         "security": {}
     }');
 
@@ -88,7 +88,7 @@ test('it can return the security', function () {
 });
 
 test('it can return the webhooks', function () {
-    $spec = jsonSpecification('{
+    $spec = jsonDocument('{
         "webhooks": {}
     }');
 
@@ -98,7 +98,7 @@ test('it can return the webhooks', function () {
 });
 
 test('it can return the tags', function () {
-    $spec = jsonSpecification('{
+    $spec = jsonDocument('{
         "tags": []
     }');
 
@@ -108,7 +108,7 @@ test('it can return the tags', function () {
 });
 
 test('it returns null when data is unavailable', function (string $data) {
-    $spec = jsonSpecification('{}');
+    $spec = jsonDocument('{}');
 
     $result = $spec->{$data}();
 
