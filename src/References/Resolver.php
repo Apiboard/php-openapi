@@ -45,21 +45,33 @@ final class Resolver
                 continue;
             }
 
-            if (array_key_exists($reference->path(), $this->retrievedReferences)) {
-                continue;
+            $previouslyRetrieved = array_key_exists($reference->path(), $this->retrievedReferences);
+
+            if ($previouslyRetrieved === false) {
+                $contents =  $this->retriever->retrieve($reference->path());
+
+                $resolvedContents = $contents->toArray();
+
+                $this->retrievedReferences[$reference->path()] = $resolvedContents;
+
+                foreach ($reference->properties() as $property) {
+                    $resolvedContents = $resolvedContents[$property];
+                }
+
+                $this->retrievedReferences[$reference->value()] = $resolvedContents;
+
+                $this->retrieveReferences($contents->references());
             }
 
-            $contents = $this->retriever->retrieve($reference->path());
+            if ($previouslyRetrieved === true) {
+                $resolvedContents = $this->retrievedReferences[$reference->path()];
 
-            $resolvedContents = $contents->toArray();
+                foreach ($reference->properties() as $property) {
+                    $resolvedContents = $resolvedContents[$property];
+                }
 
-            foreach ($reference->properties() as $property) {
-                $resolvedContents = $resolvedContents[$property];
+                $this->retrievedReferences[$reference->value()] = $resolvedContents;
             }
-
-            $this->retrievedReferences[$reference->path()] = $resolvedContents;
-
-            $this->retrieveReferences($contents->references());
         }
     }
 

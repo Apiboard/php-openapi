@@ -1,7 +1,6 @@
 <?php
 
 use Apiboard\OpenAPI\Contents\Json;
-use Apiboard\OpenAPI\Contents\Reference;
 use Apiboard\OpenAPI\Contents\Yaml;
 use Apiboard\OpenAPI\References\Resolver;
 use Apiboard\OpenAPI\References\Retriever;
@@ -100,6 +99,26 @@ test('it retrieves duplicate external references only once', function () {
     $resolver = new Resolver(retriever(function () use (&$count) {
         $count++;
         return new Json('');
+    }));
+
+    $resolver->resolve($contents);
+
+    expect($count)->toBe(1);
+});
+
+test('it retrieves duplicate external references with different json pointers only once', function () {
+    $count = 0;
+    $contents = new Json('{ "something": { "$ref": "ref-1.json#/some/pointer" }, "same": { "$ref": "ref-1.json#/some/different/pointer" } }');
+    $resolver = new Resolver(retriever(function () use (&$count) {
+        $count++;
+        return new Json('{
+            "some": {
+                "pointer": "The pointer value!",
+                "different": {
+                    "pointer": "The other pointer value!"
+                }
+            }
+        }');
     }));
 
     $resolver->resolve($contents);

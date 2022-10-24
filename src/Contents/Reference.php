@@ -14,9 +14,14 @@ final class Reference
         $this->pointer = new \JsonSchema\Entity\JsonPointer($value);
     }
 
-    public function path(): string
+    public function value(): string
     {
         return $this->value;
+    }
+
+    public function path(): string
+    {
+        return $this->pointer->getFilename();
     }
 
     public function isInternal(): bool
