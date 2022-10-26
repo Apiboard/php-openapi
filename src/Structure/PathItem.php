@@ -52,9 +52,15 @@ final class PathItem
 
     public function operations(): ?Operations
     {
-        $operations = $this->data['operations'] ?? null;
+        $operations = array_filter([
+            'get' => $this->data['get'] ?? null,
+            'post' => $this->data['post'] ?? null,
+            'put' => $this->data['put'] ?? null,
+            'patch' => $this->data['patch'] ?? null,
+            'delete' => $this->data['delete'] ?? null,
+        ], fn (mixed $value) =>  $value !== null);
 
-        if ($operations === null) {
+        if (count($operations) === 0) {
             return null;
         }
 

@@ -55,12 +55,19 @@ test('it can return the servers', function () {
 
 test('it can return the operations', function () {
     $path = new PathItem('/my-uri', [
-        'operations' => [],
+        'get' => [],
+        'post' => [],
+        'put' => [],
+        'patch' => [],
+        'delete' => [],
     ]);
 
     $result = $path->operations();
 
-    expect($result)->toBeInstanceOf(Operations::class);
+    expect($result)
+        ->toBeInstanceOf(Operations::class)
+        ->toHaveCount(5);
+    expect($result['get'])->not->toBeNull();
 });
 
 test('it returns null when data is unavailable', function (string $data) {
