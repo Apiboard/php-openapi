@@ -32,10 +32,14 @@ final class Schema
         return $this->data['writeOnly'] ?? false;
     }
 
-    public function types(): DataTypes
+    public function types(): ?DataTypes
     {
-        $dataTypes = $this->data['type'];
+        $dataTypes = $this->data['type'] ?? null;
         $nullable = $this->data['nullable'] ?? false;
+
+        if ($dataTypes === null) {
+            return null;
+        }
 
         if (is_string($dataTypes)) {
             $dataTypes = [$dataTypes];

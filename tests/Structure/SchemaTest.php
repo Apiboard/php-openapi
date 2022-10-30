@@ -167,4 +167,5 @@ test('it returns null when data is not available', function (string $data) {
    'description',
    'examples',
    'polymorphism',
+   'types',
 ]);
