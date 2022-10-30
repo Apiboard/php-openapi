@@ -2,13 +2,17 @@
 
 namespace Apiboard\OpenAPI\Structure;
 
+use Apiboard\OpenAPI\Concerns\CanBeDeprecated;
 use Apiboard\OpenAPI\Concerns\CanBeDescribed;
+use Apiboard\OpenAPI\Concerns\CanBeRequired;
 use Apiboard\OpenAPI\Concerns\HasASchema;
 
 final class Header
 {
     use HasASchema;
     use CanBeDescribed;
+    use CanBeRequired;
+    use CanBeDeprecated;
 
     private string $name;
 
