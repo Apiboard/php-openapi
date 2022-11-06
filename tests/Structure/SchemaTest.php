@@ -130,6 +130,144 @@ test('it can return the write only state', function () {
     expect($result)->toBeTrue();
 });
 
+test('it can return the properties', function () {
+    $schema = new Schema([
+        'properties' => [
+            'something' => [],
+        ],
+    ]);
+
+    $result = $schema->properties();
+
+    expect($result)->toBeArray();
+    expect($result['something'])->toBeInstanceOf(Schema::class);
+});
+
+test('it can return the items', function () {
+    $schema = new Schema([
+        'items' => [
+            [],
+        ],
+    ]);
+
+    $result = $schema->items();
+
+    expect($result);
+    expect($result)->toBeInstanceOf(Schema::class);
+});
+
+test('it can return the min items', function () {
+    $schema = new Schema([
+       'minItems' => 1,
+    ]);
+
+    $result = $schema->minItems();
+
+    expect($result)->toBe(1);
+});
+
+test('it can return the max items', function () {
+    $schema = new Schema([
+       'maxItems' => 1,
+    ]);
+
+    $result = $schema->maxItems();
+
+    expect($result)->toBe(1);
+});
+
+test('it can return the unique items state', function () {
+    $schema = new Schema([
+       'uniqueItems' => true,
+    ]);
+
+    $result = $schema->uniqueItems();
+
+    expect($result)->toBeTrue();
+});
+
+test('it can return the format', function () {
+    $schema = new Schema([
+        'format' => 'uuid'
+    ]);
+
+    $result = $schema->format();
+
+    expect($result)->toBe('uuid');
+});
+
+test('it can return the minimum', function () {
+    $schema = new Schema([
+        'minimum' => 0
+    ]);
+
+    $result = $schema->minimum();
+
+    expect($result)->toBe(0);
+});
+
+test('it can return the maximum', function () {
+    $schema = new Schema([
+        'maximum' => 0
+    ]);
+
+    $result = $schema->maximum();
+
+    expect($result)->toBe(0);
+});
+
+test('it can return the multiple of', function () {
+    $schema = new Schema([
+        'multipleOf' => 2
+    ]);
+
+    $result = $schema->multipleOf();
+
+    expect($result)->toBe(2);
+});
+
+test('it can return the required properties for objects', function () {
+    $schema = new Schema([
+        'required' => [
+            'something',
+        ]
+    ]);
+
+    $result = $schema->required();
+
+    expect($result)->toBe([
+        'something',
+    ]);
+});
+
+test('it returns the required properties for objects as an empty array by default', function () {
+    $schema = new Schema([
+        'type' => 'object',
+    ]);
+
+    $result = $schema->required();
+
+    expect($result)->toBe([]);
+});
+
+test('it can return the required state', function () {
+    $schema = new Schema([
+        'required' => true
+    ]);
+
+    $result = $schema->required();
+
+    expect($result)->toBeTrue();
+});
+
+test('it return the required state as false by default', function () {
+    $schema = new Schema([]);
+
+    $result = $schema->required();
+
+    expect($result)->toBeFalse();
+});
+
 test('it can return if is has polymorphism', function (string $morphKey) {
     $schema = new Schema([
         $morphKey => [],
@@ -168,4 +306,13 @@ test('it returns null when data is not available', function (string $data) {
    'examples',
    'polymorphism',
    'types',
+   'properties',
+   'items',
+   'format',
+   'minimum',
+   'maximum',
+   'minItems',
+   'maxItems',
+   'uniqueItems',
+   'multipleOf',
 ]);

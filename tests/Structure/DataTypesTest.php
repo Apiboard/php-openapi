@@ -14,10 +14,20 @@ test('it retrieve data types by key', function () {
 
 test('it can count the data types', function () {
     $dataTypes = new DataTypes([
-        'object'
+        'object',
     ]);
 
     expect($dataTypes)->toHaveCount(1);
+});
+
+test('it can return if the data type is object', function () {
+    $dataTypes = new DataTypes([
+        'object',
+    ]);
+
+    $result = $dataTypes->isObject();
+
+    expect($result)->toBeTrue();
 });
 
 test('it can return if the data type is nullable', function (array $types, bool $nullable) {

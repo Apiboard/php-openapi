@@ -52,6 +52,78 @@ final class Schema
         return new DataTypes($dataTypes);
     }
 
+    public function format(): ?string
+    {
+        return $this->data['format'] ?? null;
+    }
+
+    public function minimum(): ?int
+    {
+        return $this->data['minimum'] ?? null;
+    }
+
+    public function maximum(): ?int
+    {
+        return $this->data['maximum'] ?? null;
+    }
+
+    public function multipleOf(): ?int
+    {
+        return $this->data['multipleOf'] ?? null;
+    }
+
+    public function properties(): ?array
+    {
+        $properties = $this->data['properties'] ?? null;
+
+        if ($properties === null) {
+            return null;
+        }
+
+        return array_map(fn (array $schema) => new self($schema), $properties);
+    }
+
+    public function items(): ?Schema
+    {
+        $items = $this->data['items'] ?? null;
+
+        if ($items === null) {
+            return null;
+        }
+
+        return new self($items);
+    }
+
+    public function minItems(): ?int
+    {
+        return $this->data['minItems'] ?? null;
+    }
+
+    public function maxItems(): ?int
+    {
+        return $this->data['maxItems'] ?? null;
+    }
+
+    public function uniqueItems(): ?bool
+    {
+        return $this->data['uniqueItems'] ?? null;
+    }
+
+    public function required(): bool|array
+    {
+        $required = $this->data['required'] ?? null;
+
+        if ($required === null) {
+            if ($this->types()?->isObject()) {
+                return [];
+            }
+
+            return false;
+        }
+
+        return $required;
+    }
+
     public function examples(): ?Examples
     {
         $examples = $this->data['examples'] ?? null;
