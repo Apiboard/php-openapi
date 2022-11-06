@@ -1,9 +1,9 @@
 <?php
 
 use Apiboard\OpenAPI\Contents\Json;
+use Apiboard\OpenAPI\Contents\Retriever;
 use Apiboard\OpenAPI\Contents\Yaml;
 use Apiboard\OpenAPI\References\Resolver;
-use Apiboard\OpenAPI\Contents\Retriever;
 
 test('it can resolve basic external references', function () {
     $contents = new Json('{ "something": { "$ref": "ref-1.json" }, "simple": "value" }');
@@ -137,14 +137,15 @@ test('it does not resolve external references without a retriever', function () 
 
 test('it does not resolve internal references', function () {
     $count = 0;
-    $contents = new Json('{ "something": { "$ref": "#/internal/thing" } }');
+    $contents = new Json('{"something":{"$ref":"#/internal/thing"}}');
     $resolver = new Resolver(retriever(function () use (&$count) {
         $count++;
         return new Json('');
     }));
 
-    $resolver->resolve($contents);
+    $result = $resolver->resolve($contents);
 
+    expect($result->toString())->toBe($contents->toString());
     expect($count)->toBe(0);
 });
 

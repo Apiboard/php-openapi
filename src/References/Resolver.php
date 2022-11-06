@@ -31,7 +31,7 @@ final class Resolver
         $resolved = $this->replaceReferences([], $contents->toArray());
 
         return match ($contents::class) {
-            Json::class => new Json(json_encode($resolved)),
+            Json::class => new Json(json_encode($resolved, JSON_UNESCAPED_SLASHES)),
             Yaml::class => new Yaml(\Symfony\Component\Yaml\Yaml::dump($resolved)),
         };
     }
@@ -96,10 +96,17 @@ final class Resolver
             }
 
             if ($key === '$ref') {
-                $resolvedValue = $this->retrievedReferences[$value] ?? $value;
+                $resolvedValue = $this->retrievedReferences[$value] ?? null;
 
-                // We're most likely going to enter an infinite replacement loop.
-                // Let's just stop here and use a JSON pointer reference here.
+                // This is an internal reference, don't replace this.
+                if ($resolvedValue === null) {
+                    $resolved[$key] = $value;
+
+                    continue;
+                }
+
+                // Prevent enterting an infinite reference replacement loop .
+                // Use a JSON pointer reference instead here when needed.
                 $resolvedKey = is_array($resolvedValue) ? array_key_first($resolvedValue) : null;
                 if ($resolvedKey && ($resolvedValue[$resolvedKey] === $contents)) {
                     $resolved = [
