@@ -1,6 +1,6 @@
 <?php
 
-namespace Apiboard\OpenAPI\References;
+namespace Apiboard\OpenAPI\Contents;
 
 use Apiboard\OpenAPI\Contents\Json;
 use Apiboard\OpenAPI\Contents\Yaml;

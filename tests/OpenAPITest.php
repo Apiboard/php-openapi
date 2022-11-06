@@ -2,8 +2,8 @@
 
 use Apiboard\OpenAPI\Contents\Json;
 use Apiboard\OpenAPI\Contents\Reference;
+use Apiboard\OpenAPI\Contents\Retriever;
 use Apiboard\OpenAPI\Contents\Yaml;
-use Apiboard\OpenAPI\References\Retriever;
 use Apiboard\OpenAPI\Structure\Document;
 
 test('it can build from JSON', function () {
@@ -50,6 +50,10 @@ test('it resolves references when building', function () {
 
         public function retrieve(string $filePath): Json|Yaml
         {
+            if (str_contains($filePath, 'references.json')) {
+                return new Json(file_get_contents($filePath));
+            }
+
             $this->called = true;
 
             return new Json('{ "description": "OK" }');

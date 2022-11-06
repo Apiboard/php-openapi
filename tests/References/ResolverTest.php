@@ -3,7 +3,7 @@
 use Apiboard\OpenAPI\Contents\Json;
 use Apiboard\OpenAPI\Contents\Yaml;
 use Apiboard\OpenAPI\References\Resolver;
-use Apiboard\OpenAPI\References\Retriever;
+use Apiboard\OpenAPI\Contents\Retriever;
 
 test('it can resolve basic external references', function () {
     $contents = new Json('{ "something": { "$ref": "ref-1.json" }, "simple": "value" }');

@@ -3,33 +3,33 @@
 namespace Apiboard\OpenAPI;
 
 use Apiboard\OpenAPI\Contents\Json;
+use Apiboard\OpenAPI\Contents\Retriever;
+use Apiboard\OpenAPI\Contents\Retrievers\LocalFilesystemRetriever;
 use Apiboard\OpenAPI\Contents\Yaml;
 use Apiboard\OpenAPI\References\Resolver;
-use Apiboard\OpenAPI\References\Retriever;
 use Apiboard\OpenAPI\Structure\Document;
 use InvalidArgumentException;
 
 final class OpenAPI
 {
+    private Retriever $retriever;
+
     private Resolver $resolver;
 
     private \JsonSchema\Validator $validator;
 
-    public function __construct(?Retriever $referenceRetriever = null)
+    public function __construct(?Retriever $retriever = null)
     {
-        $this->resolver = new Resolver($referenceRetriever);
+        $retriever = $retriever ?? new LocalFilesystemRetriever();
+
+        $this->retriever = $retriever;
+        $this->resolver = new Resolver($retriever);
         $this->validator = new \JsonSchema\Validator();
     }
 
     public function build(string $filePath): Document
     {
-        $extension = pathinfo($filePath, PATHINFO_EXTENSION);
-
-        $contents = match ($extension) {
-            'json' => new Json(file_get_contents($filePath)),
-            'yaml' => new Yaml(file_get_contents($filePath)),
-            default => throw new InvalidArgumentException('Can only build JSON or YAML files'),
-        };
+        $contents = $this->retriever->retrieve($filePath);
 
         $resolvedContents = $this->resolver->resolve($contents);
 

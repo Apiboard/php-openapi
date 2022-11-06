@@ -3,7 +3,7 @@
 use Apiboard\OpenAPI\Contents\Json;
 use Apiboard\OpenAPI\Contents\Yaml;
 use Apiboard\OpenAPI\OpenAPI;
-use Apiboard\OpenAPI\References\Retriever;
+use Apiboard\OpenAPI\Contents\Retriever;
 use Apiboard\OpenAPI\Structure\Document;
 use PHPUnit\Framework\Assert;
 
