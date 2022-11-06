@@ -4,17 +4,25 @@ namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\CanBeDeprecated;
 use Apiboard\OpenAPI\Concerns\CanBeDescribed;
+use Apiboard\OpenAPI\Concerns\HasReferences;
+use Apiboard\OpenAPI\Contents\Reference;
 
 final class Schema
 {
     use CanBeDeprecated;
     use CanBeDescribed;
+    use HasReferences;
 
     private array $data;
 
     public function __construct(array $data)
     {
         $this->data = $data;
+    }
+
+    public function toArray(): array
+    {
+        return $this->data;
     }
 
     public function title(): ?string
@@ -83,12 +91,16 @@ final class Schema
         return array_map(fn (array $schema) => new self($schema), $properties);
     }
 
-    public function items(): ?Schema
+    public function items(): Schema|Reference|null
     {
         $items = $this->data['items'] ?? null;
 
         if ($items === null) {
             return null;
+        }
+
+        if ($this->isReference($items)) {
+            return new Reference($items['$ref']);
         }
 
         return new self($items);

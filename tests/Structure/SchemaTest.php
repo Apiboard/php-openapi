@@ -1,5 +1,6 @@
 <?php
 
+use Apiboard\OpenAPI\Contents\Reference;
 use Apiboard\OpenAPI\Structure\DataTypes;
 use Apiboard\OpenAPI\Structure\Examples;
 use Apiboard\OpenAPI\Structure\Polymorphism;
@@ -152,8 +153,19 @@ test('it can return the items', function () {
 
     $result = $schema->items();
 
-    expect($result);
     expect($result)->toBeInstanceOf(Schema::class);
+});
+
+test('it can return the items as reference', function () {
+    $schema = new Schema([
+        'items' => [
+            '$ref' => '#/some/ref',
+        ],
+    ]);
+
+    $result = $schema->items();
+
+    expect($result)->toBeInstanceOf(Reference::class);
 });
 
 test('it can return the min items', function () {
