@@ -86,9 +86,7 @@ final class Resolver
             if ($key !== '$ref') {
                 $this->replacedKeys[] = $key;
 
-                if (is_string($value)) {
-                    $resolved[$key] = $value;
-                }
+                $resolved[$key] = $value;
 
                 if (is_array($value)) {
                     $resolved[$key] = $this->replaceReferences([], $value);
