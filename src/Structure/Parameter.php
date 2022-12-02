@@ -51,6 +51,11 @@ final class Parameter
         return $this->data['allowReserved'] ?? false;
     }
 
+    public function example(): mixed
+    {
+        return $this->data['example'] ?? null;
+    }
+
     private function determineStyle(): string
     {
         return match ($this->in()) {

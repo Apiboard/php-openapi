@@ -185,3 +185,21 @@ test('it returns false if reserved value data is not available', function () {
 
     expect($result)->toBeFalse();
 });
+
+test('it can return an example', function () {
+    $parameter = new Parameter([
+        'example' => 'value',
+    ]);
+
+    $result = $parameter->example();
+
+    expect($result)->toBe('value');
+});
+
+test('it returns null when no example is available', function () {
+    $parameter = new Parameter([]);
+
+    $result = $parameter->example();
+
+    expect($result)->toBeNull();
+});
