@@ -31,4 +31,24 @@ final class DataTypes implements ArrayAccess, Countable
     {
         return in_array('object', $this->data);
     }
+
+    public function isArray(): bool
+    {
+        return in_array('array', $this->data);
+    }
+
+    public function isString(): bool
+    {
+        return in_array('string', $this->data);
+    }
+
+    public function isInteger(): bool
+    {
+        return in_array('integer', $this->data);
+    }
+
+    public function isNumber(): bool
+    {
+        return in_array('number', $this->data);
+    }
 }
