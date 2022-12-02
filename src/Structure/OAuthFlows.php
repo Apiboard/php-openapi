@@ -2,7 +2,7 @@
 
 namespace Apiboard\OpenAPI\Structure;
 
-use Apiboard\OpenAPI\Concerns\AsCountableArray;
+use Apiboard\OpenAPI\Concerns\AsCountableArrayIterator;
 use ArrayAccess;
 use Countable;
 

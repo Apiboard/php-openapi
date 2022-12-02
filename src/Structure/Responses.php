@@ -2,15 +2,16 @@
 
 namespace Apiboard\OpenAPI\Structure;
 
-use Apiboard\OpenAPI\Concerns\AsCountableArray;
+use Apiboard\OpenAPI\Concerns\AsCountableArrayIterator;
 use Apiboard\OpenAPI\Concerns\HasReferences;
 use Apiboard\OpenAPI\Contents\Reference;
 use ArrayAccess;
 use Countable;
+use Iterator;
 
-final class Responses implements ArrayAccess, Countable
+final class Responses implements ArrayAccess, Countable, Iterator
 {
-    use AsCountableArray;
+    use AsCountableArrayIterator;
     use HasReferences;
 
     private array $data;

@@ -2,13 +2,14 @@
 
 namespace Apiboard\OpenAPI\Structure;
 
-use Apiboard\OpenAPI\Concerns\AsCountableArray;
+use Apiboard\OpenAPI\Concerns\AsCountableArrayIterator;
 use ArrayAccess;
 use Countable;
+use Iterator;
 
-final class Operations implements ArrayAccess, Countable
+final class Operations implements ArrayAccess, Countable, Iterator
 {
-    use AsCountableArray;
+    use AsCountableArrayIterator;
 
     private array $data;
 

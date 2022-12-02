@@ -2,13 +2,14 @@
 
 namespace Apiboard\OpenAPI\Structure;
 
-use Apiboard\OpenAPI\Concerns\AsCountableArray;
+use Apiboard\OpenAPI\Concerns\AsCountableArrayIterator;
 use ArrayAccess;
 use Countable;
+use Iterator;
 
-final class MediaTypes implements ArrayAccess, Countable
+final class MediaTypes implements ArrayAccess, Countable, Iterator
 {
-    use AsCountableArray;
+    use AsCountableArrayIterator;
 
     private array $data;
 

@@ -2,8 +2,12 @@
 
 namespace Apiboard\OpenAPI\Concerns;
 
-trait AsCountableArray
+use ArrayIterator;
+
+trait AsCountableArrayIterator
 {
+    private ?ArrayIterator $iterator = null;
+
     public function offsetGet(mixed $offset): mixed
     {
         return $this->data[$offset] ?? null;
@@ -37,5 +41,34 @@ trait AsCountableArray
     public function toArray(): array
     {
         return $this->data;
+    }
+
+    public function current(): mixed
+    {
+        return $this->iterator->current();
+    }
+
+    public function next(): void
+    {
+        $this->iterator->next();
+    }
+
+    public function key(): string|int|null
+    {
+        return $this->iterator->key();
+    }
+
+    public function valid(): bool
+    {
+        return $this->iterator->valid();
+    }
+
+    public function rewind(): void
+    {
+        if ($this->iterator === null) {
+            $this->iterator = new ArrayIterator($this->data);
+        }
+
+        $this->iterator->rewind();
     }
 }
