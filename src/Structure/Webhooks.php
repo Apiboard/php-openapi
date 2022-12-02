@@ -32,4 +32,9 @@ final class Webhooks implements ArrayAccess, Countable, Iterator
     {
         return $this->data[$offset] ?? null;
     }
+
+    public function current(): PathItem|Reference
+    {
+        return $this->iterator->current();
+    }
 }

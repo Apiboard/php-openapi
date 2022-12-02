@@ -32,4 +32,9 @@ final class Callbacks implements ArrayAccess, Countable, Iterator
     {
         return $this->data[$expression] ?? null;
     }
+
+    public function current(): PathItem|Reference
+    {
+        return $this->iterator->current();
+    }
 }

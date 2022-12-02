@@ -26,4 +26,9 @@ final class Operations implements ArrayAccess, Countable, Iterator
     {
         return $this->data[$method] ?? null;
     }
+
+    public function current(): Operation
+    {
+        return $this->iterator->current();
+    }
 }

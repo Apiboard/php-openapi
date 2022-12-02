@@ -27,6 +27,11 @@ final class MediaTypes implements ArrayAccess, Countable, Iterator
         return $this->data[$contentType] ?? null;
     }
 
+    public function current(): MediaType
+    {
+        return $this->iterator->current();
+    }
+
     public function json(): ?MediaType
     {
         return $this->offsetGet('application/json');

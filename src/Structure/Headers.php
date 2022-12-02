@@ -32,4 +32,9 @@ final class Headers implements ArrayAccess, Countable, Iterator
     {
         return $this->data[$name] ?? null;
     }
+
+    public function current(): Header|Reference
+    {
+        return $this->iterator->current();
+    }
 }

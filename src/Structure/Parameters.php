@@ -36,6 +36,11 @@ final class Parameters implements ArrayAccess, Countable, Iterator
         return $this->data[$offset] ?? null;
     }
 
+    public function current(): Parameter|Reference
+    {
+        return $this->iterator->current();
+    }
+
     public function inQuery(): self
     {
         return new self($this->filter(fn (Parameter $parameter) => $parameter->in() === 'query'));

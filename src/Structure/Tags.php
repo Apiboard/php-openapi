@@ -22,4 +22,10 @@ final class Tags implements ArrayAccess, Countable, Iterator
     {
         return $this->data[$offset] ?? null;
     }
+
+
+    public function current(): Tag
+    {
+        return $this->iterator->current();
+    }
 }

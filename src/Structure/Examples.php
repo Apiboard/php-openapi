@@ -31,4 +31,9 @@ final class Examples implements ArrayAccess, Countable, Iterator
     {
         return $this->data[$offset] ?? null;
     }
+
+    public function current(): Example|Reference
+    {
+        return $this->iterator->current();
+    }
 }

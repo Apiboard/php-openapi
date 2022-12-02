@@ -30,4 +30,9 @@ final class SecuritySchemes implements ArrayAccess, Countable, Iterator
     {
         return $this->data[$type] ?? null;
     }
+
+    public function current(): SecurityScheme|Reference
+    {
+        return $this->iterator->current();
+    }
 }

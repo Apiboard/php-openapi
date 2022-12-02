@@ -22,4 +22,9 @@ final class Servers implements ArrayAccess, Countable, Iterator
     {
         return $this->data[$offset] ?? null;
     }
+
+    public function current(): Server
+    {
+        return $this->iterator->current();
+    }
 }

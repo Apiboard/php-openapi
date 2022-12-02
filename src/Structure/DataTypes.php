@@ -23,6 +23,11 @@ final class DataTypes implements ArrayAccess, Countable, Iterator
         return $this->data[$offset] ?? null;
     }
 
+    public function current(): string
+    {
+        return $this->iterator->current();
+    }
+
     public function isNullable(): bool
     {
         return in_array('null', $this->data);

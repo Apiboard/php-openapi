@@ -30,4 +30,9 @@ final class Schemas implements ArrayAccess, Countable, Iterator
     {
         return $this->data[$offset] ?? null;
     }
+
+    public function current(): Schema|Reference
+    {
+        return $this->iterator->current();
+    }
 }

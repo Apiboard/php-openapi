@@ -30,4 +30,9 @@ final class Links implements ArrayAccess, Countable, Iterator
     {
         return $this->data[$name] ?? null;
     }
+
+    public function current(): Link|Reference
+    {
+        return $this->iterator->current();
+    }
 }

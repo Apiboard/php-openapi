@@ -2,10 +2,6 @@
 
 namespace Apiboard\OpenAPI\Structure;
 
-use Apiboard\OpenAPI\Concerns\AsCountableArrayIterator;
-use ArrayAccess;
-use Countable;
-
 final class OAuthFlows
 {
     public function __construct(array $data)

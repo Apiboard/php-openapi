@@ -32,4 +32,9 @@ final class Responses implements ArrayAccess, Countable, Iterator
     {
         return $this->data[$statusCode] ?? null;
     }
+
+    public function current(): Response|Reference
+    {
+        return $this->iterator->current();
+    }
 }

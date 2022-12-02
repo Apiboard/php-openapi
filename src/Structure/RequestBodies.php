@@ -36,6 +36,11 @@ final class RequestBodies implements ArrayAccess, Countable, Iterator
         return $this->data[$offset] ?? null;
     }
 
+    public function current(): RequestBody|Reference
+    {
+        return $this->iterator->current();
+    }
+
     public function onlyRequired(): self
     {
         return new self($this->filter(fn (RequestBody $requestBody) => $requestBody->required()));

@@ -32,4 +32,9 @@ final class Paths implements ArrayAccess, Countable, Iterator
     {
         return $this->data[$uri] ?? null;
     }
+
+    public function current(): PathItem|Reference
+    {
+        return $this->iterator->current();
+    }
 }
