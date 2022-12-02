@@ -208,6 +208,26 @@ test('it can return the format', function () {
     expect($result)->toBe('uuid');
 });
 
+test('it can return the enum', function () {
+    $schema = new Schema([
+        'enum' => ['one', 'two'],
+    ]);
+
+    $result = $schema->enum();
+
+    expect($result)->toBe(['one', 'two']);
+});
+
+test('it can return the min length', function () {
+    $schema = new Schema([
+        'minLength' => 1,
+    ]);
+
+    $result = $schema->minLength();
+
+    expect($result)->toBe(1);
+});
+
 test('it can return the minimum', function () {
     $schema = new Schema([
         'minimum' => 0
@@ -216,6 +236,16 @@ test('it can return the minimum', function () {
     $result = $schema->minimum();
 
     expect($result)->toBe(0);
+});
+
+test('it can return the max length', function () {
+    $schema = new Schema([
+        'maxLength' => 1,
+    ]);
+
+    $result = $schema->maxLength();
+
+    expect($result)->toBe(1);
 });
 
 test('it can return the maximum', function () {
@@ -321,6 +351,7 @@ test('it returns null when data is not available', function (string $data) {
    'properties',
    'items',
    'format',
+   'enum',
    'minimum',
    'maximum',
    'minItems',

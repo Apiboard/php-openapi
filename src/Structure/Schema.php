@@ -65,6 +65,21 @@ final class Schema
         return $this->data['format'] ?? null;
     }
 
+    public function enum(): ?array
+    {
+        return $this->data['enum'] ?? null;
+    }
+
+    public function minLength(): ?int
+    {
+        return $this->data['minLength'] ?? null;
+    }
+
+    public function maxLength(): ?int
+    {
+        return $this->data['maxLength'] ?? null;
+    }
+
     public function minimum(): ?int
     {
         return $this->data['minimum'] ?? null;
