@@ -46,6 +46,11 @@ final class OpenAPI
         return new Document($resolvedContents);
     }
 
+    public function resolve(Json|Yaml $contents): Json|Yaml
+    {
+        return $this->resolver->resolve($contents);
+    }
+
     public function validate(Json|Yaml $contents): array
     {
         $version = match ($contents->toArray()['openapi'] ?? '') {

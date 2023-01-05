@@ -43,6 +43,33 @@ test('it can validate OpenAPI specification v3.0.X', function () {
     ]);
 });
 
+test('it can resolve references', function () {
+    $jsonFile = fixture('references.json');
+    $retriever = new class () implements Retriever {
+        private bool $called = false;
+
+        public function retrieve(string $filePath): Json|Yaml
+        {
+            if (str_contains($filePath, 'references.json')) {
+                return new Json(file_get_contents($filePath));
+            }
+
+            $this->called = true;
+
+            return new Json('{ "description": "OK" }');
+        }
+
+        public function wasCalled(): bool
+        {
+            return $this->called;
+        }
+    };
+
+    openAPI($retriever)->resolve(new Json(file_get_contents($jsonFile)));
+
+    expect($retriever->wasCalled())->toBeTrue();
+});
+
 test('it resolves references when building', function () {
     $jsonFile = fixture('references.json');
     $retriever = new class () implements Retriever {
