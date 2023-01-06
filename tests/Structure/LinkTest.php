@@ -1,11 +1,9 @@
 <?php
 
+use Apiboard\OpenAPI\Contents\JsonPointer;
 use Apiboard\OpenAPI\Structure\Link;
-use Apiboard\OpenAPI\Structure\Parameters;
-use Apiboard\OpenAPI\Structure\RequestBody;
 use Apiboard\OpenAPI\Structure\RuntimeExpression;
 use Apiboard\OpenAPI\Structure\Server;
-use JsonSchema\Entity\JsonPointer;
 
 test('it can return the description', function () {
     $link = new Link([

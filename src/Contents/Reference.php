@@ -6,12 +6,12 @@ final class Reference
 {
     private string $value;
 
-    private \JsonSchema\Entity\JsonPointer $pointer;
+    private JsonPointer $pointer;
 
     public function __construct(string $value)
     {
         $this->value = $value;
-        $this->pointer = new \JsonSchema\Entity\JsonPointer($value);
+        $this->pointer = new JsonPointer($value);
     }
 
     public function value(): string

@@ -17,7 +17,6 @@
     "require": {
         "php": ">=8.0",
         "symfony/yaml": "^6.1",
-        "justinrainbow/json-schema": "^5.2",
         "opis/json-schema": "^2.3"
     },
     "config": {
