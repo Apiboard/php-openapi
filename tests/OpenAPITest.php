@@ -38,8 +38,9 @@ test('it can validate OpenAPI specification v3.0.X', function () {
     $errors = openAPI()->validate($json);
 
     expect($errors)->toBe([
-        '/info' => 'The property info is required',
-        '/paths' => 'The property paths is required',
+        '/' => [
+            'The required properties (info) are missing',
+        ],
     ]);
 });
 
@@ -103,10 +104,9 @@ test('it can validate OpenAPI specification v3.1.X', function () {
     $errors = openAPI()->validate($yaml);
 
     expect($errors)->toBe([
-        '/info' => 'The property info is required',
-        '/paths' => 'The property paths is required',
-        '/components' => 'The property components is required',
-        '/webhooks' => 'The property webhooks is required',
+        '/' => [
+            'The required properties (info) are missing',
+        ],
     ]);
 });
 
@@ -132,8 +132,4 @@ test('it throws when building incomplete files', function () {
     $jsonFile = fixture('incomplete.json');
 
     openAPI()->build($jsonFile);
-})->throws('
-The property info is required (~/info)
-The property paths is required (~/paths)
-The property components is required (~/components)
-The property webhooks is required (~/webhooks)');
+})->throws('The required properties (info) are missing (~/)');

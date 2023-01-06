@@ -16,7 +16,7 @@ final class OpenAPI
 
     private Resolver $resolver;
 
-    private \JsonSchema\Validator $validator;
+    private \Opis\JsonSchema\Validator $validator;
 
     public function __construct(?Retriever $retriever = null)
     {
@@ -24,7 +24,10 @@ final class OpenAPI
 
         $this->retriever = $retriever;
         $this->resolver = new Resolver($retriever);
-        $this->validator = new \JsonSchema\Validator();
+        $this->validator = new \Opis\JsonSchema\Validator();
+        $this->validator->resolver()
+            ->registerFile('https://apiboard.dev/oas-3.0.json', __DIR__ . "/Validation/v3.0.json")
+            ->registerFile('https://apiboard.dev/oas-3.1.json', __DIR__ . "/Validation/v3.1.json");
     }
 
     public function build(string $filePath): Document
@@ -35,8 +38,10 @@ final class OpenAPI
 
         $errorMessage = '';
 
-        foreach ($this->validate($resolvedContents) as $pointer=>$error) {
-            $errorMessage .= "\n" . $error . " (~{$pointer})";
+        foreach ($this->validate($resolvedContents) as $pointer=>$errors) {
+            foreach ($errors as $error) {
+                $errorMessage .= "\n" . $error . " (~{$pointer})";
+            }
         }
 
         if ($errorMessage) {
@@ -59,19 +64,12 @@ final class OpenAPI
             default => throw new InvalidArgumentException('Can only validate OpenAPI v3.0.X or v3.1.X'),
         };
 
-        $schema = new Json(file_get_contents(__DIR__ . "/Validation/v{$version}.json"));
-        $structure = $contents->toObject();
+        $result = $this->validator->validate($contents->toObject(), "https://apiboard.dev/oas-{$version}.json");
 
-        $this->validator->validate($structure, $schema->toObject());
+        if ($result->isValid()) {
+            return [];
+        }
 
-        $errors = array_reduce($this->validator->getErrors(), function (array $errors, array $error) {
-            if ($error['pointer']) {
-                $errors[$error['pointer']] = $error['message'];
-            }
-
-            return $errors;
-        }, []);
-
-        return $errors;
+        return (new \Opis\JsonSchema\Errors\ErrorFormatter())->format($result->error());
     }
 }
