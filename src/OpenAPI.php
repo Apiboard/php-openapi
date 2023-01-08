@@ -64,6 +64,7 @@ final class OpenAPI
             default => throw new InvalidArgumentException('Can only validate OpenAPI v3.0.X or v3.1.X'),
         };
 
+        $this->validator->setMaxErrors(10);
         $result = $this->validator->validate($contents->toObject(), "https://apiboard.dev/oas-{$version}.json");
 
         if ($result->isValid()) {

@@ -38,7 +38,7 @@ test('it can validate OpenAPI specification v3.0.X', function () {
 
     expect($errors)->toBe([
         '/' => [
-            'The required properties (info) are missing',
+            'The required properties (info, paths) are missing',
         ],
     ]);
 });
