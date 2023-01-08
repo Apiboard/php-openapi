@@ -29,6 +29,24 @@ test('it can cast none empty JSON strings to an array', function () {
     ]);
 });
 
+test('it can cast an empty JSON string to an object', function () {
+    $contents = '{}';
+
+    $json = new Json($contents);
+
+    expect($json->toObject())->toBeObject();
+});
+
+test('it can cast none empty JSON strings to an object', function () {
+    $contents = '{"am": "not-empty"}';
+
+    $json = new Json($contents);
+
+    tap($json->toObject(), function (stdClass $object) {
+        expect($object->am)->toBe('not-empty');
+    });
+});
+
 test('it throws an exception on invalid json strings', function () {
     $contents = 'I am not in a JSON format!';
 

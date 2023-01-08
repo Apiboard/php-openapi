@@ -1,9 +1,9 @@
 <?php
 
 use Apiboard\OpenAPI\Contents\Json;
+use Apiboard\OpenAPI\Contents\Retriever;
 use Apiboard\OpenAPI\Contents\Yaml;
 use Apiboard\OpenAPI\OpenAPI;
-use Apiboard\OpenAPI\Contents\Retriever;
 use Apiboard\OpenAPI\Structure\Document;
 use PHPUnit\Framework\Assert;
 
@@ -59,6 +59,13 @@ function openAPI(?Retriever $retriever = null): OpenAPI
 function fixture(string $path): string
 {
     return __DIR__ . "/__fixtures__/{$path}";
+}
+
+function tap(mixed $result, callable $callback)
+{
+    $callback($result);
+
+    return $result;
 }
 
 function jsonDocument(string $json): Document
