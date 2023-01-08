@@ -141,6 +141,46 @@ test('casting JSON OAS contents to object casts security key to array and not an
     expect($result->paths->something->security[0]->Bearer)->toBeArray();
 });
 
+test('casting JSON OAS contents to object casts servers key to array and not an object', function () {
+    $json = new Json('{
+        "servers": {},
+        "paths": {
+            "something": {
+                "servers": {
+                    "0": {
+                        "url": "http://localhost"
+                    }
+                }
+            }
+        }
+    }');
+
+    $result = $json->toObject();
+
+    expect($result->servers)->toBeArray();
+    expect($result->paths->something->servers)->toBeArray();
+    expect($result->paths->something->servers[0])->toBeObject();
+});
+
+test('casting JSON OAS contents to object casts enum key to array and not an object', function () {
+    $json = new Json('{
+        "components": {
+            "schemas": {
+                "Something": {
+                    "type": "string",
+                    "enum": {
+                        "0": "string-options"
+                    }
+                }
+            }
+       }
+    }');
+
+    $result = $json->toObject();
+
+    expect($result->components->schemas->Something->enum)->toBeArray();
+});
+
 test('casting JSON OAS contents to object casts required key to array and not an object', function () {
     $json = new Json('{
         "paths": {
