@@ -17,7 +17,8 @@
     "require": {
         "php": ">=8.0",
         "symfony/yaml": "^6.1",
-        "opis/json-schema": "^2.3"
+        "opis/json-schema": "^2.3",
+        "symfony/filesystem": "^6.2"
     },
     "config": {
         "allow-plugins": {

@@ -32,7 +32,7 @@ final class OpenAPI
 
     public function build(string $filePath): Document
     {
-        $contents = $this->retriever->retrieve($filePath);
+        $contents = $this->retriever->from($filePath)->retrieve($filePath);
 
         $resolvedContents = $this->resolver->resolve($contents);
 

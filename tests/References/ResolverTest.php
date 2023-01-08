@@ -169,6 +169,11 @@ function retriever(callable $callback): Retriever
             $this->callback = $callback;
         }
 
+        public function from(string $basePath): self
+        {
+            return $this;
+        }
+
         public function retrieve(string $filePath): Json|Yaml
         {
             $callback = $this->callback;

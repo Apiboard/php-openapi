@@ -1,7 +1,6 @@
 <?php
 
 use Apiboard\OpenAPI\Contents\Json;
-use Apiboard\OpenAPI\Contents\Reference;
 use Apiboard\OpenAPI\Contents\Retriever;
 use Apiboard\OpenAPI\Contents\Yaml;
 use Apiboard\OpenAPI\Structure\Document;
@@ -49,6 +48,15 @@ test('it can resolve references', function () {
     $retriever = new class () implements Retriever {
         private bool $called = false;
 
+        public string $basePath = '';
+
+        public function from(string $basePath): self
+        {
+            $this->basePath = $basePath;
+
+            return $this;
+        }
+
         public function retrieve(string $filePath): Json|Yaml
         {
             if (str_contains($filePath, 'references.json')) {
@@ -76,6 +84,15 @@ test('it resolves references when building', function () {
     $retriever = new class () implements Retriever {
         private bool $called = false;
 
+        public string $basePath = '';
+
+        public function from(string $basePath): self
+        {
+            $this->basePath = $basePath;
+
+            return $this;
+        }
+
         public function retrieve(string $filePath): Json|Yaml
         {
             if (str_contains($filePath, 'references.json')) {
@@ -95,6 +112,7 @@ test('it resolves references when building', function () {
 
     openAPI($retriever)->build($jsonFile);
 
+    expect($retriever->basePath)->toBe($jsonFile);
     expect($retriever->wasCalled())->toBeTrue();
 });
 
