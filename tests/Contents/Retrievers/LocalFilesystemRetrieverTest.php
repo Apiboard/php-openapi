@@ -7,7 +7,7 @@ test('it can retrieve files with absolute paths', function () {
 
     $result = localRetriever()->retrieve($path);
 
-    expect($result->toString())->toBe(file_get_contents($path));
+    expect($result->toString())->toBe(trim(file_get_contents($path)));
 });
 
 test('it can retrieve files with relative path using the configured base path', function () {
@@ -15,7 +15,7 @@ test('it can retrieve files with relative path using the configured base path', 
 
     $result = localRetriever()->from($path)->retrieve('./example.json');
 
-    expect($result->toString())->toBe(file_get_contents($path));
+    expect($result->toString())->toBe(trim(file_get_contents($path)));
 });
 
 

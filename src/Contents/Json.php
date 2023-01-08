@@ -26,7 +26,7 @@ final class Json
 
     public function toString(): string
     {
-        return $this->value;
+        return json_encode($this->toObject(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
     public function toObject(): object
