@@ -31,7 +31,7 @@ final class Json
 
     public function toObject(): object
     {
-        $decoded = json_decode($this->value, false, 512, JSON_FORCE_OBJECT | JSON_THROW_ON_ERROR);
+        $decoded = json_decode($this->value, false, 512, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES);
 
         return $this->castSpecificKeysToProperOASType($decoded);
     }
@@ -43,24 +43,6 @@ final class Json
                 $object->{$key} = $this->castSpecificKeysToProperOASType($value);
             }
 
-            if (in_array($key, ['tags', 'servers', 'parameters', 'enum', 'security', 'scopes', 'anyOf', 'oneOf', 'allOf'])) {
-                $array = (array) $value;
-
-                if ($key === 'security') {
-                    foreach ($array as $index=>$value) {
-                        foreach ($value as $property => $value) {
-                            $array[$index]->{$property} = (array) $value;
-                        }
-                    }
-                }
-
-                $object->{$key} = $array;
-            }
-
-            if ($key === 'required' && is_bool($value) === false) {
-                $object->{$key} = (array) $value;
-            }
-
             if (is_array($object->{$key})) {
                 $object->{$key} = array_map(function (mixed $value) {
                     return match (gettype($value)) {
@@ -68,6 +50,17 @@ final class Json
                         default => $value,
                     };
                 }, $object->{$key});
+            }
+
+            // Sometimes the PHP json_encode/json_decode functions don't
+            // work properly. We should attempt to cast the value to
+            // the correct data type to ensure validation passes.
+            if ($key === 'items' && ($object->type ?? '') === 'array') {
+                $object->{$key} = (object) $value;
+            }
+
+            if ($key === 'schema' && is_array($value) && count($value) === 0) {
+                $object->{$key} = (object) $value;
             }
         }
 

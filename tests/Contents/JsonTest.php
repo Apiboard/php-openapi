@@ -74,171 +74,39 @@ test('it can return all external references', function () {
         ->toBeArrayOf(Reference::class);
 });
 
-test('casting JSON OAS contents to object casts tags key to array and not an object', function () {
+test('casting JSON OAS contents to object casts empty schema keys from array to an object', function () {
     $json = new Json('{
-        "tags": {},
-        "paths": {
-            "something": {
-                "tags": {
-                    "0": {
-                        "name": "test",
-                        "description": "a test description"
-                    }
+        "some": {
+            "key": [
+                {
+                    "schema": []
                 }
-            }
+            ]
         }
     }');
 
     $result = $json->toObject();
 
-    expect($result->tags)->toBeArray();
-    expect($result->paths->something->tags)->toBeArray();
-    expect($result->paths->something->tags[0])->toBeObject();
+    expect($result->some->key[0]->schema)->toBeObject();
 });
 
-test('casting JSON OAS contents to object casts parameter key to array and not an object', function () {
-    $json = new Json('{
-        "paths": {
-            "parameters": {},
-            "something": {
-                "parameters": {
-                    "0": {
-                        "schema": {}
-                    }
-                }
-            }
-        }
-    }');
-
-    $result = $json->toObject();
-
-    expect($result->paths->parameters)->toBeArray();
-    expect($result->paths->something->parameters)->toBeArray();
-    expect($result->paths->something->parameters[0]->schema)->toBeObject();
-});
-
-test('casting JSON OAS contents to object casts security key to array and not an object', function () {
-    $json = new Json('{
-        "security": {},
-        "paths": {
-            "something": {
-                "security": {
-                    "0": {
-                        "Bearer": {
-                            "0": "scope-1"
-                        }
-                    }
-                }
-            }
-        }
-    }');
-
-    $result = $json->toObject();
-
-    expect($result->security)->toBeArray();
-    expect($result->paths->something->security)->toBeArray();
-    expect($result->paths->something->security[0])->toBeObject();
-    expect($result->paths->something->security[0]->Bearer)->toBeArray();
-});
-
-test('casting JSON OAS contents to object casts servers key to array and not an object', function () {
-    $json = new Json('{
-        "servers": {},
-        "paths": {
-            "something": {
-                "servers": {
-                    "0": {
-                        "url": "http://localhost"
-                    }
-                }
-            }
-        }
-    }');
-
-    $result = $json->toObject();
-
-    expect($result->servers)->toBeArray();
-    expect($result->paths->something->servers)->toBeArray();
-    expect($result->paths->something->servers[0])->toBeObject();
-});
-
-test('casting JSON OAS contents to object casts enum key to array and not an object', function () {
+test('casting JSON OAS contents to object casts empty items keys from array to an object within an array typed schema definition', function () {
     $json = new Json('{
         "components": {
             "schemas": {
                 "Something": {
-                    "type": "string",
-                    "enum": {
-                        "0": "string-options"
-                    }
+                    "type": "array",
+                    "items": []
+                },
+                "Else": {
+                    "items": []
                 }
-            }
-       }
-    }');
-
-    $result = $json->toObject();
-
-    expect($result->components->schemas->Something->enum)->toBeArray();
-});
-
-test('casting JSON OAS contents to object casts required key to array and not an object', function () {
-    $json = new Json('{
-        "paths": {
-            "something": {
-                "parameters": [
-                    {
-                        "required": true
-                    }
-                ]
-            }
-        },
-        "components": {
-            "schemas": {
-                "Something": {
-                    "type": "object",
-                    "required": {
-                        "0": "id"
-                    }
-                }
-            }
-       }
-    }');
-
-    $result = $json->toObject();
-
-    expect($result->paths->something->parameters[0]->required)->toBeBool();
-    expect($result->components->schemas->Something->required)->toBeArray();
-});
-
-test('casting JSON OAS contents to object casts polymorphic keys to array and not an object', function (string $key) {
-    $json = new Json('{
-        "paths": {
-            "something": {
-                "parameters": [
-                    {
-                        "schema": {
-                            "'. $key . '" : {
-                                "0": {
-                                    "type": "string"
-                                },
-                                "1": {
-                                    "type": "integer"
-                                }
-                            }
-                        }
-                    }
-                ]
             }
         }
     }');
 
     $result = $json->toObject();
 
-    expect($result->paths->something->parameters[0]->schema->{$key})->toBeArray();
-    expect($result->paths->something->parameters[0]->schema->{$key}[0])->toBeObject();
-    expect($result->paths->something->parameters[0]->schema->{$key}[1])->toBeObject();
-})->with([
-    'anyOf',
-    'allOf',
-    'oneOf',
-]);
+    expect($result->components->schemas->Something->items)->toBeObject();
+    expect($result->components->schemas->Else->items)->toBeArray();
+});
