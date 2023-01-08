@@ -43,7 +43,7 @@ final class Json
                 $object->{$key} = $this->castSpecificKeysToProperOASType($value);
             }
 
-            if (in_array($key, ['tags', 'security'])) {
+            if (in_array($key, ['tags', 'security', 'scopes'])) {
                 $object->{$key} = (array) $value;
             }
         }
