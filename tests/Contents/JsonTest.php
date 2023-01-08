@@ -96,6 +96,27 @@ test('casting JSON OAS contents to object casts tags key to array and not an obj
     expect($result->paths->something->tags[0])->toBeObject();
 });
 
+test('casting JSON OAS contents to object casts parameter key to array and not an object', function () {
+    $json = new Json('{
+        "paths": {
+            "parameters": {},
+            "something": {
+                "parameters": {
+                    "0": {
+                        "schema": {}
+                    }
+                }
+            }
+        }
+    }');
+
+    $result = $json->toObject();
+
+    expect($result->paths->parameters)->toBeArray();
+    expect($result->paths->something->parameters)->toBeArray();
+    expect($result->paths->something->parameters[0]->schema)->toBeObject();
+});
+
 test('casting JSON OAS contents to object casts security key to array and not an object', function () {
     $json = new Json('{
         "security": {},
