@@ -149,6 +149,15 @@ test('it does not resolve internal references', function () {
     expect($count)->toBe(0);
 });
 
+test('it can resolve empty contents correctly', function () {
+    $contents = new Json('{}');
+    $resolver = new Resolver();
+
+    $result = $resolver->resolve($contents);
+
+    expect($result->toObject())->toBeObject();
+});
+
 function retriever(callable $callback): Retriever
 {
     /** @var Retriever */

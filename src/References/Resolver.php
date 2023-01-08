@@ -31,7 +31,7 @@ final class Resolver
         $resolved = $this->replaceReferences([], $contents->toArray());
 
         return match ($contents::class) {
-            Json::class => new Json(json_encode($resolved, JSON_UNESCAPED_SLASHES)),
+            Json::class => new Json(json_encode($resolved, JSON_FORCE_OBJECT | JSON_UNESCAPED_SLASHES)),
             Yaml::class => new Yaml(\Symfony\Component\Yaml\Yaml::dump($resolved)),
         };
     }
