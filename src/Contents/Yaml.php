@@ -33,6 +33,6 @@ final class Yaml
     {
         $json = json_encode($this->toArray(), JSON_THROW_ON_ERROR);
 
-        return json_decode($json, false, 512, JSON_FORCE_OBJECT | JSON_THROW_ON_ERROR);
+        return (new Json($json))->toObject();
     }
 }
