@@ -1,6 +1,5 @@
 <?php
 
-use Apiboard\OpenAPI\Contents\Retriever;
 use Apiboard\OpenAPI\Contents\Retrievers\LocalFilesystemRetriever;
 
 test('it can retrieve files with absolute paths', function () {
