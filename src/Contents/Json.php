@@ -44,7 +44,17 @@ final class Json
             }
 
             if (in_array($key, ['tags', 'security', 'scopes'])) {
-                $object->{$key} = (array) $value;
+                $array = (array) $value;
+
+                if ($key === 'security') {
+                    foreach ($array as $index=>$value) {
+                        foreach ($value as $property => $value) {
+                            $array[$index]->{$property} = (array) $value;
+                        }
+                    }
+                }
+
+                $object->{$key} = $array;
             }
         }
 

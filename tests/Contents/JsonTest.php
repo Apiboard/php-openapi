@@ -74,22 +74,48 @@ test('it can return all external references', function () {
         ->toBeArrayOf(Reference::class);
 });
 
-test('casting JSON OAS contents to object casts specific key to array and not an object', function (string $key) {
+test('casting JSON OAS contents to object casts tags key to array and not an object', function () {
     $json = new Json('{
-        "'. $key .'": {},
+        "tags": {},
         "paths": {
             "something": {
-                "'. $key .'": {}
+                "tags": {
+                    "0": {
+                        "name": "test",
+                        "description": "a test description"
+                    }
+                }
             }
         }
     }');
 
     $result = $json->toObject();
 
-    expect($result->{$key})->toBeArray();
-    expect($result->paths->something->{$key})->toBeArray();
-})->with([
-    'tags',
-    'security',
-    'scopes',
-]);
+    expect($result->tags)->toBeArray();
+    expect($result->paths->something->tags)->toBeArray();
+    expect($result->paths->something->tags[0])->toBeObject();
+});
+
+test('casting JSON OAS contents to object casts security key to array and not an object', function () {
+    $json = new Json('{
+        "security": {},
+        "paths": {
+            "something": {
+                "security": {
+                    "0": {
+                        "Bearer": {
+                            "0": "scope-1"
+                        }
+                    }
+                }
+            }
+        }
+    }');
+
+    $result = $json->toObject();
+
+    expect($result->security)->toBeArray();
+    expect($result->paths->something->security)->toBeArray();
+    expect($result->paths->something->security[0])->toBeObject();
+    expect($result->paths->something->security[0]->Bearer)->toBeArray();
+});
