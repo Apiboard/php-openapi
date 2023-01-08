@@ -56,6 +56,10 @@ final class Json
 
                 $object->{$key} = $array;
             }
+
+            if ($key === 'required' && is_bool($value) === false) {
+                $object->{$key} = (array) $value;
+            }
         }
 
         return $object;

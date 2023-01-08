@@ -140,3 +140,32 @@ test('casting JSON OAS contents to object casts security key to array and not an
     expect($result->paths->something->security[0])->toBeObject();
     expect($result->paths->something->security[0]->Bearer)->toBeArray();
 });
+
+test('casting JSON OAS contents to object casts required key to array and not an object', function () {
+    $json = new Json('{
+        "paths": {
+            "something": {
+                "parameters": [
+                    {
+                        "required": true
+                    }
+                ]
+            }
+        },
+        "components": {
+            "schemas": {
+                "Something": {
+                    "type": "object",
+                    "required": {
+                        "0": "id"
+                    }
+                }
+            }
+       }
+    }');
+
+    $result = $json->toObject();
+
+    expect($result->paths->something->parameters[0]->required)->toBeBool();
+    expect($result->components->schemas->Something->required)->toBeArray();
+});
