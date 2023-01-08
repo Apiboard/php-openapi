@@ -43,7 +43,7 @@ final class Json
                 $object->{$key} = $this->castSpecificKeysToProperOASType($value);
             }
 
-            if (in_array($key, ['tags', 'parameters', 'security', 'scopes'])) {
+            if (in_array($key, ['tags', 'parameters', 'security', 'scopes', 'anyOf', 'oneOf', 'allOf'])) {
                 $array = (array) $value;
 
                 if ($key === 'security') {
@@ -59,6 +59,15 @@ final class Json
 
             if ($key === 'required' && is_bool($value) === false) {
                 $object->{$key} = (array) $value;
+            }
+
+            if (is_array($object->{$key})) {
+                $object->{$key} = array_map(function (mixed $value) {
+                    return match (gettype($value)) {
+                        'object' => $this->castSpecificKeysToProperOASType($value),
+                        default => $value,
+                    };
+                }, $object->{$key});
             }
         }
 

@@ -169,3 +169,36 @@ test('casting JSON OAS contents to object casts required key to array and not an
     expect($result->paths->something->parameters[0]->required)->toBeBool();
     expect($result->components->schemas->Something->required)->toBeArray();
 });
+
+test('casting JSON OAS contents to object casts polymorphic keys to array and not an object', function (string $key) {
+    $json = new Json('{
+        "paths": {
+            "something": {
+                "parameters": [
+                    {
+                        "schema": {
+                            "'. $key . '" : {
+                                "0": {
+                                    "type": "string"
+                                },
+                                "1": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }');
+
+    $result = $json->toObject();
+
+    expect($result->paths->something->parameters[0]->schema->{$key})->toBeArray();
+    expect($result->paths->something->parameters[0]->schema->{$key}[0])->toBeObject();
+    expect($result->paths->something->parameters[0]->schema->{$key}[1])->toBeObject();
+})->with([
+    'anyOf',
+    'allOf',
+    'oneOf',
+]);
