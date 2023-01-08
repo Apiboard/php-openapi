@@ -73,3 +73,19 @@ test('it can return all external references', function () {
         ->toHaveCount(2)
         ->toBeArrayOf(Reference::class);
 });
+
+test('casting JSON OAS contents to object casts empty tags key to array and not an object', function () {
+    $json = new Json('{
+        "tags": {},
+        "paths": {
+            "something": {
+                "tags": {}
+            }
+        }
+    }');
+
+    $result = $json->toObject();
+
+    expect($result->tags)->toBeArray();
+    expect($result->paths->something->tags)->toBeArray();
+})->only();

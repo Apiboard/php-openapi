@@ -31,6 +31,23 @@ final class Json
 
     public function toObject(): object
     {
-        return json_decode($this->value, false, 512, JSON_FORCE_OBJECT | JSON_THROW_ON_ERROR);
+        $decoded = json_decode($this->value, false, 512, JSON_FORCE_OBJECT | JSON_THROW_ON_ERROR);
+
+        return $this->castSpecificKeysToProperOASType($decoded);
+    }
+
+    private function castSpecificKeysToProperOASType(object $object): object
+    {
+        foreach ($object as $key => $value) {
+            if ($value instanceof \stdClass) {
+                $object->{$key} = $this->castSpecificKeysToProperOASType($value);
+            }
+
+            if (in_array($key, ['tags'])) {
+                $object->{$key} = (array) $value;
+            }
+        }
+
+        return $object;
     }
 }
