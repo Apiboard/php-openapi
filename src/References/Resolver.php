@@ -46,34 +46,34 @@ final class Resolver
                 continue;
             }
 
-            $absoluteReference = $reference->withBase($basePath);
-
-            $previouslyRetrieved = array_key_exists($absoluteReference->path(), $this->retrievedReferences);
+            $previouslyRetrieved = array_key_exists($reference->path(), $this->retrievedReferences);
 
             if ($previouslyRetrieved === false) {
+                $absoluteReference = $reference->withBase($basePath);
                 $contents =  $this->retriever->retrieve($absoluteReference->path());
 
                 $resolvedContents = $contents->toArray();
 
-                $this->retrievedReferences[$absoluteReference->path()] = $resolvedContents;
+                $this->retrievedReferences[$reference->path()] = $resolvedContents;
 
-                foreach ($absoluteReference->properties() as $property) {
+                foreach ($reference->properties() as $property) {
                     $resolvedContents = $resolvedContents[$property];
                 }
 
-                $this->retrievedReferences[$absoluteReference->value()] = $resolvedContents;
+                $this->retrievedReferences[$reference->value()] = $resolvedContents;
+                $this->retrievedReferences[$reference->value()] = $resolvedContents;
 
                 $this->retrieveReferences($contents->references(), $absoluteReference->basePath());
             }
 
             if ($previouslyRetrieved === true) {
-                $resolvedContents = $this->retrievedReferences[$absoluteReference->path()];
+                $resolvedContents = $this->retrievedReferences[$reference->path()];
 
-                foreach ($absoluteReference->properties() as $property) {
+                foreach ($reference->properties() as $property) {
                     $resolvedContents = $resolvedContents[$property];
                 }
 
-                $this->retrievedReferences[$absoluteReference->value()] = $resolvedContents;
+                $this->retrievedReferences[$reference->value()] = $resolvedContents;
             }
         }
     }

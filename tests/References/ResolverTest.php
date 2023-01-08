@@ -170,15 +170,15 @@ test('it can resolve upwards references correctly with a retriever that has a ba
                 }
             }'),
             '/path/to/upwards/folder/other/file.json' => new Json('{}'),
+            default => $this->fail('Unexpected file path received:' . $filePath),
         };
     });
     $resolver = new Resolver($retriever->from('/path/to/base/'));
 
-    $resolver->resolve($contents);
+    $result = $resolver->resolve($contents);
 
-    expect(invade($resolver)->retrievedReferences)->toHaveKeys([
-        '/path/to/upwards/folder/file.json',
-        '/path/to/upwards/folder/other/file.json',
+    expect($result->toArray())->toBe([
+        'key' => []
     ]);
 });
 
