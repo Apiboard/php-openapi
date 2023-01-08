@@ -158,19 +158,52 @@ test('it can resolve empty contents correctly', function () {
     expect($result->toObject())->toBeObject();
 });
 
+test('it can resolve upwards references correctly with a retriever that has a base path defined', function () {
+    $contents = new Json('{
+        "$ref": "../upwards/folder/file.json"
+    }');
+    $retriever = retriever(function (string $filePath) {
+        return match ($filePath) {
+            '/path/to/upwards/folder/file.json' => new Json('{
+                "key": {
+                    "$ref": "./other/file.json"
+                }
+            }'),
+            '/path/to/upwards/folder/other/file.json' => new Json('{}'),
+        };
+    });
+    $resolver = new Resolver($retriever->from('/path/to/base/'));
+
+    $resolver->resolve($contents);
+
+    expect(invade($resolver)->retrievedReferences)->toHaveKeys([
+        '/path/to/upwards/folder/file.json',
+        '/path/to/upwards/folder/other/file.json',
+    ]);
+});
+
 function retriever(callable $callback): Retriever
 {
     /** @var Retriever */
     $retriever = new class ($callback) implements Retriever {
         private Closure $callback;
 
+        private string $basePath = '';
+
         public function __construct(Closure $callback)
         {
             $this->callback = $callback;
         }
 
+        public function basePath(): string
+        {
+            return $this->basePath;
+        }
+
         public function from(string $basePath): self
         {
+            $this->basePath = $basePath;
+
             return $this;
         }
 

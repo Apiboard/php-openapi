@@ -48,7 +48,12 @@ test('it can resolve references', function () {
     $retriever = new class () implements Retriever {
         private bool $called = false;
 
-        public string $basePath = '';
+        private string $basePath = '';
+
+        public function basePath(): string
+        {
+            return $this->basePath;
+        }
 
         public function from(string $basePath): self
         {
@@ -84,7 +89,12 @@ test('it resolves references when building', function () {
     $retriever = new class () implements Retriever {
         private bool $called = false;
 
-        public string $basePath = '';
+        private string $basePath = '';
+
+        public function basePath(): string
+        {
+            return $this->basePath;
+        }
 
         public function from(string $basePath): self
         {
@@ -95,7 +105,7 @@ test('it resolves references when building', function () {
 
         public function retrieve(string $filePath): Json|Yaml
         {
-            if (str_contains($filePath, 'references.json')) {
+            if (str_ends_with($filePath, 'references.json')) {
                 return new Json(file_get_contents($filePath));
             }
 
@@ -112,7 +122,7 @@ test('it resolves references when building', function () {
 
     openAPI($retriever)->build($jsonFile);
 
-    expect($retriever->basePath)->toBe($jsonFile);
+    expect($retriever->basePath())->toBe($jsonFile);
     expect($retriever->wasCalled())->toBeTrue();
 });
 

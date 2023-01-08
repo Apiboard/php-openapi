@@ -26,7 +26,7 @@ final class Resolver
             return $contents;
         }
 
-        $this->retrieveReferences($contents->references());
+        $this->retrieveReferences($contents->references(), $this->retriever->basePath());
 
         $resolved = $this->replaceReferences([], $contents->toArray());
 
@@ -39,39 +39,41 @@ final class Resolver
     /**
      * @param array<Reference> $references
      */
-    private function retrieveReferences(array $references): void
+    private function retrieveReferences(array $references, string $basePath): void
     {
         foreach ($references as $reference) {
             if ($reference->isInternal()) {
                 continue;
             }
 
-            $previouslyRetrieved = array_key_exists($reference->path(), $this->retrievedReferences);
+            $absoluteReference = $reference->withBase($basePath);
+
+            $previouslyRetrieved = array_key_exists($absoluteReference->path(), $this->retrievedReferences);
 
             if ($previouslyRetrieved === false) {
-                $contents =  $this->retriever->retrieve($reference->path());
+                $contents =  $this->retriever->retrieve($absoluteReference->path());
 
                 $resolvedContents = $contents->toArray();
 
-                $this->retrievedReferences[$reference->path()] = $resolvedContents;
+                $this->retrievedReferences[$absoluteReference->path()] = $resolvedContents;
 
-                foreach ($reference->properties() as $property) {
+                foreach ($absoluteReference->properties() as $property) {
                     $resolvedContents = $resolvedContents[$property];
                 }
 
-                $this->retrievedReferences[$reference->value()] = $resolvedContents;
+                $this->retrievedReferences[$absoluteReference->value()] = $resolvedContents;
 
-                $this->retrieveReferences($contents->references());
+                $this->retrieveReferences($contents->references(), $absoluteReference->basePath());
             }
 
             if ($previouslyRetrieved === true) {
-                $resolvedContents = $this->retrievedReferences[$reference->path()];
+                $resolvedContents = $this->retrievedReferences[$absoluteReference->path()];
 
-                foreach ($reference->properties() as $property) {
+                foreach ($absoluteReference->properties() as $property) {
                     $resolvedContents = $resolvedContents[$property];
                 }
 
-                $this->retrievedReferences[$reference->value()] = $resolvedContents;
+                $this->retrievedReferences[$absoluteReference->value()] = $resolvedContents;
             }
         }
     }

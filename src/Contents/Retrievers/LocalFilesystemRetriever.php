@@ -12,6 +12,11 @@ final class LocalFilesystemRetriever implements Retriever
 {
     private string $basePath = '';
 
+    public function basePath(): string
+    {
+        return $this->basePath;
+    }
+
     public function from(string $basePath): Retriever
     {
         $this->basePath = dirname($basePath) . '/';
@@ -23,7 +28,7 @@ final class LocalFilesystemRetriever implements Retriever
     {
         $extension = pathinfo($filePath, PATHINFO_EXTENSION);
 
-        if (str_starts_with($filePath, '.')) {
+        if (str_starts_with($filePath, '/') === false) {
             $filePath = Path::canonicalize($this->basePath . $filePath);
         }
 
