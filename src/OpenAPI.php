@@ -30,7 +30,7 @@ final class OpenAPI
             ->registerFile('https://apiboard.dev/oas-3.1.json', __DIR__ . "/Validation/v3.1.json");
     }
 
-    public function build(string $filePath): Document
+    public function parse(string $filePath): Document
     {
         $contents = $this->retriever->from($filePath)->retrieve($filePath);
 
@@ -51,8 +51,10 @@ final class OpenAPI
         return new Document($resolvedContents);
     }
 
-    public function resolve(Json|Yaml $contents): Json|Yaml
+    public function resolve(string $filePath): Json|Yaml
     {
+        $contents = $this->retriever->from($filePath)->retrieve($filePath);
+
         return $this->resolver->resolve($contents);
     }
 

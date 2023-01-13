@@ -35,7 +35,7 @@ final class LocalFilesystemRetriever implements Retriever
         return match ($extension) {
             'json' => new Json(file_get_contents($filePath)),
             'yaml' => new Yaml(file_get_contents($filePath)),
-            default => throw new InvalidArgumentException('Can only build JSON or YAML files'),
+            default => throw new InvalidArgumentException('Can only parse JSON or YAML files'),
         };
     }
 }
