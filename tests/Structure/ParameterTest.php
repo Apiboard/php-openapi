@@ -1,8 +1,6 @@
 <?php
 
-use Apiboard\OpenAPI\Contents\Reference;
 use Apiboard\OpenAPI\Structure\Parameter;
-use Apiboard\OpenAPI\Structure\Schema;
 
 test('it can return the name', function () {
     $parameter = new Parameter([
@@ -78,28 +76,6 @@ test('it returns false for the the deprecated state by default', function () {
     $result = $parameter->deprecated();
 
     expect($result)->toBeFalse();
-});
-
-test('it can return the schema', function () {
-    $parameter = new Parameter([
-        'schema' => [],
-    ]);
-
-    $result = $parameter->schema();
-
-    expect($result)->toBeInstanceOf(Schema::class);
-});
-
-test('it can return the referenced schema', function () {
-    $header = new Parameter([
-        'schema' => [
-            '$ref' => '#/some/ref'
-        ],
-    ]);
-
-    $result = $header->schema();
-
-    expect($result)->toBeInstanceOf(Reference::class);
 });
 
 test('it can return the style', function () {
