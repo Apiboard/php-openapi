@@ -1,6 +1,6 @@
 <?php
 
-use Apiboard\OpenAPI\Contents\Reference;
+use Apiboard\OpenAPI\References\Reference;
 use Apiboard\OpenAPI\Structure\Response;
 use Apiboard\OpenAPI\Structure\Responses;
 

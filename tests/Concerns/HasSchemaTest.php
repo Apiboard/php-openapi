@@ -1,7 +1,7 @@
 <?php
 
 use Apiboard\OpenAPI\Concerns\HasASchema;
-use Apiboard\OpenAPI\Contents\Reference;
+use Apiboard\OpenAPI\References\Reference;
 use Apiboard\OpenAPI\Structure\Header;
 use Apiboard\OpenAPI\Structure\Parameter;
 use Apiboard\OpenAPI\Structure\Schema;

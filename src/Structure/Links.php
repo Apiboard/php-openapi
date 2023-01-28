@@ -4,7 +4,7 @@ namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\AsCountableArrayIterator;
 use Apiboard\OpenAPI\Concerns\HasReferences;
-use Apiboard\OpenAPI\Contents\Reference;
+use Apiboard\OpenAPI\References\Reference;
 use ArrayAccess;
 use Countable;
 use Iterator;

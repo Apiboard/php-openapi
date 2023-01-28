@@ -2,7 +2,7 @@
 
 use Apiboard\OpenAPI\Concerns\HasReferences;
 use Apiboard\OpenAPI\Contents\Json;
-use Apiboard\OpenAPI\Contents\Reference;
+use Apiboard\OpenAPI\References\Reference;
 use Apiboard\OpenAPI\Contents\Yaml;
 use Apiboard\OpenAPI\Structure\Callbacks;
 use Apiboard\OpenAPI\Structure\Examples;

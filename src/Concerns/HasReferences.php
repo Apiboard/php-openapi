@@ -2,7 +2,7 @@
 
 namespace Apiboard\OpenAPI\Concerns;
 
-use Apiboard\OpenAPI\Contents\Reference;
+use Apiboard\OpenAPI\References\Reference;
 
 trait HasReferences
 {

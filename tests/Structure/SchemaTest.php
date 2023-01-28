@@ -1,6 +1,6 @@
 <?php
 
-use Apiboard\OpenAPI\Contents\Reference;
+use Apiboard\OpenAPI\References\Reference;
 use Apiboard\OpenAPI\Structure\DataTypes;
 use Apiboard\OpenAPI\Structure\Examples;
 use Apiboard\OpenAPI\Structure\Polymorphism;

@@ -3,7 +3,6 @@
 namespace Apiboard\OpenAPI\References;
 
 use Apiboard\OpenAPI\Contents\Json;
-use Apiboard\OpenAPI\Contents\Reference;
 use Apiboard\OpenAPI\Contents\Retriever;
 use Apiboard\OpenAPI\Contents\Yaml;
 

@@ -1,7 +1,7 @@
 <?php
 
 use Apiboard\OpenAPI\Contents\Json;
-use Apiboard\OpenAPI\Contents\Reference;
+use Apiboard\OpenAPI\References\Reference;
 
 test('it can cast empty strings to an array', function () {
     $contents = "";

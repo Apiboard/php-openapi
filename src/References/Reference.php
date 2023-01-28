@@ -1,6 +1,6 @@
 <?php
 
-namespace Apiboard\OpenAPI\Contents;
+namespace Apiboard\OpenAPI\References;
 
 use Symfony\Component\Filesystem\Path;
 

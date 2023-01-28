@@ -3,7 +3,7 @@
 namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\CanBeDescribed;
-use Apiboard\OpenAPI\Contents\JsonPointer;
+use Apiboard\OpenAPI\References\JsonPointer;
 
 final class Link
 {
