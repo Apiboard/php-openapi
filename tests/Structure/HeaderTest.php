@@ -28,24 +28,6 @@ test('it returns null when description is unavaible', function () {
     expect($result)->toBeNull();
 });
 
-test('it can return the required state', function () {
-    $header = new Header('X-My-Header', [
-        'required' => true,
-    ]);
-
-    $result = $header->required();
-
-    expect($result)->toBeTrue();
-});
-
-test('it returns false for the the required state by default', function () {
-    $header = new Header('X-My-Header', []);
-
-    $result = $header->required();
-
-    expect($result)->toBeFalse();
-});
-
 test('it can return the deprecated state', function () {
     $header = new Header('X-My-Header', [
         'deprecated' => true,

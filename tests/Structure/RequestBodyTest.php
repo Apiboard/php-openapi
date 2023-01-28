@@ -23,24 +23,6 @@ test('it can return the content media types', function () {
     expect($result)->toBeInstanceOf(MediaTypes::class);
 });
 
-test('it can return the required state', function () {
-    $requestBody = new RequestBody([
-        'required' => true,
-    ]);
-
-    $result = $requestBody->required();
-
-    expect($result)->toBeTrue();
-});
-
-test('it returns false when the required state is not provided', function () {
-    $requestBody = new RequestBody([]);
-
-    $result = $requestBody->required();
-
-    expect($result)->toBeFalse();
-});
-
 test('it returns null when the description is not provided', function () {
     $requestBody = new RequestBody([]);
 

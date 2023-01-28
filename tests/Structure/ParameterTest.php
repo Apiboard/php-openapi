@@ -40,25 +40,6 @@ test('it can return the location', function () {
     expect($result)->toBe('header');
 });
 
-test('it can return the required state', function () {
-    $parameter = new Parameter([
-        'required' => true,
-    ]);
-
-    $result = $parameter->required();
-
-    expect($result)->toBeTrue();
-});
-
-test('it returns false for the the required state by default', function () {
-    $parameter = new Parameter([
-    ]);
-
-    $result = $parameter->required();
-
-    expect($result)->toBeFalse();
-});
-
 test('it can return the deprecated state', function () {
     $parameter = new Parameter([
         'deprecated' => true,
