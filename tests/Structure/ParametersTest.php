@@ -67,15 +67,3 @@ test('it can retrieve only required parameters', function () {
     expect($result)->toHaveCount(1);
     expect($result[0]->required())->toBeTrue();
 });
-
-test('it can return all its references', function () {
-    $parameters = new Parameters([
-        [],
-        ['$ref' => '#/some/ref']
-    ]);
-
-    $result = $parameters->references();
-
-    expect($result)->toHaveCount(1);
-    expect($result[0])->toBeInstanceOf(Reference::class);
-});

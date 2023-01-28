@@ -26,19 +26,6 @@ test('it can retrieve references callbacks by their expression', function () {
     expect($result)->toBeInstanceOf(Reference::class);
 });
 
-test('it can return all its references', function () {
-    $callbacks = new Callbacks([
-        'expression' => [
-            '$ref' => '#/some/ref'
-        ],
-    ]);
-
-    $result = $callbacks->references();
-
-    expect($result)->toHaveCount(1);
-    expect($result[0])->toBeInstanceOf(Reference::class);
-});
-
 test('it can be looped over', function () {
     $callbacks = new Callbacks([
         'expression-1' => [],

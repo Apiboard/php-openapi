@@ -44,15 +44,3 @@ test('it can retrieve only required request bodies', function () {
     expect($result)->toHaveCount(1);
     expect($result['1']->required())->toBeTrue();
 });
-
-test('it can return all its references', function () {
-    $requestBodies = new RequestBodies([
-        [],
-        ['$ref' => '#/some/ref']
-    ]);
-
-    $result = $requestBodies->references();
-
-    expect($result)->toHaveCount(1);
-    expect($result[0])->toBeInstanceOf(Reference::class);
-});

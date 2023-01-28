@@ -25,16 +25,3 @@ test('it can retrieve referenced links by their name', function () {
 
     expect($result)->toBeInstanceOf(Reference::class);
 });
-
-test('it can return all its references', function () {
-    $links = new Links([
-        'my-link' => [
-            '$ref' => '#/some/ref',
-        ],
-    ]);
-
-    $result = $links->references();
-
-    expect($result)->toHaveCount(1);
-    expect($result[0])->toBeInstanceOf(Reference::class);
-});

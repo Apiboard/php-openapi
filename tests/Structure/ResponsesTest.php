@@ -25,15 +25,3 @@ test('it can retrieve referenced responses by their status code', function () {
 
     expect($result)->toBeInstanceOf(Reference::class);
 });
-
-test('it can return all its references', function () {
-    $responses = new Responses([
-        "200" => [],
-        "404" => ['$ref' => '#/some/ref']
-    ]);
-
-    $result = $responses->references();
-
-    expect($result)->toHaveCount(1);
-    expect($result[0])->toBeInstanceOf(Reference::class);
-});

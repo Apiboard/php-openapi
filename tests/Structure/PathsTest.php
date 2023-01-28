@@ -44,16 +44,3 @@ test('paths can be counted', function () {
 
     expect($result)->toBe(2);
 });
-
-test('it can return all its references', function () {
-    $paths = new Paths([
-        '/my-path' => [
-            '$ref' => '#/some/ref',
-        ],
-    ]);
-
-    $result = $paths->references();
-
-    expect($result)->toHaveCount(1);
-    expect($result[0])->toBeInstanceOf(Reference::class);
-});

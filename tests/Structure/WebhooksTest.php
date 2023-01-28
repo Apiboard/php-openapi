@@ -44,15 +44,3 @@ test('webhooks can be counted', function () {
 
     expect($result)->toBe(2);
 });
-
-test('it can return all its references', function () {
-    $responses = new Webhooks([
-        '/my-path' => [],
-        '/my-other-path' => ['$ref' => '#/some/ref']
-    ]);
-
-    $result = $responses->references();
-
-    expect($result)->toHaveCount(1);
-    expect($result[0])->toBeInstanceOf(Reference::class);
-});

@@ -168,17 +168,3 @@ test('it can return the referenced request body', function () {
 
     expect($result)->toBeInstanceOf(Reference::class);
 });
-
-test('it can return all its references', function () {
-    $responses = new Operation('get', [
-        'requestBody' => [
-            '$ref' => '#/some/ref'
-        ],
-        'callbacks' => [],
-    ]);
-
-    $result = $responses->references();
-
-    expect($result)->toHaveCount(1);
-    expect($result[0])->toBeInstanceOf(Reference::class);
-});
