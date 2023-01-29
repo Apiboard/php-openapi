@@ -6,6 +6,7 @@ use Apiboard\OpenAPI\Concerns\CanBeDeprecated;
 use Apiboard\OpenAPI\Concerns\CanBeDescribed;
 use Apiboard\OpenAPI\Concerns\CanBeRequired;
 use Apiboard\OpenAPI\Concerns\HasASchema;
+use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 
 final class Parameter
 {
@@ -13,6 +14,7 @@ final class Parameter
     use CanBeDescribed;
     use CanBeDeprecated;
     use HasASchema;
+    use HasVendorExtensions;
 
     private array $data;
 

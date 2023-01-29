@@ -4,6 +4,7 @@ namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\CanBeUsedAsArray;
 use Apiboard\OpenAPI\Concerns\HasReferences;
+use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 use Apiboard\OpenAPI\References\Reference;
 use ArrayAccess;
 use Countable;
@@ -13,14 +14,16 @@ final class Callbacks implements ArrayAccess, Countable, Iterator
 {
     use CanBeUsedAsArray;
     use HasReferences;
+    use HasVendorExtensions;
 
     private array $data;
 
     public function __construct(array $data)
     {
         foreach ($data as $expression => $value) {
-            $data[$expression] = match ($this->isReference($value)) {
-                true => new Reference($value['$ref']),
+            $data[$expression] = match (true) {
+                $this->isReference($value) => new Reference($value['$ref']),
+                $this->isVendorExtension($expression) => $value,
                 default => new PathItem($expression, $value),
             };
         }
@@ -30,6 +33,10 @@ final class Callbacks implements ArrayAccess, Countable, Iterator
 
     public function offsetGet(mixed $expression): PathItem|Reference|null
     {
+        if ($this->isVendorExtension($expression)) {
+            return null;
+        }
+
         return $this->data[$expression] ?? null;
     }
 

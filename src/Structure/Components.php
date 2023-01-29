@@ -2,8 +2,12 @@
 
 namespace Apiboard\OpenAPI\Structure;
 
+use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
+
 final class Components
 {
+    use HasVendorExtensions;
+
     private array $data;
 
     public function __construct(array $data)

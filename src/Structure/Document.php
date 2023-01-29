@@ -2,12 +2,15 @@
 
 namespace Apiboard\OpenAPI\Structure;
 
+use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 use Apiboard\OpenAPI\Contents\Json;
 use Apiboard\OpenAPI\Contents\Yaml;
 use Stringable;
 
 final class Document implements Stringable
 {
+    use HasVendorExtensions;
+
     private Yaml|Json $contents;
 
     private array $data;

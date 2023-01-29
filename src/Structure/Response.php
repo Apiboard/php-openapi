@@ -2,8 +2,12 @@
 
 namespace Apiboard\OpenAPI\Structure;
 
+use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
+
 final class Response
 {
+    use HasVendorExtensions;
+
     private string $statusCode;
 
     private array $data;

@@ -3,10 +3,12 @@
 namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\CanBeDescribed;
+use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 
 final class PathItem
 {
     use CanBeDescribed;
+    use HasVendorExtensions;
 
     private string $uri;
 

@@ -4,6 +4,7 @@ namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\CanBeUsedAsArray;
 use Apiboard\OpenAPI\Concerns\HasReferences;
+use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 use Apiboard\OpenAPI\References\Reference;
 use ArrayAccess;
 use Countable;
@@ -13,14 +14,16 @@ final class Responses implements ArrayAccess, Countable, Iterator
 {
     use CanBeUsedAsArray;
     use HasReferences;
+    use HasVendorExtensions;
 
     private array $data;
 
     public function __construct(array $data)
     {
         foreach ($data as $statusCode => $value) {
-            $data[$statusCode] = match ($this->isReference($value)) {
-                true => new Reference($value['$ref']),
+            $data[$statusCode] = match (true) {
+                $this->isReference($value) => new Reference($value['$ref']),
+                $this->isVendorExtension($statusCode) => $value,
                 default => new Response($statusCode, $value),
             };
         }
@@ -30,6 +33,10 @@ final class Responses implements ArrayAccess, Countable, Iterator
 
     public function offsetGet(mixed $statusCode): Response|Reference|null
     {
+        if ($this->isVendorExtension($statusCode)) {
+            return null;
+        }
+
         return $this->data[$statusCode] ?? null;
     }
 

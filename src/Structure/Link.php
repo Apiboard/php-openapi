@@ -3,11 +3,13 @@
 namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\CanBeDescribed;
+use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 use Apiboard\OpenAPI\References\JsonPointer;
 
 final class Link
 {
     use CanBeDescribed;
+    use HasVendorExtensions;
 
     private array $data;
 

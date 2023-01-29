@@ -25,3 +25,13 @@ test('it can retrieve references callbacks by their expression', function () {
 
     expect($result)->toBeInstanceOf(Reference::class);
 });
+
+test('it does not include vendor extensions', function () {
+    $callbacks = new Callbacks([
+        'x-vendor' => [],
+    ]);
+
+    $result = $callbacks['x-vendor'];
+
+    expect($result)->toBeNull();
+});

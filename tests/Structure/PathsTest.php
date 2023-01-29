@@ -33,3 +33,13 @@ test('it returns null for unknown paths', function () {
 
     expect($result)->toBeNull();
 });
+
+test('it does not include vendor extensions', function () {
+    $paths = new Paths([
+        'x-vendor' => [],
+    ]);
+
+    $result = $paths['x-vendor'];
+
+    expect($result)->toBeNull();
+});

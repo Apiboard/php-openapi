@@ -3,11 +3,13 @@
 namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\HasReferences;
+use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 use Apiboard\OpenAPI\References\Reference;
 
 final class MediaType
 {
     use HasReferences;
+    use HasVendorExtensions;
 
     private string $contentType;
 

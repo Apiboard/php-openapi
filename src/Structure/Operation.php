@@ -5,6 +5,7 @@ namespace Apiboard\OpenAPI\Structure;
 use Apiboard\OpenAPI\Concerns\CanBeDeprecated;
 use Apiboard\OpenAPI\Concerns\CanBeDescribed;
 use Apiboard\OpenAPI\Concerns\HasReferences;
+use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 use Apiboard\OpenAPI\References\Reference;
 
 final class Operation
@@ -12,6 +13,7 @@ final class Operation
     use CanBeDeprecated;
     use CanBeDescribed;
     use HasReferences;
+    use HasVendorExtensions;
 
     private string $method;
 

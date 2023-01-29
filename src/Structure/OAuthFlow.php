@@ -2,8 +2,12 @@
 
 namespace Apiboard\OpenAPI\Structure;
 
+use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
+
 final class OAuthFlow
 {
+    use HasVendorExtensions;
+
     private string $type;
 
     private array $data;

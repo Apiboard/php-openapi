@@ -25,3 +25,13 @@ test('it can retrieve referenced responses by their status code', function () {
 
     expect($result)->toBeInstanceOf(Reference::class);
 });
+
+test('it does not include vendor extensions', function () {
+    $paths = new Responses([
+        'x-vendor' => [],
+    ]);
+
+    $result = $paths['x-vendor'];
+
+    expect($result)->toBeNull();
+});
