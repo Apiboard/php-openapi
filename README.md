@@ -2,7 +2,7 @@
 
 OpenAPI Specification parser for PHP 8. Supports both OAS 3.0 and 3.1.
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/vpre/apiboard/php-openapi.svg?style=flat-square)](https://packagist.org/packages/beblife/schema-validation-laravel)
+[![Latest Version on Packagist](https://img.shields.io/packagist/vpre/apiboard/php-openapi.svg?style=flat-square)](https://packagist.org/packages/apiboard/php-openapi)
 ![PHP from Packagist](https://img.shields.io/packagist/php-v/apiboard/php-openapi?style=flat-square)
 ![CI](https://github.com/apiboard/php-openapi/workflows/CI/badge.svg?style=flat-square)
 
