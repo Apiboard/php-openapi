@@ -24,6 +24,14 @@ test('it can be cast to array', function () {
     expect($yamlSpec->toArray())->toBe([]);
 });
 
+test('it can be json serialized', function () {
+    $jsonSpec = jsonDocument('{}');
+    $yamlSpec = yamlDocument('');
+
+    expect($jsonSpec->jsonSerialize())->toBe([]);
+    expect($yamlSpec->jsonSerialize())->toBe([]);
+});
+
 test('it can return the OpenAPI version', function () {
     $spec = jsonDocument('{
         "openapi": "3.1.0"

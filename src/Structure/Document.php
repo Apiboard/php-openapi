@@ -5,9 +5,10 @@ namespace Apiboard\OpenAPI\Structure;
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 use Apiboard\OpenAPI\Contents\Json;
 use Apiboard\OpenAPI\Contents\Yaml;
+use JsonSerializable;
 use Stringable;
 
-final class Document implements Stringable
+final class Document implements Stringable, JsonSerializable
 {
     use HasVendorExtensions;
 
@@ -29,6 +30,11 @@ final class Document implements Stringable
     public function toArray(): array
     {
         return $this->contents->toArray();
+    }
+
+    public function jsonSerialize(): array
+    {
+        return $this->toArray();
     }
 
     public function openAPI(): string
