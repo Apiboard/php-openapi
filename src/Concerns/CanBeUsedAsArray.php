@@ -4,7 +4,7 @@ namespace Apiboard\OpenAPI\Concerns;
 
 use ArrayIterator;
 
-trait AsCountableArrayIterator
+trait CanBeUsedAsArray
 {
     private ?ArrayIterator $iterator = null;
 

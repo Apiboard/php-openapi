@@ -2,7 +2,7 @@
 
 namespace Apiboard\OpenAPI\Structure;
 
-use Apiboard\OpenAPI\Concerns\AsCountableArrayIterator;
+use Apiboard\OpenAPI\Concerns\CanBeUsedAsArray;
 use Apiboard\OpenAPI\Concerns\HasReferences;
 use Apiboard\OpenAPI\References\Reference;
 use ArrayAccess;
@@ -11,7 +11,7 @@ use Iterator;
 
 final class Paths implements ArrayAccess, Countable, Iterator
 {
-    use AsCountableArrayIterator;
+    use CanBeUsedAsArray;
     use HasReferences;
 
     private array $data;
