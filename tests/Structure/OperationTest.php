@@ -87,24 +87,6 @@ test('it can return the security', function () {
     expect($result)->toBeInstanceOf(Security::class);
 });
 
-test('it can return the deprecated state', function () {
-    $operation = new Operation('get', [
-        'deprecated' => true,
-    ]);
-
-    $result = $operation->deprecated();
-
-    expect($result)->toBeTrue();
-});
-
-test('it returns false as deprecated state when not available', function () {
-    $operation = new Operation('get', []);
-
-    $result = $operation->deprecated();
-
-    expect($result)->toBeFalse();
-});
-
 test('it can return the callbacks', function () {
     $operation = new Operation('get', [
         'callbacks' => [],

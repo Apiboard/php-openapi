@@ -22,25 +22,6 @@ test('it can return the location', function () {
     expect($result)->toBe('header');
 });
 
-test('it can return the deprecated state', function () {
-    $parameter = new Parameter([
-        'deprecated' => true,
-    ]);
-
-    $result = $parameter->deprecated();
-
-    expect($result)->toBeTrue();
-});
-
-test('it returns false for the the deprecated state by default', function () {
-    $parameter = new Parameter([
-    ]);
-
-    $result = $parameter->deprecated();
-
-    expect($result)->toBeFalse();
-});
-
 test('it can return the style', function () {
     $parameter = new Parameter([
         'style' => 'form',

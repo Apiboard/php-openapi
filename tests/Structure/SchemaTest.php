@@ -91,16 +91,6 @@ test('it can return the examples combined with a 3.0.X example format', function
         ->toHaveCount(2);
 });
 
-test('it can return the deprecated state', function () {
-    $schema = new Schema([
-        'deprecated' => true,
-    ]);
-
-    $result = $schema->deprecated();
-
-    expect($result)->toBeTrue();
-});
-
 test('it can return the read only state', function () {
     $schema = new Schema([
         'readOnly' => true,
