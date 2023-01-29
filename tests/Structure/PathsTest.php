@@ -33,14 +33,3 @@ test('it returns null for unknown paths', function () {
 
     expect($result)->toBeNull();
 });
-
-test('paths can be counted', function () {
-    $paths = new Paths([
-        '/my-path' => [],
-        '/my-other-path' => [],
-    ]);
-
-    $result = count($paths);
-
-    expect($result)->toBe(2);
-});

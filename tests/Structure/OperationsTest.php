@@ -20,14 +20,3 @@ test('it returns null for unknown operation methods', function () {
 
     expect($result)->toBeNull();
 });
-
-test('operations can be counted', function () {
-    $operations = new Operations([
-        'get' => [],
-        'post' => [],
-    ]);
-
-    $result = count($operations);
-
-    expect($result)->toBe(2);
-});

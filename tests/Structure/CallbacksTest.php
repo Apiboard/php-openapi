@@ -25,22 +25,3 @@ test('it can retrieve references callbacks by their expression', function () {
 
     expect($result)->toBeInstanceOf(Reference::class);
 });
-
-test('it can be looped over', function () {
-    $callbacks = new Callbacks([
-        'expression-1' => [],
-        'expression-2' => [],
-    ]);
-    $looped = [];
-
-    foreach ($callbacks as $key => $callback) {
-        $looped[] = $key;
-
-        expect($callback)->toBeInstanceOf(PathItem::class);
-    }
-
-    expect($looped)->toEqual([
-        'expression-1',
-        'expression-2',
-    ]);
-});

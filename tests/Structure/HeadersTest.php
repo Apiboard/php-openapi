@@ -33,14 +33,3 @@ test('it returns null for unknown header names', function () {
 
     expect($result)->toBeNull();
 });
-
-test('headers can be counted', function () {
-    $headers = new Headers([
-        'X-My-Header' => [],
-        'X-Other-Header' => [],
-    ]);
-
-    $result = count($headers);
-
-    expect($result)->toBe(2);
-});

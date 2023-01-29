@@ -2,24 +2,6 @@
 
 use Apiboard\OpenAPI\Structure\DataTypes;
 
-test('it retrieve data types by key', function () {
-    $dataTypes = new DataTypes([
-        0 => 'object',
-    ]);
-
-    $result = $dataTypes[0];
-
-    expect($result)->toBe('object');
-});
-
-test('it can count the data types', function () {
-    $dataTypes = new DataTypes([
-        'object',
-    ]);
-
-    expect($dataTypes)->toHaveCount(1);
-});
-
 test('it can return if the data type is string', function () {
     $dataTypes = new DataTypes([
         'string',

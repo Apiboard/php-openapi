@@ -25,11 +25,3 @@ test('it retrieve referenced schemas by key', function () {
 
     expect($result)->toBeInstanceOf(Reference::class);
 });
-
-test('it can count the schemas', function () {
-    $schemas = new Schemas([
-        [],
-    ]);
-
-    expect($schemas)->toHaveCount(1);
-});

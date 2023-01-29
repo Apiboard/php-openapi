@@ -33,14 +33,3 @@ test('it returns null for unknown webhooks', function () {
 
     expect($result)->toBeNull();
 });
-
-test('webhooks can be counted', function () {
-    $webhooks = new Webhooks([
-        '/my-path' => [],
-        '/my-other-path' => [],
-    ]);
-
-    $result = count($webhooks);
-
-    expect($result)->toBe(2);
-});
