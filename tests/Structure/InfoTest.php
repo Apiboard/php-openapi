@@ -24,16 +24,6 @@ test('it can return the version', function () {
     expect($result)->toBe('0');
 });
 
-test('it can return the description', function () {
-    $info = new Info([
-        'description' => 'This is just an example API for testing purposes.',
-    ]);
-
-    $result = $info->description();
-
-    expect($result)->toBe('This is just an example API for testing purposes.');
-});
-
 test('it can return the terms of service', function () {
     $info = new Info([
         'termsOfService' => 'https://example.com/terms',

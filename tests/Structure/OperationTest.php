@@ -27,16 +27,6 @@ test('it can return the summary', function () {
     expect($result)->toBe('My get summary!');
 });
 
-test('it can return the description', function () {
-    $operation = new Operation('get', [
-        'description' => 'My get description!',
-    ]);
-
-    $result = $operation->description();
-
-    expect($result)->toBe('My get description!');
-});
-
 test('it can return the operationId', function () {
     $operation = new Operation('get', [
         'operationId' => 'my-get-operationId!',

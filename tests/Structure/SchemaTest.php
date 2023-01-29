@@ -16,16 +16,6 @@ test('it can return the title', function () {
     expect($result)->toBe('My schema title');
 });
 
-test('it can return the description', function () {
-    $schema = new Schema([
-        'description' => 'My schema description',
-    ]);
-
-    $result = $schema->description();
-
-    expect($result)->toBe('My schema description');
-});
-
 test('it can return the data types', function (array $data, int $count) {
     $schema = new Schema($data);
 

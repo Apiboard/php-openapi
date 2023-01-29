@@ -26,16 +26,6 @@ test('it can return the default value', function () {
     expect($result)->toBe('something');
 });
 
-test('it can return the description', function () {
-    $serverVariable = new ServerVariable([
-        'description' => 'some variable',
-    ]);
-
-    $result = $serverVariable->description();
-
-    expect($result)->toBe('some variable');
-});
-
 test('it can return null when data is not available', function (string $data) {
     $serverVariable = new ServerVariable([]);
 

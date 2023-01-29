@@ -12,24 +12,6 @@ test('it can return the name', function () {
     expect($result)->toBe('Parameter name');
 });
 
-test('it can return the description', function () {
-    $parameter = new Parameter([
-        'description' => 'Parameter description',
-    ]);
-
-    $result = $parameter->description();
-
-    expect($result)->toBe('Parameter description');
-});
-
-test('it returns null when the description is unavailable', function () {
-    $parameter = new Parameter([]);
-
-    $result = $parameter->description();
-
-    expect($result)->toBeNull();
-});
-
 test('it can return the location', function () {
     $parameter = new Parameter([
         'in' => 'header',

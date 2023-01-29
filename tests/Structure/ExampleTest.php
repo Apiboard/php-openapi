@@ -12,16 +12,6 @@ test('it can return the summary', function () {
     expect($result)->toBe('My cool example');
 });
 
-test('it can return the description', function () {
-    $example = new Example([
-        'description' => 'My cool example',
-    ]);
-
-    $result = $example->description();
-
-    expect($result)->toBe('My cool example');
-});
-
 test('it can return the value', function () {
     $example = new Example([
         'value' => [],

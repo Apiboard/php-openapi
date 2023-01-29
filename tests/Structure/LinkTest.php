@@ -5,16 +5,6 @@ use Apiboard\OpenAPI\Structure\Link;
 use Apiboard\OpenAPI\Structure\RuntimeExpression;
 use Apiboard\OpenAPI\Structure\Server;
 
-test('it can return the description', function () {
-    $link = new Link([
-        'description' => 'My link!',
-    ]);
-
-    $result = $link->description();
-
-    expect($result)->toBe('My link!');
-});
-
 test('it can return the operation id', function () {
     $link = new Link([
         'operationId' => 'operation-id',

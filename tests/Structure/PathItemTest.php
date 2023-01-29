@@ -23,16 +23,6 @@ test('it can return the summary', function () {
     expect($result)->toBe('My uri summary!');
 });
 
-test('it can return the description', function () {
-    $path = new PathItem('/my-uri', [
-        'description' => 'My uri description!',
-    ]);
-
-    $result = $path->description();
-
-    expect($result)->toBe('My uri description!');
-});
-
 test('it can return the parameters', function () {
     $path = new PathItem('/my-uri', [
         'parameters' => [],

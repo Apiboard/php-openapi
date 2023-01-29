@@ -13,16 +13,6 @@ test('it can return the url', function () {
     expect($result)->toBe('https://my.server.example');
 });
 
-test('it can return the description', function () {
-    $server = new Server([
-        'description' => 'My server!',
-    ]);
-
-    $result = $server->description();
-
-    expect($result)->toBe('My server!');
-});
-
 test('it can return the server variables', function () {
     $server = new Server([
         'variables' => [
