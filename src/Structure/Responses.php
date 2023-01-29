@@ -18,7 +18,7 @@ final class Responses implements ArrayAccess, Countable, Iterator
 
     public function __construct(array $data)
     {
-        foreach ($data as $statusCode=>$value) {
+        foreach ($data as $statusCode => $value) {
             $data[$statusCode] = match ($this->isReference($value)) {
                 true => new Reference($value['$ref']),
                 default => new Response($statusCode, $value),

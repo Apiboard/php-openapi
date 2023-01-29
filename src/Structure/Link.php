@@ -40,7 +40,7 @@ final class Link
             return null;
         }
 
-        foreach ($parameters as $name=>$expression) {
+        foreach ($parameters as $name => $expression) {
             $parameters[$name] = new RuntimeExpression($name, $expression);
         }
 

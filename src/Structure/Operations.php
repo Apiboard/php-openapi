@@ -15,7 +15,7 @@ final class Operations implements ArrayAccess, Countable, Iterator
 
     public function __construct(array $data)
     {
-        foreach ($data as $method=>$value) {
+        foreach ($data as $method => $value) {
             $data[$method] = new Operation($method, $value);
         }
 

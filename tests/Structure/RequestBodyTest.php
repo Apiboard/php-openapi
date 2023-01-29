@@ -5,7 +5,7 @@ use Apiboard\OpenAPI\Structure\RequestBody;
 
 test('it can return the description', function () {
     $requestBody = new RequestBody([
-        'description' => 'Some request body!'
+        'description' => 'Some request body!',
     ]);
 
     $result = $requestBody->description();

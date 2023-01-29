@@ -18,7 +18,7 @@ test('it can retrieve referenced parameters by key', function () {
     $parameters = new Parameters([
         0 => [
             '$ref' => '#/some/reference',
-        ]
+        ],
     ]);
 
     $result = $parameters[0];
@@ -33,16 +33,15 @@ test('it can retrieve parameter by their location', function (string $location) 
         ],
         [
             '$ref' => '#/some/ref',
-        ]
+        ],
     ]);
-    $location = 'in' . ucfirst($location);
+    $location = 'in'.ucfirst($location);
 
     $result = $parameters->{$location}();
 
     expect($result)
         ->toBeInstanceOf(Parameters::class)
-        ->not->toBeEmpty()
-    ;
+        ->not->toBeEmpty();
 })->with([
     'query',
     'header',
@@ -59,7 +58,7 @@ test('it can retrieve only required parameters', function () {
         ],
         [
             '$ref' => '#/some/ref',
-        ]
+        ],
     ]);
 
     $result = $parameters->onlyRequired();

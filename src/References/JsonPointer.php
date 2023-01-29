@@ -29,8 +29,7 @@ class JsonPointer
     }
 
     /**
-     * @param string $propertyPathString
-     *
+     * @param  string  $propertyPathString
      * @return string[]
      */
     private function decodePropertyPaths($propertyPathString)
@@ -48,13 +47,12 @@ class JsonPointer
     }
 
     /**
-     * @param string $path
-     *
+     * @param  string  $path
      * @return string
      */
     private function decodePath($path)
     {
-        return strtr($path, array('~1' => '/', '~0' => '~', '%25' => '%'));
+        return strtr($path, ['~1' => '/', '~0' => '~', '%25' => '%']);
     }
 
     public function getFilename(): string

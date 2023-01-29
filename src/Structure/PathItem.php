@@ -58,7 +58,7 @@ final class PathItem
             'put' => $this->data['put'] ?? null,
             'patch' => $this->data['patch'] ?? null,
             'delete' => $this->data['delete'] ?? null,
-        ], fn (mixed $value) =>  $value !== null);
+        ], fn (mixed $value) => $value !== null);
 
         if (count($operations) === 0) {
             return null;

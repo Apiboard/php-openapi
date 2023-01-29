@@ -158,7 +158,7 @@ final class Schema
 
         if ($example !== null) {
             $examples = array_merge($examples ?? [], [
-                ['value' => $example]
+                ['value' => $example],
             ]);
         }
 

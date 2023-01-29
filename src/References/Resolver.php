@@ -36,7 +36,7 @@ final class Resolver
     }
 
     /**
-     * @param array<Reference> $references
+     * @param  array<Reference>  $references
      */
     private function retrieveReferences(array $references, string $basePath): void
     {
@@ -49,7 +49,7 @@ final class Resolver
 
             if ($previouslyRetrieved === false) {
                 $absoluteReference = $reference->withBase($basePath);
-                $contents =  $this->retriever->retrieve($absoluteReference->path());
+                $contents = $this->retriever->retrieve($absoluteReference->path());
 
                 $resolvedContents = $contents->toArray();
 
@@ -83,7 +83,7 @@ final class Resolver
             return $resolved;
         }
 
-        foreach ($contents as $key=>$value) {
+        foreach ($contents as $key => $value) {
             if ($key !== '$ref') {
                 $this->replacedKeys[] = $key;
 
@@ -110,9 +110,10 @@ final class Resolver
                 if ($resolvedKey && ($resolvedValue[$resolvedKey] === $contents)) {
                     $resolved = [
                         $resolvedKey => [
-                            '$ref' => "#/" . implode('/', $this->replacedKeys) . '/' . array_key_first($resolvedValue),
+                            '$ref' => '#/'.implode('/', $this->replacedKeys).'/'.array_key_first($resolvedValue),
                         ],
                     ];
+
                     continue;
                 }
 

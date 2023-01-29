@@ -19,7 +19,7 @@ test('it can return the method', function () {
 
 test('it can return the summary', function () {
     $operation = new Operation('get', [
-        'summary' => 'My get summary!'
+        'summary' => 'My get summary!',
     ]);
 
     $result = $operation->summary();
@@ -29,7 +29,7 @@ test('it can return the summary', function () {
 
 test('it can return the description', function () {
     $operation = new Operation('get', [
-        'description' => 'My get description!'
+        'description' => 'My get description!',
     ]);
 
     $result = $operation->description();
@@ -39,7 +39,7 @@ test('it can return the description', function () {
 
 test('it can return the operationId', function () {
     $operation = new Operation('get', [
-        'operationId' => 'my-get-operationId!'
+        'operationId' => 'my-get-operationId!',
     ]);
 
     $result = $operation->operationId();
@@ -49,7 +49,7 @@ test('it can return the operationId', function () {
 
 test('it can return the parameters', function () {
     $operation = new Operation('get', [
-        'parameters' => []
+        'parameters' => [],
     ]);
 
     $result = $operation->parameters();
@@ -59,7 +59,7 @@ test('it can return the parameters', function () {
 
 test('it can return the request body', function () {
     $operation = new Operation('get', [
-        'requestBody' => []
+        'requestBody' => [],
     ]);
 
     $result = $operation->requestBody();
@@ -69,7 +69,7 @@ test('it can return the request body', function () {
 
 test('it can return the responses', function () {
     $operation = new Operation('get', [
-        'responses' => []
+        'responses' => [],
     ]);
 
     $result = $operation->responses();
@@ -79,7 +79,7 @@ test('it can return the responses', function () {
 
 test('it can return the servers', function () {
     $operation = new Operation('get', [
-        'servers' => []
+        'servers' => [],
     ]);
 
     $result = $operation->servers();
@@ -89,7 +89,7 @@ test('it can return the servers', function () {
 
 test('it can return the security', function () {
     $operation = new Operation('get', [
-        'security' => []
+        'security' => [],
     ]);
 
     $result = $operation->security();
@@ -99,7 +99,7 @@ test('it can return the security', function () {
 
 test('it can return the deprecated state', function () {
     $operation = new Operation('get', [
-        'deprecated' => true
+        'deprecated' => true,
     ]);
 
     $result = $operation->deprecated();
@@ -115,7 +115,6 @@ test('it returns false as deprecated state when not available', function () {
     expect($result)->toBeFalse();
 });
 
-
 test('it can return the callbacks', function () {
     $operation = new Operation('get', [
         'callbacks' => [],
@@ -129,7 +128,7 @@ test('it can return the callbacks', function () {
 test('it can return the tags', function () {
     $operation = new Operation('get', [
         'tags' => [
-            'tag-1'
+            'tag-1',
         ],
     ]);
 
@@ -154,14 +153,14 @@ test('it returns null when data is unavailable', function (string $data) {
     'requestBody',
     'servers',
     'security',
-    'callbacks'
+    'callbacks',
 ]);
 
 test('it can return the referenced request body', function () {
     $operation = new Operation('get', [
         'requestBody' => [
-            '$ref' => '#/some/ref'
-        ]
+            '$ref' => '#/some/ref',
+        ],
     ]);
 
     $result = $operation->requestBody();

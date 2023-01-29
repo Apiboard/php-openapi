@@ -4,7 +4,7 @@ use Apiboard\OpenAPI\Contents\Json;
 use Apiboard\OpenAPI\References\Reference;
 
 test('it can cast empty strings to an array', function () {
-    $contents = "";
+    $contents = '';
 
     $json = new Json($contents);
 
@@ -12,7 +12,7 @@ test('it can cast empty strings to an array', function () {
 });
 
 test('it can cast empty JSON strings to an array', function () {
-    $contents = "{}";
+    $contents = '{}';
 
     $json = new Json($contents);
 
@@ -25,7 +25,7 @@ test('it can cast none empty JSON strings to an array', function () {
     $json = new Json($contents);
 
     expect($json->toArray())->toBe([
-        'i-am' => 'not-empty'
+        'i-am' => 'not-empty',
     ]);
 });
 

@@ -17,7 +17,7 @@ test('it can retrieve callbacks by their expression', function () {
 test('it can retrieve references callbacks by their expression', function () {
     $callbacks = new Callbacks([
         'expression' => [
-            '$ref' => '#/some/ref'
+            '$ref' => '#/some/ref',
         ],
     ]);
 
@@ -33,7 +33,7 @@ test('it can be looped over', function () {
     ]);
     $looped = [];
 
-    foreach ($callbacks as $key=>$callback) {
+    foreach ($callbacks as $key => $callback) {
         $looped[] = $key;
 
         expect($callback)->toBeInstanceOf(PathItem::class);

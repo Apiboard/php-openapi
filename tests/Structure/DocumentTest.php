@@ -31,7 +31,7 @@ test('it can return the OpenAPI version', function () {
 
     $result = $spec->openAPI();
 
-    expect($result)->toBe("3.1.0");
+    expect($result)->toBe('3.1.0');
 });
 
 test('it can return the info', function () {

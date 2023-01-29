@@ -2,8 +2,8 @@
 
 use Apiboard\OpenAPI\Concerns\HasReferences;
 use Apiboard\OpenAPI\Contents\Json;
-use Apiboard\OpenAPI\References\Reference;
 use Apiboard\OpenAPI\Contents\Yaml;
+use Apiboard\OpenAPI\References\Reference;
 use Apiboard\OpenAPI\Structure\Callbacks;
 use Apiboard\OpenAPI\Structure\Examples;
 use Apiboard\OpenAPI\Structure\Headers;
@@ -20,14 +20,15 @@ use Apiboard\OpenAPI\Structure\SecuritySchemes;
 use Apiboard\OpenAPI\Structure\Webhooks;
 
 test('it can return all references', function () {
-    $class = new class () {
+    $class = new class()
+    {
         use HasReferences;
 
         public function toArray(): array
         {
             return [
                 'ref-key' => [
-                    '$ref' => '#/some/ref'
+                    '$ref' => '#/some/ref',
                 ],
                 'normal-key' => 'with value',
             ];

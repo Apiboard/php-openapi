@@ -2,9 +2,6 @@
 
 namespace Apiboard\OpenAPI\Contents;
 
-use Apiboard\OpenAPI\Contents\Json;
-use Apiboard\OpenAPI\Contents\Yaml;
-
 interface Retriever
 {
     public function basePath(): string;

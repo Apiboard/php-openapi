@@ -35,7 +35,7 @@ test('it can return the data types', function (array $data, int $count) {
         ->toBeInstanceOf(DataTypes::class)
         ->toHaveCount($count);
 })->with([
-    'OpenAPI 3.0.X' =>[
+    'OpenAPI 3.0.X' => [
         [
             'type' => 'string',
             'nullable' => false,
@@ -44,23 +44,23 @@ test('it can return the data types', function (array $data, int $count) {
     ],
     'OpenAPI 3.1.X' => [
         [
-            'type' => ['string']
+            'type' => ['string'],
         ],
-        1
+        1,
     ],
     'Nullable OpenAPI 3.0.X' => [
         [
             'type' => 'string',
             'nullable' => true,
         ],
-        2
+        2,
     ],
     'Nullable OpenAPI 3.1.X' => [
         [
             'type' => ['string', 'null'],
         ],
-        2
-    ]
+        2,
+    ],
 ]);
 
 test('it can return the examples', function () {
@@ -88,7 +88,7 @@ test('it can return the examples combined with a 3.0.X example format', function
     $schema = new Schema([
         'examples' => [
             [
-                'value' => 'New example'
+                'value' => 'New example',
             ],
         ],
         'example' => 'An example!',
@@ -170,7 +170,7 @@ test('it can return the items as reference', function () {
 
 test('it can return the min items', function () {
     $schema = new Schema([
-       'minItems' => 1,
+        'minItems' => 1,
     ]);
 
     $result = $schema->minItems();
@@ -180,7 +180,7 @@ test('it can return the min items', function () {
 
 test('it can return the max items', function () {
     $schema = new Schema([
-       'maxItems' => 1,
+        'maxItems' => 1,
     ]);
 
     $result = $schema->maxItems();
@@ -190,7 +190,7 @@ test('it can return the max items', function () {
 
 test('it can return the unique items state', function () {
     $schema = new Schema([
-       'uniqueItems' => true,
+        'uniqueItems' => true,
     ]);
 
     $result = $schema->uniqueItems();
@@ -200,7 +200,7 @@ test('it can return the unique items state', function () {
 
 test('it can return the format', function () {
     $schema = new Schema([
-        'format' => 'uuid'
+        'format' => 'uuid',
     ]);
 
     $result = $schema->format();
@@ -230,7 +230,7 @@ test('it can return the min length', function () {
 
 test('it can return the minimum', function () {
     $schema = new Schema([
-        'minimum' => 0
+        'minimum' => 0,
     ]);
 
     $result = $schema->minimum();
@@ -250,7 +250,7 @@ test('it can return the max length', function () {
 
 test('it can return the maximum', function () {
     $schema = new Schema([
-        'maximum' => 0
+        'maximum' => 0,
     ]);
 
     $result = $schema->maximum();
@@ -260,7 +260,7 @@ test('it can return the maximum', function () {
 
 test('it can return the multiple of', function () {
     $schema = new Schema([
-        'multipleOf' => 2
+        'multipleOf' => 2,
     ]);
 
     $result = $schema->multipleOf();
@@ -272,7 +272,7 @@ test('it can return the required properties for objects', function () {
     $schema = new Schema([
         'required' => [
             'something',
-        ]
+        ],
     ]);
 
     $result = $schema->required();
@@ -294,7 +294,7 @@ test('it returns the required properties for objects as an empty array by defaul
 
 test('it can return the required state', function () {
     $schema = new Schema([
-        'required' => true
+        'required' => true,
     ]);
 
     $result = $schema->required();
@@ -343,19 +343,19 @@ test('it returns null when data is not available', function (string $data) {
 
     expect($result)->toBeNull();
 })->with([
-   'title',
-   'description',
-   'examples',
-   'polymorphism',
-   'types',
-   'properties',
-   'items',
-   'format',
-   'enum',
-   'minimum',
-   'maximum',
-   'minItems',
-   'maxItems',
-   'uniqueItems',
-   'multipleOf',
+    'title',
+    'description',
+    'examples',
+    'polymorphism',
+    'types',
+    'properties',
+    'items',
+    'format',
+    'enum',
+    'minimum',
+    'maximum',
+    'minItems',
+    'maxItems',
+    'uniqueItems',
+    'multipleOf',
 ]);

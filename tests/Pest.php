@@ -58,7 +58,7 @@ function openAPI(?Retriever $retriever = null): OpenAPI
 
 function fixture(string $path): string
 {
-    return __DIR__ . "/__fixtures__/{$path}";
+    return __DIR__."/__fixtures__/{$path}";
 }
 
 function tap(mixed $result, callable $callback)

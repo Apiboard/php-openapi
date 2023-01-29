@@ -25,7 +25,7 @@ final class Polymorphism
 
         if ($this->type === 'allOf') {
             $schemas = [
-                array_reduce($schemas, fn (array $schemas, array $schema) => array_merge($schemas, $schema), [])
+                array_reduce($schemas, fn (array $schemas, array $schema) => array_merge($schemas, $schema), []),
             ];
         }
 

@@ -26,8 +26,8 @@ final class OpenAPI
         $this->resolver = new Resolver($retriever);
         $this->validator = new \Opis\JsonSchema\Validator();
         $this->validator->resolver()
-            ->registerFile('https://apiboard.dev/oas-3.0.json', __DIR__ . "/Validation/v3.0.json")
-            ->registerFile('https://apiboard.dev/oas-3.1.json', __DIR__ . "/Validation/v3.1.json");
+            ->registerFile('https://apiboard.dev/oas-3.0.json', __DIR__.'/Validation/v3.0.json')
+            ->registerFile('https://apiboard.dev/oas-3.1.json', __DIR__.'/Validation/v3.1.json');
     }
 
     public function parse(string $filePath): Document
@@ -38,9 +38,9 @@ final class OpenAPI
 
         $errorMessage = '';
 
-        foreach ($this->validate($resolvedContents) as $pointer=>$errors) {
+        foreach ($this->validate($resolvedContents) as $pointer => $errors) {
             foreach ($errors as $error) {
-                $errorMessage .= "\n" . $error . " (~{$pointer})";
+                $errorMessage .= "\n".$error." (~{$pointer})";
             }
         }
 

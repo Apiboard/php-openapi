@@ -18,7 +18,7 @@ final class Webhooks implements ArrayAccess, Countable, Iterator
 
     public function __construct(array $data)
     {
-        foreach ($data as $uri=>$value) {
+        foreach ($data as $uri => $value) {
             $data[$uri] = match ($this->isReference($value)) {
                 true => new Reference($value['$ref']),
                 default => new PathItem($uri, $value),

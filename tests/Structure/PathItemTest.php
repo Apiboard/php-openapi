@@ -15,7 +15,7 @@ test('it can return the uri', function () {
 
 test('it can return the summary', function () {
     $path = new PathItem('/my-uri', [
-        'summary' => 'My uri summary!'
+        'summary' => 'My uri summary!',
     ]);
 
     $result = $path->summary();
@@ -25,7 +25,7 @@ test('it can return the summary', function () {
 
 test('it can return the description', function () {
     $path = new PathItem('/my-uri', [
-        'description' => 'My uri description!'
+        'description' => 'My uri description!',
     ]);
 
     $result = $path->description();

@@ -18,7 +18,7 @@ final class Headers implements ArrayAccess, Countable, Iterator
 
     public function __construct(array $data)
     {
-        foreach ($data as $name=>$value) {
+        foreach ($data as $name => $value) {
             $data[$name] = match ($this->isReference($value)) {
                 true => new Reference($value['$ref']),
                 default => new Header($name, $value),

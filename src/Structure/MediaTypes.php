@@ -15,7 +15,7 @@ final class MediaTypes implements ArrayAccess, Countable, Iterator
 
     public function __construct(array $data)
     {
-        foreach ($data as $contentType=>$value) {
+        foreach ($data as $contentType => $value) {
             $data[$contentType] = new MediaType($contentType, $value);
         }
 

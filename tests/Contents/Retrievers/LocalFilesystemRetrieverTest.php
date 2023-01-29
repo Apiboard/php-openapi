@@ -18,7 +18,6 @@ test('it can retrieve files with relative path using the configured base path', 
     expect($result->toString())->toBe(trim(file_get_contents($path)));
 });
 
-
 function localRetriever(): LocalFilesystemRetriever
 {
     return new LocalFilesystemRetriever();

@@ -1,10 +1,10 @@
 <?php
 
-use Apiboard\OpenAPI\References\Reference;
 use Apiboard\OpenAPI\Contents\Yaml;
+use Apiboard\OpenAPI\References\Reference;
 
 test('it can cast empty strings to an array', function () {
-    $contents = "";
+    $contents = '';
 
     $yaml = new Yaml($contents);
 
@@ -12,7 +12,7 @@ test('it can cast empty strings to an array', function () {
 });
 
 test('it can cast none empty YAML strings to an array', function () {
-    $contents = <<<EOD
+    $contents = <<<'EOD'
 i-am:
     - not empty
     - it seems
@@ -24,17 +24,17 @@ EOD;
         'i-am' => [
             'not empty',
             'it seems',
-        ]
+        ],
     ]);
 });
 
 test('it can return all external references', function () {
-    $json = new Yaml(<<<EOD
+    $json = new Yaml(<<<'EOD'
 info:
-  \$ref: '#/some/internal-json-pointer'
+  $ref: '#/some/internal-json-pointer'
 paths:
   /:
-    \$ref: './some-externa-ref.yml'
+    $ref: './some-externa-ref.yml'
 EOD);
 
     $result = $json->references();

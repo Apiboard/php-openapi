@@ -34,7 +34,6 @@ trait HasReferences
     {
         return is_array($value)
             && count($value) === 1
-            && array_key_exists('$ref', $value)
-        ;
+            && array_key_exists('$ref', $value);
     }
 }

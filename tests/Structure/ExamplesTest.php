@@ -6,7 +6,7 @@ use Apiboard\OpenAPI\Structure\Examples;
 
 test('it can retrieve examples by their key', function () {
     $examples = new Examples([
-        'my-example' => []
+        'my-example' => [],
     ]);
 
     $result = $examples['my-example'];
@@ -17,8 +17,8 @@ test('it can retrieve examples by their key', function () {
 test('it can retrieve referenced examples by their key', function () {
     $examples = new Examples([
         'my-example' => [
-            '$ref' => '#/some/ref'
-        ]
+            '$ref' => '#/some/ref',
+        ],
     ]);
 
     $result = $examples['my-example'];

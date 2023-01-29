@@ -18,7 +18,7 @@ final class Callbacks implements ArrayAccess, Countable, Iterator
 
     public function __construct(array $data)
     {
-        foreach ($data as $expression=>$value) {
+        foreach ($data as $expression => $value) {
             $data[$expression] = match ($this->isReference($value)) {
                 true => new Reference($value['$ref']),
                 default => new PathItem($expression, $value),

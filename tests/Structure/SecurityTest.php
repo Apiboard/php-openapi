@@ -8,7 +8,7 @@ test('it can return security requirements by key', function () {
         0 => [
             [
                 'Something' => [],
-            ]
+            ],
         ],
     ]);
 

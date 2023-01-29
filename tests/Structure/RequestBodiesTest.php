@@ -17,7 +17,7 @@ test('it retrieve request bodies by key', function () {
 test('it retrieve referenced request bodies by key', function () {
     $requestBodies = new RequestBodies([
         0 => [
-            '$ref' => '#/some/ref'
+            '$ref' => '#/some/ref',
         ],
     ]);
 
@@ -36,7 +36,7 @@ test('it can retrieve only required request bodies', function () {
         ],
         [
             '$ref' => '#/some/ref',
-        ]
+        ],
     ]);
 
     $result = $requestBodies->onlyRequired();

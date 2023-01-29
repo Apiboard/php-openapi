@@ -12,7 +12,7 @@ test('it can return the name', function () {
 
 test('it can return the description', function () {
     $header = new Header('X-My-Header', [
-        'description' => 'My custom header!'
+        'description' => 'My custom header!',
     ]);
 
     $result = $header->description();

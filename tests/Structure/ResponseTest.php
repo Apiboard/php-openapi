@@ -1,7 +1,5 @@
 <?php
 
-use Apiboard\OpenAPI\Structure\Callback;
-use Apiboard\OpenAPI\Structure\Callbacks;
 use Apiboard\OpenAPI\Structure\Headers;
 use Apiboard\OpenAPI\Structure\Links;
 use Apiboard\OpenAPI\Structure\MediaTypes;
@@ -17,7 +15,7 @@ test('it can return the status code', function () {
 
 test('it can return the description', function () {
     $response = new Response('200', [
-        'description' => 'My cool response'
+        'description' => 'My cool response',
     ]);
 
     $result = $response->description();

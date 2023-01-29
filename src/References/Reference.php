@@ -18,7 +18,7 @@ final class Reference
 
     public function withBase(string $base): self
     {
-        return new self(Path::canonicalize($base . $this->value));
+        return new self(Path::canonicalize($base.$this->value));
     }
 
     public function value(): string
@@ -28,7 +28,7 @@ final class Reference
 
     public function basePath(): string
     {
-        return dirname($this->path()) . '/';
+        return dirname($this->path()).'/';
     }
 
     public function path(): string

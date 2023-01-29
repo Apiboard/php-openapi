@@ -22,7 +22,7 @@ test('it can return the schemas for oneOf type', function () {
         'oneOf' => [
             [],
             [],
-        ]
+        ],
     ]);
 
     $result = $polymorphism->schemas();
@@ -37,7 +37,7 @@ test('it can return the schemas for anyOf type', function () {
         'anyOf' => [
             [],
             [],
-        ]
+        ],
     ]);
 
     $result = $polymorphism->schemas();
@@ -52,7 +52,7 @@ test('it can return the schemas for allOf type', function () {
         'allOf' => [
             [],
             [],
-        ]
+        ],
     ]);
 
     $result = $polymorphism->schemas();

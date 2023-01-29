@@ -5,7 +5,7 @@ use Apiboard\OpenAPI\Structure\SecurityScheme;
 
 test('it can return the type', function () {
     $securityScheme = new SecurityScheme([
-        'type' => 'http'
+        'type' => 'http',
     ]);
 
     $result = $securityScheme->type();
@@ -15,7 +15,7 @@ test('it can return the type', function () {
 
 test('it can return the name', function () {
     $securityScheme = new SecurityScheme([
-        'name' => 'Key'
+        'name' => 'Key',
     ]);
 
     $result = $securityScheme->name();
@@ -25,7 +25,7 @@ test('it can return the name', function () {
 
 test('it can return the description', function () {
     $securityScheme = new SecurityScheme([
-        'description' => 'Some scheme you got here!'
+        'description' => 'Some scheme you got here!',
     ]);
 
     $result = $securityScheme->description();
@@ -35,7 +35,7 @@ test('it can return the description', function () {
 
 test('it can return the location', function () {
     $securityScheme = new SecurityScheme([
-        'in' => 'header'
+        'in' => 'header',
     ]);
 
     $result = $securityScheme->in();
@@ -45,7 +45,7 @@ test('it can return the location', function () {
 
 test('it can return the scheme', function () {
     $securityScheme = new SecurityScheme([
-        'scheme' => 'Basic'
+        'scheme' => 'Basic',
     ]);
 
     $result = $securityScheme->scheme();
@@ -55,7 +55,7 @@ test('it can return the scheme', function () {
 
 test('it can return the bearer format', function () {
     $securityScheme = new SecurityScheme([
-        'bearerFormat' => 'bearer'
+        'bearerFormat' => 'bearer',
     ]);
 
     $result = $securityScheme->bearerFormat();
@@ -65,7 +65,7 @@ test('it can return the bearer format', function () {
 
 test('it can return the openID connect url', function () {
     $securityScheme = new SecurityScheme([
-        'openIdConnectUrl' => 'https://some.open.id.url'
+        'openIdConnectUrl' => 'https://some.open.id.url',
     ]);
 
     $result = $securityScheme->openIdConnectUrl();
@@ -76,7 +76,7 @@ test('it can return the openID connect url', function () {
 test('it can return the flows', function () {
     $securityScheme = new SecurityScheme([
         'type' => 'oauth2',
-        'flows' => []
+        'flows' => [],
     ]);
 
     $result = $securityScheme->flows();
