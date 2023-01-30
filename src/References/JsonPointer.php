@@ -29,10 +29,9 @@ class JsonPointer
     }
 
     /**
-     * @param  string  $propertyPathString
-     * @return string[]
+     * @return array<array-key,string>
      */
-    private function decodePropertyPaths($propertyPathString)
+    private function decodePropertyPaths(string $propertyPathString): array
     {
         $paths = [];
         foreach (explode('/', trim($propertyPathString, '/')) as $path) {
@@ -46,11 +45,7 @@ class JsonPointer
         return $paths;
     }
 
-    /**
-     * @param  string  $path
-     * @return string
-     */
-    private function decodePath($path)
+    private function decodePath(string $path): string
     {
         return strtr($path, ['~1' => '/', '~0' => '~', '%25' => '%']);
     }
