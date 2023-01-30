@@ -36,7 +36,7 @@ final class Resolver
     }
 
     /**
-     * @param  array<Reference>  $references
+     * @param  array<array-key,Reference>  $references
      */
     private function retrieveReferences(array $references, string $basePath): void
     {
