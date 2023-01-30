@@ -104,7 +104,7 @@ final class Resolver
                     continue;
                 }
 
-                // Prevent enterting an infinite reference replacement loop .
+                // Prevent entering an infinite reference replacement loop.
                 // Use a JSON pointer reference instead here when needed.
                 $resolvedKey = is_array($resolvedValue) ? array_key_first($resolvedValue) : null;
                 if ($resolvedKey && ($resolvedValue[$resolvedKey] === $contents)) {
