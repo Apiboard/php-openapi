@@ -4,13 +4,11 @@ namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 
-final class OAuthFlow
+final class OAuthFlow extends Structure
 {
     use HasVendorExtensions;
 
     private string $type;
-
-    private array $data;
 
     public function __construct(string $type, array $data)
     {

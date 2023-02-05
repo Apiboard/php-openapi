@@ -5,17 +5,10 @@ namespace Apiboard\OpenAPI\Structure;
 use Apiboard\OpenAPI\Concerns\CanBeDescribed;
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 
-final class Tag
+final class Tag extends Structure
 {
     use CanBeDescribed;
     use HasVendorExtensions;
-
-    private array $data;
-
-    public function __construct(array $data)
-    {
-        $this->data = $data;
-    }
 
     public function name(): string
     {

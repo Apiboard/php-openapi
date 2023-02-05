@@ -10,13 +10,11 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 
-final class Callbacks implements ArrayAccess, Countable, Iterator
+final class Callbacks extends Structure implements ArrayAccess, Countable, Iterator
 {
     use CanBeUsedAsArray;
     use HasReferences;
     use HasVendorExtensions;
-
-    private array $data;
 
     public function __construct(array $data)
     {

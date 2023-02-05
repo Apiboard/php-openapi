@@ -8,7 +8,7 @@ use Apiboard\OpenAPI\Concerns\CanBeRequired;
 use Apiboard\OpenAPI\Concerns\HasASchema;
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 
-final class Header
+final class Header extends Structure
 {
     use HasASchema;
     use CanBeDescribed;
@@ -17,8 +17,6 @@ final class Header
     use HasVendorExtensions;
 
     private string $name;
-
-    private array $data;
 
     public function __construct(string $name, array $data)
     {

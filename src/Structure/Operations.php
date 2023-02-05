@@ -7,11 +7,9 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 
-final class Operations implements ArrayAccess, Countable, Iterator
+final class Operations extends Structure implements ArrayAccess, Countable, Iterator
 {
     use CanBeUsedAsArray;
-
-    private array $data;
 
     public function __construct(array $data)
     {

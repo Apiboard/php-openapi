@@ -8,19 +8,12 @@ use Apiboard\OpenAPI\Concerns\HasReferences;
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 use Apiboard\OpenAPI\References\Reference;
 
-final class Schema
+final class Schema extends Structure
 {
     use CanBeDeprecated;
     use CanBeDescribed;
     use HasReferences;
     use HasVendorExtensions;
-
-    private array $data;
-
-    public function __construct(array $data)
-    {
-        $this->data = $data;
-    }
 
     public function toArray(): array
     {

@@ -6,14 +6,12 @@ use Apiboard\OpenAPI\Concerns\HasReferences;
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 use Apiboard\OpenAPI\References\Reference;
 
-final class MediaType
+final class MediaType extends Structure
 {
     use HasReferences;
     use HasVendorExtensions;
 
     private string $contentType;
-
-    private array $data;
 
     public function __construct(string $contentType, array $data)
     {

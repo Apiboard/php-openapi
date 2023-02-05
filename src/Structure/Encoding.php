@@ -4,16 +4,9 @@ namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 
-final class Encoding
+final class Encoding extends Structure
 {
     use HasVendorExtensions;
-
-    private array $data;
-
-    public function __construct(array $data)
-    {
-        $this->data = $data;
-    }
 
     public function contentType(): ?string
     {

@@ -2,11 +2,9 @@
 
 namespace Apiboard\OpenAPI\Structure;
 
-final class Polymorphism
+final class Polymorphism extends Structure
 {
     private string $type;
-
-    private array $data;
 
     public function __construct(string $type, array $data)
     {

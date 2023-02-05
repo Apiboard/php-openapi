@@ -5,14 +5,12 @@ namespace Apiboard\OpenAPI\Structure;
 use Apiboard\OpenAPI\Concerns\CanBeDescribed;
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 
-final class PathItem
+final class PathItem extends Structure
 {
     use CanBeDescribed;
     use HasVendorExtensions;
 
     private string $uri;
-
-    private array $data;
 
     public function __construct(string $uri, array $data)
     {

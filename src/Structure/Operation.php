@@ -8,7 +8,7 @@ use Apiboard\OpenAPI\Concerns\HasReferences;
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 use Apiboard\OpenAPI\References\Reference;
 
-final class Operation
+final class Operation extends Structure
 {
     use CanBeDeprecated;
     use CanBeDescribed;
@@ -16,8 +16,6 @@ final class Operation
     use HasVendorExtensions;
 
     private string $method;
-
-    private array $data;
 
     public function __construct(string $method, array $data)
     {

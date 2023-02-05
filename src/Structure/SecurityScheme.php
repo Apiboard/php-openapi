@@ -4,16 +4,9 @@ namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 
-final class SecurityScheme
+final class SecurityScheme extends Structure
 {
     use HasVendorExtensions;
-
-    private array $data;
-
-    public function __construct(array $data)
-    {
-        $this->data = $data;
-    }
 
     public function type(): string
     {

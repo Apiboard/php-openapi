@@ -4,13 +4,11 @@ namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 
-final class Response
+final class Response extends Structure
 {
     use HasVendorExtensions;
 
     private string $statusCode;
-
-    private array $data;
 
     public function __construct(string $statusCode, array $data)
     {

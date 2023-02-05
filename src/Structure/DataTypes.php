@@ -7,16 +7,9 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 
-final class DataTypes implements ArrayAccess, Countable, Iterator
+final class DataTypes extends Structure implements ArrayAccess, Countable, Iterator
 {
     use CanBeUsedAsArray;
-
-    private array $data;
-
-    public function __construct(array $data)
-    {
-        $this->data = $data;
-    }
 
     public function offsetGet(mixed $offset): ?string
     {

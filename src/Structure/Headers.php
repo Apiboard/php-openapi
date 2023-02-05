@@ -9,12 +9,10 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 
-final class Headers implements ArrayAccess, Countable, Iterator
+final class Headers extends Structure implements ArrayAccess, Countable, Iterator
 {
     use CanBeUsedAsArray;
     use HasReferences;
-
-    private array $data;
 
     public function __construct(array $data)
     {

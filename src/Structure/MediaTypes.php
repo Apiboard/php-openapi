@@ -7,11 +7,9 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 
-final class MediaTypes implements ArrayAccess, Countable, Iterator
+final class MediaTypes extends Structure implements ArrayAccess, Countable, Iterator
 {
     use CanBeUsedAsArray;
-
-    private array $data;
 
     public function __construct(array $data)
     {

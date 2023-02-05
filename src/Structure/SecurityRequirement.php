@@ -2,11 +2,9 @@
 
 namespace Apiboard\OpenAPI\Structure;
 
-final class SecurityRequirement
+final class SecurityRequirement extends Structure
 {
     private string $name;
-
-    private $data;
 
     public function __construct(string $name, array $data)
     {

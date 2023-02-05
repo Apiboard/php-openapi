@@ -9,12 +9,10 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 
-final class Webhooks implements ArrayAccess, Countable, Iterator
+final class Webhooks extends Structure implements ArrayAccess, Countable, Iterator
 {
     use CanBeUsedAsArray;
     use HasReferences;
-
-    private array $data;
 
     public function __construct(array $data)
     {

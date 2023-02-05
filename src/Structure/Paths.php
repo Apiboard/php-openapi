@@ -10,13 +10,11 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 
-final class Paths implements ArrayAccess, Countable, Iterator
+final class Paths extends Structure implements ArrayAccess, Countable, Iterator
 {
     use CanBeUsedAsArray;
     use HasReferences;
     use HasVendorExtensions;
-
-    private array $data;
 
     public function __construct(array $data)
     {

@@ -8,20 +8,13 @@ use Apiboard\OpenAPI\Concerns\CanBeRequired;
 use Apiboard\OpenAPI\Concerns\HasASchema;
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 
-final class Parameter
+final class Parameter extends Structure
 {
     use CanBeRequired;
     use CanBeDescribed;
     use CanBeDeprecated;
     use HasASchema;
     use HasVendorExtensions;
-
-    private array $data;
-
-    public function __construct(array $data)
-    {
-        $this->data = $data;
-    }
 
     public function name(): string
     {

@@ -7,11 +7,9 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 
-class Security implements ArrayAccess, Countable, Iterator
+class Security extends Structure implements ArrayAccess, Countable, Iterator
 {
     use CanBeUsedAsArray;
-
-    private array $data;
 
     public function __construct(array $data)
     {
