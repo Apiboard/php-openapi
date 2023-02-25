@@ -29,7 +29,7 @@ final class Document implements Stringable, JsonSerializable
 
     public function toArray(): array
     {
-        return $this->contents->toArray();
+        return $this->data;
     }
 
     public function jsonSerialize(): array
