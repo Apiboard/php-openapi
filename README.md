@@ -54,7 +54,7 @@ You can resolve external references. It returns a PHP object with the resolved c
 ```php
 $contents = $openAPI->resolve('/path/to/my-oas.json');
 
-$document = new Apiboard\OpenAPI\Structure\Document($document);
+$document = new Apiboard\OpenAPI\Structure\Document($contents);
 ```
 When resolving external references the contents will be retrieved from the local fileystem by default. You can override the way file contents is retrieved by passing a custom class that implements the `Apiboard\OpenAPI\Contents\Retriever` interface.
 
