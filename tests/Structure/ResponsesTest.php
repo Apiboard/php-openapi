@@ -27,11 +27,21 @@ test('it can retrieve referenced responses by their status code', function () {
 });
 
 test('it does not include vendor extensions', function () {
-    $paths = new Responses([
+    $responses = new Responses([
         'x-vendor' => [],
     ]);
 
-    $result = $paths['x-vendor'];
+    $result = $responses['x-vendor'];
 
     expect($result)->toBeNull();
+});
+
+test('it can be constructed with array of response classes', function () {
+    $responses = new Responses([
+        new Response('200', []),
+    ]);
+
+    $result = $responses['200'];
+
+    expect($result)->toBeInstanceOf(Response::class);
 });

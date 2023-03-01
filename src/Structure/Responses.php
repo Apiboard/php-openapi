@@ -19,10 +19,11 @@ final class Responses extends Structure implements ArrayAccess, Countable, Itera
     public function __construct(array $data)
     {
         foreach ($data as $statusCode => $value) {
-            $data[$statusCode] = match (true) {
-                $this->isReference($value) => new Reference($value['$ref']),
-                $this->isVendorExtension($statusCode) => $value,
-                default => new Response($statusCode, $value),
+            match (true) {
+                $this->isReference($value) => $data[$statusCode] = new Reference($value['$ref']),
+                $this->isVendorExtension($statusCode) => $data[$statusCode] = $value,
+                $value instanceof Response => $data[$value->statusCode()] = $value,
+                default => $data[$statusCode] = new Response($statusCode, $value),
             };
         }
 
