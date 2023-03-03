@@ -25,7 +25,11 @@ trait CanBeUsedAsArray
 
     public function offsetExists(mixed $offset): bool
     {
-        return (bool) $this->data[$offset] ?? false;
+        if (isset($this->data[$offset])) {
+            return true;
+        }
+
+        return false;
     }
 
     public function count(): int
