@@ -45,15 +45,16 @@ final class Resolver
                 continue;
             }
 
-            $previouslyRetrieved = array_key_exists($reference->path(), $this->retrievedReferences);
+            $absoluteReference = $reference->withBase($basePath);
+
+            $previouslyRetrieved = array_key_exists($absoluteReference->path(), $this->retrievedReferences);
 
             if ($previouslyRetrieved === false) {
-                $absoluteReference = $reference->withBase($basePath);
                 $contents = $this->retriever->retrieve($absoluteReference->path());
 
                 $resolvedContents = $contents->toArray();
 
-                $this->retrievedReferences[$reference->path()] = $resolvedContents;
+                $this->retrievedReferences[$absoluteReference->path()] = $resolvedContents;
 
                 foreach ($reference->properties() as $property) {
                     $resolvedContents = $resolvedContents[$property];
@@ -66,7 +67,7 @@ final class Resolver
             }
 
             if ($previouslyRetrieved === true) {
-                $resolvedContents = $this->retrievedReferences[$reference->path()];
+                $resolvedContents = $this->retrievedReferences[$absoluteReference->path()];
 
                 foreach ($reference->properties() as $property) {
                     $resolvedContents = $resolvedContents[$property];
