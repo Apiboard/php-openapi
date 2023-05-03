@@ -74,6 +74,23 @@ test('it can return all external references', function () {
         ->toBeArrayOf(Reference::class);
 });
 
+test('casting JSON OAS contents to object casts empty security entry from array to an object', function () {
+    $json = new Json('{
+        "security": [
+            {
+                "Token": []
+            },
+            []
+        ]
+    }');
+
+    $result = $json->toObject();
+
+    expect($result->security[0])->toBeObject();
+    expect($result->security[0]->Token)->toBeArray();
+    expect($result->security[1])->toBeObject();
+});
+
 test('casting JSON OAS contents to object casts empty schema keys from array to an object', function () {
     $json = new Json('{
         "some": {

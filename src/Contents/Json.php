@@ -52,6 +52,16 @@ final class Json
                 }, $object->{$key});
             }
 
+            if ($key === 'security') {
+                $object->{$key} = array_map(function (mixed $value) {
+                    if (is_array($value) && empty($value)) {
+                        return (object) $value;
+                    }
+
+                    return $value;
+                }, $value);
+            }
+
             // Sometimes the PHP json_encode/json_decode functions don't
             // work properly. We should attempt to cast the value to
             // the correct data type to ensure validation passes.
