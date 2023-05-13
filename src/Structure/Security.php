@@ -13,7 +13,7 @@ class Security extends Structure implements ArrayAccess, Countable, Iterator
 
     public function __construct(array $data)
     {
-        $this->data = array_map(fn (array $value) => new SecurityRequirement(array_keys($value)[0], array_values($value)), $data);
+        $this->data = array_map(fn (array $value) => new SecurityRequirement(array_keys($value)[0] ?? 'None', array_values($value)), $data);
     }
 
     public function offsetGet(mixed $offset): ?SecurityRequirement
