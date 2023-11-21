@@ -5,21 +5,18 @@ namespace Apiboard\OpenAPI\Structure;
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 use Apiboard\OpenAPI\Contents\Json;
 use Apiboard\OpenAPI\Contents\Yaml;
-use JsonSerializable;
 use Stringable;
 
-final class Document implements Stringable, JsonSerializable
+final class Document extends Structure implements Stringable
 {
     use HasVendorExtensions;
 
     private Yaml|Json $contents;
 
-    private array $data;
-
     public function __construct(Yaml|Json $contents)
     {
         $this->contents = $contents;
-        $this->data = $contents->toArray();
+        parent::__construct($contents->toArray());
     }
 
     public function __toString(): string
@@ -29,12 +26,7 @@ final class Document implements Stringable, JsonSerializable
 
     public function toArray(): array
     {
-        return $this->data;
-    }
-
-    public function jsonSerialize(): array
-    {
-        return $this->toArray();
+        return $this->contents->toArray();
     }
 
     public function openAPI(): string
