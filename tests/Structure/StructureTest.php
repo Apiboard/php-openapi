@@ -1,6 +1,5 @@
 <?php
 
-use Apiboard\OpenAPI\Structure\Document;
 use Apiboard\OpenAPI\Structure\RuntimeExpression;
 use Apiboard\OpenAPI\Structure\Structure;
 
@@ -18,7 +17,6 @@ test('it is used as parent where applicable', function (string $class) {
     expect($parent)->toBe(Structure::class);
 })->with(function () {
     $excluded = [
-        Document::class,
         RuntimeExpression::class,
         Structure::class,
     ];
