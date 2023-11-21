@@ -37,7 +37,7 @@ class JsonPointer
         foreach (explode('/', trim($propertyPathString, '/')) as $path) {
             $path = $this->decodePath($path);
 
-            if (is_string($path) && '' !== $path) {
+            if (is_string($path) && $path !== '') {
                 $paths[] = $path;
             }
         }

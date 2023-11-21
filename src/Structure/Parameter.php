@@ -10,9 +10,9 @@ use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 
 final class Parameter extends Structure
 {
-    use CanBeRequired;
-    use CanBeDescribed;
     use CanBeDeprecated;
+    use CanBeDescribed;
+    use CanBeRequired;
     use HasASchema;
     use HasVendorExtensions;
 

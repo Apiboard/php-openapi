@@ -18,7 +18,7 @@ final class OpenAPI
 
     private \Opis\JsonSchema\Validator $validator;
 
-    public function __construct(?Retriever $retriever = null)
+    public function __construct(Retriever $retriever = null)
     {
         $retriever = $retriever ?? new LocalFilesystemRetriever();
 

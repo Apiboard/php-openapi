@@ -10,10 +10,10 @@ use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 
 final class Header extends Structure
 {
-    use HasASchema;
+    use CanBeDeprecated;
     use CanBeDescribed;
     use CanBeRequired;
-    use CanBeDeprecated;
+    use HasASchema;
     use HasVendorExtensions;
 
     private string $name;

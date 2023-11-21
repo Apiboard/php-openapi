@@ -8,8 +8,8 @@ use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 
 final class RequestBody extends Structure
 {
-    use CanBeRequired;
     use CanBeDescribed;
+    use CanBeRequired;
     use HasVendorExtensions;
 
     public function content(): MediaTypes
