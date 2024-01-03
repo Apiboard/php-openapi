@@ -14,7 +14,7 @@ final class Resolver
 
     private array $replacedKeys = [];
 
-    public function __construct(Retriever $retriever = null)
+    public function __construct(?Retriever $retriever = null)
     {
         $this->retriever = $retriever;
     }
