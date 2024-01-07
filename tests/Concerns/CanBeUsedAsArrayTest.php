@@ -20,8 +20,7 @@ use Apiboard\OpenAPI\Structure\Tags;
 use Apiboard\OpenAPI\Structure\Webhooks;
 
 test('it can be looped over', function () {
-    $class = new class() implements ArrayAccess, Countable, Iterator
-    {
+    $class = new class () implements ArrayAccess, Countable, Iterator {
         use CanBeUsedAsArray;
 
         protected $data = [
@@ -42,8 +41,7 @@ test('it can be looped over', function () {
 });
 
 test('it can be counted', function () {
-    $class = new class() implements ArrayAccess, Countable, Iterator
-    {
+    $class = new class () implements ArrayAccess, Countable, Iterator {
         use CanBeUsedAsArray;
 
         protected $data = [
@@ -58,8 +56,7 @@ test('it can be counted', function () {
 });
 
 test('it can retrieve data by key', function () {
-    $class = new class() implements ArrayAccess, Countable, Iterator
-    {
+    $class = new class () implements ArrayAccess, Countable, Iterator {
         use CanBeUsedAsArray;
 
         protected $data = [

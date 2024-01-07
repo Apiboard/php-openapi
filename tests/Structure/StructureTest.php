@@ -5,8 +5,7 @@ use Apiboard\OpenAPI\Structure\RuntimeExpression;
 use Apiboard\OpenAPI\Structure\Structure;
 
 test('it can be json serialized', function () {
-    $class = new class([]) extends Structure
-    {
+    $class = new class ([]) extends Structure {
     };
 
     expect($class->jsonSerialize())->toBe([]);
@@ -14,8 +13,7 @@ test('it can be json serialized', function () {
 
 test('it optionally accepts a JSON Pointer as context', function () {
     $pointer = new JsonPointer('/info/title');
-    $class = new class([], $pointer) extends Structure
-    {
+    $class = new class ([], $pointer) extends Structure {
     };
 
     $result = $class->pointer();

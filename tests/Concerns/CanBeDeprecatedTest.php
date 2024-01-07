@@ -7,8 +7,7 @@ use Apiboard\OpenAPI\Structure\Parameter;
 use Apiboard\OpenAPI\Structure\Schema;
 
 test('it can return the deprecated state', function () {
-    $class = new class()
-    {
+    $class = new class () {
         use CanBeDeprecated;
 
         protected $data = [
@@ -22,8 +21,7 @@ test('it can return the deprecated state', function () {
 });
 
 test('it returns false for the the deprecated state by default', function () {
-    $class = new class()
-    {
+    $class = new class () {
         use CanBeDeprecated;
     };
 

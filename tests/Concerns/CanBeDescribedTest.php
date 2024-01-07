@@ -15,8 +15,7 @@ use Apiboard\OpenAPI\Structure\ServerVariable;
 use Apiboard\OpenAPI\Structure\Tag;
 
 test('it can return the description', function () {
-    $class = new class()
-    {
+    $class = new class () {
         use CanBeDescribed;
 
         protected $data = [
@@ -30,8 +29,7 @@ test('it can return the description', function () {
 });
 
 test('it returns null when description is unavaible', function () {
-    $class = new class()
-    {
+    $class = new class () {
         use CanBeDescribed;
     };
 
