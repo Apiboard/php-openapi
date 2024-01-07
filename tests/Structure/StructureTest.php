@@ -42,7 +42,7 @@ test('it is used as parent where applicable', function (string $class) {
             continue;
         }
 
-        $class = 'Apiboard\\OpenAPI\\Structure\\' . $className = str_replace('.php', '', $fileName);
+        $class = 'Apiboard\\OpenAPI\\Structure\\'.$className = str_replace('.php', '', $fileName);
 
         if (in_array($class, $excluded)) {
             continue;
