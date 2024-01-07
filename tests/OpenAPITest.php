@@ -45,8 +45,7 @@ test('it can validate OpenAPI specification v3.0.X', function () {
 
 test('it can resolve references', function () {
     $jsonFile = fixture('references.json');
-    $retriever = new class() implements Retriever
-    {
+    $retriever = new class () implements Retriever {
         private bool $called = false;
 
         private string $basePath = '';
@@ -87,8 +86,7 @@ test('it can resolve references', function () {
 
 test('it resolves references when parsing', function () {
     $jsonFile = fixture('references.json');
-    $retriever = new class() implements Retriever
-    {
+    $retriever = new class () implements Retriever {
         private bool $called = false;
 
         private string $basePath = '';

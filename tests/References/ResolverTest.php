@@ -188,8 +188,7 @@ test('it can resolve upwards references correctly with a retriever that has a ba
 function retriever(callable $callback): Retriever
 {
     /** @var Retriever */
-    $retriever = new class($callback) implements Retriever
-    {
+    $retriever = new class ($callback) implements Retriever {
         private Closure $callback;
 
         private string $basePath = '';

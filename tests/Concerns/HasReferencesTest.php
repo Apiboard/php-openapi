@@ -20,8 +20,7 @@ use Apiboard\OpenAPI\Structure\SecuritySchemes;
 use Apiboard\OpenAPI\Structure\Webhooks;
 
 test('it can return all references', function () {
-    $class = new class()
-    {
+    $class = new class () {
         use HasReferences;
 
         public function toArray(): array

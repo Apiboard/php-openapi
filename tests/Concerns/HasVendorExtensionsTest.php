@@ -28,8 +28,7 @@ use Apiboard\OpenAPI\Structure\ServerVariable;
 use Apiboard\OpenAPI\Structure\Tag;
 
 test('it can retrieve vendor extensions', function () {
-    $class = new class()
-    {
+    $class = new class () {
         use HasVendorExtensions;
 
         protected $data = [

@@ -2,8 +2,6 @@
 
 namespace Apiboard\OpenAPI\References;
 
-use InvalidArgumentException;
-
 class JsonPointer
 {
     private string $filename;
@@ -15,10 +13,6 @@ class JsonPointer
 
     public function __construct(string $value)
     {
-        if (is_string($value) === false) {
-            throw new InvalidArgumentException('Ref value must be a string');
-        }
-
         $splitRef = explode('#', $value, 2);
 
         $this->filename = $splitRef[0];

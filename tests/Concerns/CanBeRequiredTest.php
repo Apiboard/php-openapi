@@ -6,8 +6,7 @@ use Apiboard\OpenAPI\Structure\Parameter;
 use Apiboard\OpenAPI\Structure\RequestBody;
 
 test('it can return the required state', function () {
-    $class = new class()
-    {
+    $class = new class () {
         use CanBeRequired;
 
         protected $data = [
@@ -21,8 +20,7 @@ test('it can return the required state', function () {
 });
 
 test('it returns false for the the required state by default', function () {
-    $class = new class()
-    {
+    $class = new class () {
         use CanBeRequired;
 
         protected $data = [];
