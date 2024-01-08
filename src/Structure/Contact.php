@@ -3,6 +3,7 @@
 namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
+use Apiboard\OpenAPI\References\JsonPointer;
 
 final class Contact extends Structure
 {
@@ -21,5 +22,10 @@ final class Contact extends Structure
     public function email(): string
     {
         return $this->data['email'];
+    }
+
+    public function pointer(): ?JsonPointer
+    {
+        return new JsonPointer('#/info/contact');
     }
 }

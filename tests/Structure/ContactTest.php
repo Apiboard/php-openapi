@@ -1,5 +1,6 @@
 <?php
 
+use Apiboard\OpenAPI\References\JsonPointer;
 use Apiboard\OpenAPI\Structure\Contact;
 
 test('it can return the name', function () {
@@ -30,4 +31,14 @@ test('it can return the email', function () {
     $result = $contact->email();
 
     expect($result)->toBe('jane@example.com');
+});
+
+test('it can return its fixed JSON pointer', function () {
+    $pointer = new JsonPointer('#/something/else');
+    $info = new Contact([], $pointer);
+
+    $result = $info->pointer();
+
+    expect($result)->not->toBeNull();
+    expect($result->value())->toEqual('#/info/contact');
 });
