@@ -4,6 +4,7 @@ namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\CanBeUsedAsArray;
 use Apiboard\OpenAPI\Concerns\HasReferences;
+use Apiboard\OpenAPI\References\JsonPointer;
 use Apiboard\OpenAPI\References\Reference;
 use ArrayAccess;
 use Countable;
@@ -14,9 +15,9 @@ final class Parameters extends Structure implements ArrayAccess, Countable, Iter
     use CanBeUsedAsArray;
     use HasReferences;
 
-    public function __construct(array $data)
+    public function __construct(array $data, JsonPointer $pointer = null)
     {
-        $this->data = array_map(function (array|Parameter $value) {
+        $data = array_map(function (array|Parameter $value) {
             if ($value instanceof Parameter) {
                 return $value;
             }
@@ -27,6 +28,8 @@ final class Parameters extends Structure implements ArrayAccess, Countable, Iter
 
             return new Parameter($value);
         }, $data);
+
+        parent::__construct($data, $pointer);
     }
 
     public function offsetGet(mixed $offset): Parameter|Reference|null

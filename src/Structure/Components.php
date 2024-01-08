@@ -17,7 +17,9 @@ final class Components extends Structure
             return null;
         }
 
-        return new Schemas($schemas);
+        $pointer = new JsonPointer('#/components/schemas');
+
+        return new Schemas($schemas, $pointer);
     }
 
     public function responses(): ?Responses
@@ -28,7 +30,9 @@ final class Components extends Structure
             return null;
         }
 
-        return new Responses($responses);
+        $pointer = new JsonPointer('#/components/responses');
+
+        return new Responses($responses, $pointer);
     }
 
     public function parameters(): ?Parameters
@@ -39,7 +43,9 @@ final class Components extends Structure
             return null;
         }
 
-        return new Parameters($parameters);
+        $pointer = new JsonPointer('#/components/parameters');
+
+        return new Parameters($parameters, $pointer);
     }
 
     public function examples(): ?Examples
@@ -50,7 +56,9 @@ final class Components extends Structure
             return null;
         }
 
-        return new Examples($examples);
+        $pointer = new JsonPointer('#/components/examples');
+
+        return new Examples($examples, $pointer);
     }
 
     public function requestBodies(): ?RequestBodies
@@ -61,7 +69,9 @@ final class Components extends Structure
             return null;
         }
 
-        return new RequestBodies($requestBodies);
+        $pointer = new JsonPointer('#/components/requestBodies');
+
+        return new RequestBodies($requestBodies, $pointer);
     }
 
     public function headers(): ?Headers
@@ -72,7 +82,9 @@ final class Components extends Structure
             return null;
         }
 
-        return new Headers($headers);
+        $pointer = new JsonPointer('#/components/headers');
+
+        return new Headers($headers, $pointer);
     }
 
     public function securitySchemes(): ?SecuritySchemes
@@ -83,7 +95,9 @@ final class Components extends Structure
             return null;
         }
 
-        return new SecuritySchemes($securitySchemes);
+        $pointer = new JsonPointer('#/components/securitySchemes');
+
+        return new SecuritySchemes($securitySchemes, $pointer);
     }
 
     public function links(): ?Links
@@ -94,7 +108,9 @@ final class Components extends Structure
             return null;
         }
 
-        return new Links($links);
+        $pointer = new JsonPointer('#/components/links');
+
+        return new Links($links, $pointer);
     }
 
     public function callbacks(): ?Callbacks
@@ -105,7 +121,9 @@ final class Components extends Structure
             return null;
         }
 
-        return new Callbacks($callbacks);
+        $pointer = new JsonPointer('#/components/callbacks');
+
+        return new Callbacks($callbacks, $pointer);
     }
 
     public function pathItems(): ?Paths
