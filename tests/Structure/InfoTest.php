@@ -1,5 +1,6 @@
 <?php
 
+use Apiboard\OpenAPI\References\JsonPointer;
 use Apiboard\OpenAPI\Structure\Contact;
 use Apiboard\OpenAPI\Structure\Info;
 use Apiboard\OpenAPI\Structure\License;
@@ -52,4 +53,16 @@ test('it can return the contact information', function () {
     $result = $info->contact();
 
     expect($result)->toBeInstanceOf(Contact::class);
+});
+
+test('it can return a fixed JSON pointer', function () {
+    $pointer = new JsonPointer('#/something/else');
+    $info = new Info([], $pointer);
+
+    $result = $info->pointer();
+
+    expect($result)->not->toBeNull();
+    expect($result->getPropertyPaths())->toEqual([
+        'info',
+    ]);
 });

@@ -4,6 +4,7 @@ namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\CanBeDescribed;
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
+use Apiboard\OpenAPI\References\JsonPointer;
 
 final class Info extends Structure
 {
@@ -45,5 +46,10 @@ final class Info extends Structure
         }
 
         return new Contact($contact);
+    }
+
+    public function pointer(): ?JsonPointer
+    {
+        return new JsonPointer('#/info');
     }
 }
