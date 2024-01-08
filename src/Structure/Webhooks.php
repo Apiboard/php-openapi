@@ -4,6 +4,7 @@ namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\CanBeUsedAsArray;
 use Apiboard\OpenAPI\Concerns\HasReferences;
+use Apiboard\OpenAPI\References\JsonPointer;
 use Apiboard\OpenAPI\References\Reference;
 use ArrayAccess;
 use Countable;
@@ -14,7 +15,7 @@ final class Webhooks extends Structure implements ArrayAccess, Countable, Iterat
     use CanBeUsedAsArray;
     use HasReferences;
 
-    public function __construct(array $data)
+    public function __construct(array $data, JsonPointer $pointer = null)
     {
         foreach ($data as $uri => $value) {
             $data[$uri] = match ($this->isReference($value)) {
@@ -23,7 +24,7 @@ final class Webhooks extends Structure implements ArrayAccess, Countable, Iterat
             };
         }
 
-        $this->data = $data;
+        parent::__construct($data, $pointer);
     }
 
     public function offsetGet(mixed $offset): PathItem|Reference|null
