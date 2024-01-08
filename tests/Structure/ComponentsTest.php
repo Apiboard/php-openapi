@@ -110,6 +110,7 @@ test('it can return path items', function () {
     $result = $components->pathItems();
 
     expect($result)->toBeInstanceOf(Paths::class);
+    expect($result->pointer()->value())->toEqual('#/components/pathItems');
 });
 
 test('it returns null when data is unavailable', function (string $data) {

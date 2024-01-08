@@ -1,5 +1,6 @@
 <?php
 
+use Apiboard\OpenAPI\References\JsonPointer;
 use Apiboard\OpenAPI\References\Reference;
 use Apiboard\OpenAPI\Structure\PathItem;
 use Apiboard\OpenAPI\Structure\Paths;
@@ -42,4 +43,13 @@ test('it does not include vendor extensions', function () {
     $result = $paths['x-vendor'];
 
     expect($result)->toBeNull();
+});
+
+test('it can return its pointer context', function () {
+    $pointer = new JsonPointer('#/paths');
+    $paths = new Paths([], $pointer);
+
+    $result = $paths->pointer();
+
+    expect($result)->toEqual($pointer);
 });

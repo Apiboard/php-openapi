@@ -3,6 +3,7 @@
 namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
+use Apiboard\OpenAPI\References\JsonPointer;
 
 final class Components extends Structure
 {
@@ -115,6 +116,8 @@ final class Components extends Structure
             return null;
         }
 
-        return new Paths($pathItems);
+        $pointer = new JsonPointer('#/components/pathItems');
+
+        return new Paths($pathItems, $pointer);
     }
 }
