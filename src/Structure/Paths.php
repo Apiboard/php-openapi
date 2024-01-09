@@ -23,7 +23,7 @@ final class Paths extends Structure implements ArrayAccess, Countable, Iterator
             $data[$uri] = match (true) {
                 $this->isReference($value) => new Reference($value['$ref']),
                 $this->isVendorExtension($uri) => $value,
-                default => new PathItem($uri, $value, $pointer?->append($uri)),
+                default => new PathItem($uri, $value, $pointer?->append(ltrim($uri, '/'))),
             };
         }
 

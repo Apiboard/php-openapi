@@ -36,7 +36,7 @@ class JsonPointer
         $properties = $this->propertyPaths;
 
         foreach ($values as $value) {
-            array_push($properties, ...$this->decodePropertyPaths($value));
+            array_push($properties, $this->encodePath($value));
         }
 
         return new self($this->filename . '/' .  implode('/', $properties));
@@ -57,6 +57,11 @@ class JsonPointer
         }
 
         return $paths;
+    }
+
+    private function encodePath(string $path): string
+    {
+        return strtr($path, ['/' => '~1', '~' => '~0', '%' => '%25']);
     }
 
     private function decodePath(string $path): string

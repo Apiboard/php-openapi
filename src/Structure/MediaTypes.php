@@ -15,7 +15,7 @@ final class MediaTypes extends Structure implements ArrayAccess, Countable, Iter
     public function __construct(array $data, JsonPointer $pointer = null)
     {
         foreach ($data as $contentType => $value) {
-            $data[$contentType] = new MediaType($contentType, $value);
+            $data[$contentType] = new MediaType($contentType, $value, $pointer?->append($contentType));
         }
 
         parent::__construct($data, $pointer);
