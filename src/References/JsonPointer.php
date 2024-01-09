@@ -31,6 +31,17 @@ class JsonPointer
         return $this->value;
     }
 
+    public function append(string ...$values): self
+    {
+        $properties = $this->propertyPaths;
+
+        foreach ($values as $value) {
+            array_push($properties, ...$this->decodePropertyPaths($value));
+        }
+
+        return new self($this->filename . '/' .  implode('/', $properties));
+    }
+
     /**
      * @return array<array-key,string>
      */

@@ -6,13 +6,15 @@ use Apiboard\OpenAPI\Structure\PathItem;
 use Apiboard\OpenAPI\Structure\Paths;
 
 test('it can retrieve paths by their uri', function () {
+    $pointer = new JsonPointer('/paths');
     $paths = new Paths([
         '/my-path' => [],
-    ]);
+    ], $pointer);
 
     $result = $paths['/my-path'];
 
     expect($result)->toBeInstanceOf(PathItem::class);
+    expect($result->pointer()->value())->toEqual('/paths/my-path');
 });
 
 test('it can retrieve referenced paths by their uri', function () {
@@ -46,7 +48,7 @@ test('it does not include vendor extensions', function () {
 });
 
 test('it can return its pointer context', function () {
-    $pointer = new JsonPointer('#/paths');
+    $pointer = new JsonPointer('/paths');
     $paths = new Paths([], $pointer);
 
     $result = $paths->pointer();

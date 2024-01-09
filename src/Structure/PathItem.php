@@ -4,6 +4,7 @@ namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\CanBeDescribed;
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
+use Apiboard\OpenAPI\References\JsonPointer;
 
 final class PathItem extends Structure
 {
@@ -12,10 +13,10 @@ final class PathItem extends Structure
 
     private string $uri;
 
-    public function __construct(string $uri, array $data)
+    public function __construct(string $uri, array $data, JsonPointer $pointer = null)
     {
         $this->uri = $uri;
-        $this->data = $data;
+        parent::__construct($data, $pointer);
     }
 
     public function uri(): string
