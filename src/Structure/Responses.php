@@ -24,7 +24,7 @@ final class Responses extends Structure implements ArrayAccess, Countable, Itera
                 $this->isReference($value) => $data[$statusCode] = new Reference($value['$ref']),
                 $this->isVendorExtension($statusCode) => $data[$statusCode] = $value,
                 $value instanceof Response => $data[$value->statusCode()] = $value,
-                default => $data[$statusCode] = new Response($statusCode, $value),
+                default => $data[$statusCode] = new Response($statusCode, $value, $pointer?->append($statusCode)),
             };
         }
 
