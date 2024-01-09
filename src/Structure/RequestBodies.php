@@ -17,17 +17,13 @@ final class RequestBodies extends Structure implements ArrayAccess, Countable, I
 
     public function __construct(array $data, JsonPointer $pointer = null)
     {
-        $data = array_map(function (array|RequestBody $value) {
-            if ($value instanceof RequestBody) {
-                return $value;
-            }
-
-            if ($this->isReference($value)) {
-                return new Reference($value['$ref']);
-            }
-
-            return new RequestBody($value);
-        }, $data);
+        foreach ($data as $key => $value) {
+            $data[$key] = match (true) {
+                $value instanceof RequestBody => $value,
+                $this->isReference($value) => new Reference($value['$ref']),
+                default => new RequestBody($value, $pointer?->append($key))
+            };
+        }
 
         parent::__construct($data, $pointer);
     }

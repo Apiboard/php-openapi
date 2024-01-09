@@ -14,6 +14,6 @@ final class RequestBody extends Structure
 
     public function content(): MediaTypes
     {
-        return new MediaTypes($this->data['content']);
+        return new MediaTypes($this->data['content'], $this->pointer()?->append('content'));
     }
 }
