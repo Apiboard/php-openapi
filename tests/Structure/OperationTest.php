@@ -1,5 +1,6 @@
 <?php
 
+use Apiboard\OpenAPI\References\JsonPointer;
 use Apiboard\OpenAPI\References\Reference;
 use Apiboard\OpenAPI\Structure\Callbacks;
 use Apiboard\OpenAPI\Structure\Operation;
@@ -139,3 +140,27 @@ test('it can return the referenced request body', function () {
 
     expect($result)->toBeInstanceOf(Reference::class);
 });
+
+test('it can return the correct JSON Pointer', function (string $data, string $expectedPointer) {
+    $pointer = new JsonPointer('/paths/my-uri/get');
+    $operation = new Operation('get', [
+        'callbacks' => [],
+        'security' => [],
+        'servers' => [],
+        'parameters' => [],
+        'requestBody' => [],
+        'responses' => [],
+    ], $pointer);
+
+    $result = $operation->{$data}();
+
+    expect($result->pointer())->not->toBeNull();
+    expect($result->pointer()->value())->toEqual($expectedPointer);
+})->with([
+    ['servers', '/paths/my-uri/get/servers'],
+    ['parameters', '/paths/my-uri/get/parameters'],
+    ['requestBody', '/paths/my-uri/get/requestBody'],
+    ['responses', '/paths/my-uri/get/responses'],
+    ['callbacks', '/paths/my-uri/get/callbacks'],
+    ['security', '/paths/my-uri/get/security'],
+]);

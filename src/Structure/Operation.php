@@ -6,6 +6,7 @@ use Apiboard\OpenAPI\Concerns\CanBeDeprecated;
 use Apiboard\OpenAPI\Concerns\CanBeDescribed;
 use Apiboard\OpenAPI\Concerns\HasReferences;
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
+use Apiboard\OpenAPI\References\JsonPointer;
 use Apiboard\OpenAPI\References\Reference;
 
 final class Operation extends Structure
@@ -17,10 +18,10 @@ final class Operation extends Structure
 
     private string $method;
 
-    public function __construct(string $method, array $data)
+    public function __construct(string $method, array $data, JsonPointer $pointer = null)
     {
         $this->method = $method;
-        $this->data = $data;
+        parent::__construct($data, $pointer);
     }
 
     public function method(): string
@@ -46,7 +47,7 @@ final class Operation extends Structure
             return null;
         }
 
-        return new Parameters($parameters);
+        return new Parameters($parameters, $this->pointer()?->append('parameters'));
     }
 
     public function requestBody(): RequestBody|Reference|null
@@ -61,12 +62,12 @@ final class Operation extends Structure
             return new Reference($requestBody['$ref']);
         }
 
-        return new RequestBody($requestBody);
+        return new RequestBody($requestBody, $this->pointer()?->append('requestBody'));
     }
 
     public function responses(): Responses
     {
-        return new Responses($this->data['responses']);
+        return new Responses($this->data['responses'], $this->pointer()?->append('responses'));
     }
 
     public function servers(): ?Servers
@@ -77,7 +78,7 @@ final class Operation extends Structure
             return null;
         }
 
-        return new Servers($servers);
+        return new Servers($servers, $this->pointer()?->append('servers'));
     }
 
     public function security(): ?Security
@@ -88,7 +89,7 @@ final class Operation extends Structure
             return null;
         }
 
-        return new Security($security);
+        return new Security($security, $this->pointer()?->append('security'));
     }
 
     public function callbacks(): ?Callbacks
@@ -99,7 +100,7 @@ final class Operation extends Structure
             return null;
         }
 
-        return new Callbacks($callbacks);
+        return new Callbacks($callbacks, $this->pointer()?->append('callbacks'));
     }
 
     public function tags(): array
