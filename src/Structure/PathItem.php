@@ -37,7 +37,7 @@ final class PathItem extends Structure
             return null;
         }
 
-        return new Parameters($parameters);
+        return new Parameters($parameters, $this->pointer()?->append('parameters'));
     }
 
     public function servers(): ?Servers
@@ -48,7 +48,7 @@ final class PathItem extends Structure
             return null;
         }
 
-        return new Servers($servers);
+        return new Servers($servers, $this->pointer()?->append('servers'));
     }
 
     public function operations(): ?Operations
@@ -65,6 +65,6 @@ final class PathItem extends Structure
             return null;
         }
 
-        return new Operations($operations);
+        return new Operations($operations, $this->pointer());
     }
 }
