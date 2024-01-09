@@ -42,7 +42,7 @@ final class Document extends Structure implements Stringable
 
     public function paths(): Paths
     {
-        $pointer = new JsonPointer('#/paths');
+        $pointer = new JsonPointer('/paths');
 
         return new Paths($this->data['paths'], $pointer);
     }
@@ -55,7 +55,7 @@ final class Document extends Structure implements Stringable
             return null;
         }
 
-        $pointer = new JsonPointer('#/servers');
+        $pointer = new JsonPointer('/servers');
 
         return new Servers($servers, $pointer);
     }
@@ -68,7 +68,7 @@ final class Document extends Structure implements Stringable
             return null;
         }
 
-        $pointer = new JsonPointer('#/components');
+        $pointer = new JsonPointer('/components');
 
         return new Components($components, $pointer);
     }
@@ -81,7 +81,7 @@ final class Document extends Structure implements Stringable
             return null;
         }
 
-        $pointer = new JsonPointer('#/security');
+        $pointer = new JsonPointer('/security');
 
         return new Security($security, $pointer);
     }
@@ -94,7 +94,7 @@ final class Document extends Structure implements Stringable
             return null;
         }
 
-        $pointer = new JsonPointer('#/webhooks');
+        $pointer = new JsonPointer('/webhooks');
 
         return new Webhooks($webhooks, $pointer);
     }
@@ -107,7 +107,7 @@ final class Document extends Structure implements Stringable
             return null;
         }
 
-        $pointer = new JsonPointer('#/tags');
+        $pointer = new JsonPointer('/tags');
 
         return new Tags($tags, $pointer);
     }

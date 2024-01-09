@@ -26,6 +26,6 @@ final class Contact extends Structure
 
     public function pointer(): ?JsonPointer
     {
-        return new JsonPointer('#/info/contact');
+        return new JsonPointer('/info/contact');
     }
 }

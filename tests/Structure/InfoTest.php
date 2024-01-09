@@ -56,13 +56,11 @@ test('it can return the contact information', function () {
 });
 
 test('it can return a fixed JSON pointer', function () {
-    $pointer = new JsonPointer('#/something/else');
+    $pointer = new JsonPointer('/something/else');
     $info = new Info([], $pointer);
 
     $result = $info->pointer();
 
     expect($result)->not->toBeNull();
-    expect($result->getPropertyPaths())->toEqual([
-        'info',
-    ]);
+    expect($result->value())->toEqual('/info');
 });

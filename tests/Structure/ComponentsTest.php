@@ -20,7 +20,7 @@ test('it can return schemas', function () {
     $result = $components->schemas();
 
     expect($result)->toBeInstanceOf(Schemas::class);
-    expect($result->pointer()->value())->toEqual('#/components/schemas');
+    expect($result->pointer()->value())->toEqual('/components/schemas');
 });
 
 test('it can return responses', function () {
@@ -31,7 +31,7 @@ test('it can return responses', function () {
     $result = $components->responses();
 
     expect($result)->toBeInstanceOf(Responses::class);
-    expect($result->pointer()->value())->toEqual('#/components/responses');
+    expect($result->pointer()->value())->toEqual('/components/responses');
 });
 
 test('it can return parameters', function () {
@@ -42,7 +42,7 @@ test('it can return parameters', function () {
     $result = $components->parameters();
 
     expect($result)->toBeInstanceOf(Parameters::class);
-    expect($result->pointer()->value())->toEqual('#/components/parameters');
+    expect($result->pointer()->value())->toEqual('/components/parameters');
 });
 
 test('it can return examples', function () {
@@ -53,7 +53,7 @@ test('it can return examples', function () {
     $result = $components->examples();
 
     expect($result)->toBeInstanceOf(Examples::class);
-    expect($result->pointer()->value())->toEqual('#/components/examples');
+    expect($result->pointer()->value())->toEqual('/components/examples');
 });
 
 test('it can return request bodies', function () {
@@ -64,7 +64,7 @@ test('it can return request bodies', function () {
     $result = $components->requestBodies();
 
     expect($result)->toBeInstanceOf(RequestBodies::class);
-    expect($result->pointer()->value())->toEqual('#/components/requestBodies');
+    expect($result->pointer()->value())->toEqual('/components/requestBodies');
 });
 
 test('it can return headers', function () {
@@ -75,7 +75,7 @@ test('it can return headers', function () {
     $result = $components->headers();
 
     expect($result)->toBeInstanceOf(Headers::class);
-    expect($result->pointer()->value())->toEqual('#/components/headers');
+    expect($result->pointer()->value())->toEqual('/components/headers');
 });
 
 test('it can return security schemes', function () {
@@ -86,7 +86,7 @@ test('it can return security schemes', function () {
     $result = $components->securitySchemes();
 
     expect($result)->toBeInstanceOf(SecuritySchemes::class);
-    expect($result->pointer()->value())->toEqual('#/components/securitySchemes');
+    expect($result->pointer()->value())->toEqual('/components/securitySchemes');
 });
 
 test('it can return links', function () {
@@ -97,7 +97,7 @@ test('it can return links', function () {
     $result = $components->links();
 
     expect($result)->toBeInstanceOf(Links::class);
-    expect($result->pointer()->value())->toEqual('#/components/links');
+    expect($result->pointer()->value())->toEqual('/components/links');
 });
 
 test('it can return callbacks', function () {
@@ -108,7 +108,7 @@ test('it can return callbacks', function () {
     $result = $components->callbacks();
 
     expect($result)->toBeInstanceOf(Callbacks::class);
-    expect($result->pointer()->value())->toEqual('#/components/callbacks');
+    expect($result->pointer()->value())->toEqual('/components/callbacks');
 });
 
 test('it can return path items', function () {
@@ -119,7 +119,7 @@ test('it can return path items', function () {
     $result = $components->pathItems();
 
     expect($result)->toBeInstanceOf(Paths::class);
-    expect($result->pointer()->value())->toEqual('#/components/pathItems');
+    expect($result->pointer()->value())->toEqual('/components/pathItems');
 });
 
 test('it returns null when data is unavailable', function (string $data) {

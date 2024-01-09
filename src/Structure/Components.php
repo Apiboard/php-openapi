@@ -17,7 +17,7 @@ final class Components extends Structure
             return null;
         }
 
-        $pointer = new JsonPointer('#/components/schemas');
+        $pointer = new JsonPointer('/components/schemas');
 
         return new Schemas($schemas, $pointer);
     }
@@ -30,7 +30,7 @@ final class Components extends Structure
             return null;
         }
 
-        $pointer = new JsonPointer('#/components/responses');
+        $pointer = new JsonPointer('/components/responses');
 
         return new Responses($responses, $pointer);
     }
@@ -43,7 +43,7 @@ final class Components extends Structure
             return null;
         }
 
-        $pointer = new JsonPointer('#/components/parameters');
+        $pointer = new JsonPointer('/components/parameters');
 
         return new Parameters($parameters, $pointer);
     }
@@ -56,7 +56,7 @@ final class Components extends Structure
             return null;
         }
 
-        $pointer = new JsonPointer('#/components/examples');
+        $pointer = new JsonPointer('/components/examples');
 
         return new Examples($examples, $pointer);
     }
@@ -69,7 +69,7 @@ final class Components extends Structure
             return null;
         }
 
-        $pointer = new JsonPointer('#/components/requestBodies');
+        $pointer = new JsonPointer('/components/requestBodies');
 
         return new RequestBodies($requestBodies, $pointer);
     }
@@ -82,7 +82,7 @@ final class Components extends Structure
             return null;
         }
 
-        $pointer = new JsonPointer('#/components/headers');
+        $pointer = new JsonPointer('/components/headers');
 
         return new Headers($headers, $pointer);
     }
@@ -95,7 +95,7 @@ final class Components extends Structure
             return null;
         }
 
-        $pointer = new JsonPointer('#/components/securitySchemes');
+        $pointer = new JsonPointer('/components/securitySchemes');
 
         return new SecuritySchemes($securitySchemes, $pointer);
     }
@@ -108,7 +108,7 @@ final class Components extends Structure
             return null;
         }
 
-        $pointer = new JsonPointer('#/components/links');
+        $pointer = new JsonPointer('/components/links');
 
         return new Links($links, $pointer);
     }
@@ -121,7 +121,7 @@ final class Components extends Structure
             return null;
         }
 
-        $pointer = new JsonPointer('#/components/callbacks');
+        $pointer = new JsonPointer('/components/callbacks');
 
         return new Callbacks($callbacks, $pointer);
     }
@@ -134,7 +134,7 @@ final class Components extends Structure
             return null;
         }
 
-        $pointer = new JsonPointer('#/components/pathItems');
+        $pointer = new JsonPointer('/components/pathItems');
 
         return new Paths($pathItems, $pointer);
     }

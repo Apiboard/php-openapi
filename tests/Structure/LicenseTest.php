@@ -24,11 +24,11 @@ test('it can return the url', function () {
 });
 
 test('it can return its fixed JSON pointer', function () {
-    $pointer = new JsonPointer('#/something/else');
+    $pointer = new JsonPointer('/something/else');
     $info = new License([], $pointer);
 
     $result = $info->pointer();
 
     expect($result)->not->toBeNull();
-    expect($result->value())->toEqual('#/info/license');
+    expect($result->value())->toEqual('/info/license');
 });

@@ -50,6 +50,6 @@ final class Info extends Structure
 
     public function pointer(): ?JsonPointer
     {
-        return new JsonPointer('#/info');
+        return new JsonPointer('/info');
     }
 }

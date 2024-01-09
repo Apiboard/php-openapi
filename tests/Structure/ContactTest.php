@@ -34,11 +34,11 @@ test('it can return the email', function () {
 });
 
 test('it can return its fixed JSON pointer', function () {
-    $pointer = new JsonPointer('#/something/else');
+    $pointer = new JsonPointer('/something/else');
     $info = new Contact([], $pointer);
 
     $result = $info->pointer();
 
     expect($result)->not->toBeNull();
-    expect($result->value())->toEqual('#/info/contact');
+    expect($result->value())->toEqual('/info/contact');
 });

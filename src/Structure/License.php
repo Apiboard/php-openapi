@@ -21,6 +21,6 @@ final class License extends Structure
 
     public function pointer(): ?JsonPointer
     {
-        return new JsonPointer('#/info/license');
+        return new JsonPointer('/info/license');
     }
 }
