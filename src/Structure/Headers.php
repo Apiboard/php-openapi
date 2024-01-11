@@ -20,7 +20,7 @@ final class Headers extends Structure implements ArrayAccess, Countable, Iterato
         foreach ($data as $name => $value) {
             $data[$name] = match ($this->isReference($value)) {
                 true => new Reference($value['$ref']),
-                default => new Header($name, $value),
+                default => new Header($name, $value, $pointer?->append($name)),
             };
         }
 
