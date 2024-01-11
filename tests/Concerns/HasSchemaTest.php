@@ -8,8 +8,7 @@ use Apiboard\OpenAPI\Structure\Parameter;
 use Apiboard\OpenAPI\Structure\Schema;
 
 test('it can return the schema', function () {
-    $class = new class()
-    {
+    $class = new class () {
         use HasASchema;
 
         protected $data = [
@@ -36,8 +35,7 @@ test('it can return the schema', function () {
 });
 
 test('it can return a referenced schema', function () {
-    $class = new class()
-    {
+    $class = new class () {
         use HasASchema;
 
         protected $data = [
