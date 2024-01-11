@@ -14,7 +14,7 @@ test('it can retrieve paths by their uri', function () {
     $result = $paths['/my-path'];
 
     expect($result)->toBeInstanceOf(PathItem::class);
-    expect($result->pointer()->value())->toEqual('/paths/my-path');
+    expect($result->pointer()->value())->toEqual('/paths/~1my-path');
 });
 
 test('it can retrieve referenced paths by their uri', function () {

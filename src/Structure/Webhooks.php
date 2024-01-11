@@ -20,7 +20,7 @@ final class Webhooks extends Structure implements ArrayAccess, Countable, Iterat
         foreach ($data as $uri => $value) {
             $data[$uri] = match ($this->isReference($value)) {
                 true => new Reference($value['$ref']),
-                default => new PathItem($uri, $value),
+                default => new PathItem($uri, $value, $pointer?->append($uri)),
             };
         }
 

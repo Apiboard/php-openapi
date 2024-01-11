@@ -1,17 +1,20 @@
 <?php
 
+use Apiboard\OpenAPI\References\JsonPointer;
 use Apiboard\OpenAPI\References\Reference;
 use Apiboard\OpenAPI\Structure\PathItem;
 use Apiboard\OpenAPI\Structure\Webhooks;
 
 test('it can retrieve webhooks by their uri', function () {
+    $pointer = new JsonPointer('/webhooks');
     $webhooks = new Webhooks([
         '/my-path' => [],
-    ]);
+    ], $pointer);
 
     $result = $webhooks['/my-path'];
 
     expect($result)->toBeInstanceOf(PathItem::class);
+    expect($result->pointer()->value())->toEqual('/webhooks/~1my-path');
 });
 
 test('it can retrieve referenced webhooks by their uri', function () {
