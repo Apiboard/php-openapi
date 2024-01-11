@@ -8,17 +8,23 @@ final class Reference
 {
     private string $value;
 
+    private string $filePath;
+
     private JsonPointer $pointer;
 
     public function __construct(string $value)
     {
         $this->value = $value;
-        $this->pointer = new JsonPointer($value);
+
+        $splitRef = explode('#', $value, 2);
+
+        $this->filePath = $splitRef[0];
+        $this->pointer = new JsonPointer($splitRef[1] ?? '');
     }
 
     public function withBase(string $base): self
     {
-        return new self(Path::canonicalize($base.$this->value));
+        return new self(Path::canonicalize($base . $this->value));
     }
 
     public function value(): string
@@ -28,17 +34,17 @@ final class Reference
 
     public function basePath(): string
     {
-        return dirname($this->path()).'/';
+        return dirname($this->path()) . '/';
     }
 
     public function path(): string
     {
-        return $this->pointer->getFilename();
+        return $this->filePath;
     }
 
     public function isInternal(): bool
     {
-        return $this->pointer->getFilename() === '';
+        return $this->path() === '';
     }
 
     public function properties(): array
