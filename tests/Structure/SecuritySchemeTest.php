@@ -1,5 +1,6 @@
 <?php
 
+use Apiboard\OpenAPI\References\JsonPointer;
 use Apiboard\OpenAPI\Structure\OAuthFlows;
 use Apiboard\OpenAPI\Structure\SecurityScheme;
 
@@ -74,14 +75,16 @@ test('it can return the openID connect url', function () {
 });
 
 test('it can return the flows', function () {
+    $pointer = new JsonPointer('/something');
     $securityScheme = new SecurityScheme([
         'type' => 'oauth2',
         'flows' => [],
-    ]);
+    ], $pointer);
 
     $result = $securityScheme->flows();
 
     expect($result)->toBeInstanceOf(OAuthFlows::class);
+    expect($result->pointer()->value())->toBe('/something/flows');
 });
 
 test('it return null when data is not available', function (string $data) {

@@ -53,6 +53,7 @@ test('it can return the info', function () {
     $result = $spec->info();
 
     expect($result)->toBeInstanceOf(Info::class);
+    expect($result->pointer()->value())->toEqual('/info');
 });
 
 test('it can return the paths', function () {
@@ -63,6 +64,7 @@ test('it can return the paths', function () {
     $result = $spec->paths();
 
     expect($result)->toBeInstanceOf(Paths::class);
+    expect($result->pointer()->value())->toEqual('/paths');
 });
 
 test('it can return the servers', function () {
@@ -73,6 +75,7 @@ test('it can return the servers', function () {
     $result = $spec->servers();
 
     expect($result)->toBeInstanceOf(Servers::class);
+    expect($result->pointer()->value())->toEqual('/servers');
 });
 
 test('it can return the components', function () {
@@ -83,6 +86,7 @@ test('it can return the components', function () {
     $result = $spec->components();
 
     expect($result)->toBeInstanceOf(Components::class);
+    expect($result->pointer()->value())->toEqual('/components');
 });
 
 test('it can return the security', function () {
@@ -93,6 +97,7 @@ test('it can return the security', function () {
     $result = $spec->security();
 
     expect($result)->toBeInstanceOf(Security::class);
+    expect($result->pointer()->value())->toEqual('/security');
 });
 
 test('it can return the webhooks', function () {
@@ -103,6 +108,7 @@ test('it can return the webhooks', function () {
     $result = $spec->webhooks();
 
     expect($result)->toBeInstanceOf(Webhooks::class);
+    expect($result->pointer()->value())->toEqual('/webhooks');
 });
 
 test('it can return the tags', function () {
@@ -113,6 +119,7 @@ test('it can return the tags', function () {
     $result = $spec->tags();
 
     expect($result)->toBeInstanceOf(Tags::class);
+    expect($result->pointer()->value())->toEqual('/tags');
 });
 
 test('it returns null when data is unavailable', function (string $data) {

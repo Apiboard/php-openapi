@@ -1,5 +1,6 @@
 <?php
 
+use Apiboard\OpenAPI\References\JsonPointer;
 use Apiboard\OpenAPI\References\Reference;
 use Apiboard\OpenAPI\Structure\Encoding;
 use Apiboard\OpenAPI\Structure\Examples;
@@ -82,4 +83,24 @@ test('it return null when data is not available', function (string $data) {
     'encoding',
     'example',
     'examples',
+]);
+
+test('it can return the correct JSON Pointer', function (string $data, string $expectedPointer) {
+    $pointer = new JsonPointer('/paths/my-uri/get/responses/200/application~1json');
+    $mediaType = new MediaType(
+        'application/json',
+        [
+            'schema' => [],
+            'examples' => [],
+        ],
+        $pointer,
+    );
+
+    $result = $mediaType->{$data}();
+
+    expect($result->pointer())->not->toBeNull();
+    expect($result->pointer()->value())->toEqual($expectedPointer);
+})->with([
+    ['schema', '/paths/my-uri/get/responses/200/application~1json/schema'],
+    ['examples', '/paths/my-uri/get/responses/200/application~1json/examples'],
 ]);

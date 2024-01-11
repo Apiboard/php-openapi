@@ -4,6 +4,7 @@ namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\CanBeUsedAsArray;
 use Apiboard\OpenAPI\Concerns\HasReferences;
+use Apiboard\OpenAPI\References\JsonPointer;
 use Apiboard\OpenAPI\References\Reference;
 use ArrayAccess;
 use Countable;
@@ -14,16 +15,16 @@ final class Examples extends Structure implements ArrayAccess, Countable, Iterat
     use CanBeUsedAsArray;
     use HasReferences;
 
-    public function __construct(array $data)
+    public function __construct(array $data, JsonPointer $pointer = null)
     {
         foreach ($data as $key => $value) {
             $data[$key] = match ($this->isReference($value)) {
                 true => new Reference($value['$ref']),
-                default => new Example($value),
+                default => new Example($value, $pointer?->append($key)),
             };
         }
 
-        $this->data = $data;
+        parent::__construct($data, $pointer);
     }
 
     public function offsetGet(mixed $offset): Example|Reference|null

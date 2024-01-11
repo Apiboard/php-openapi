@@ -4,6 +4,7 @@ namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\CanBeDescribed;
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
+use Apiboard\OpenAPI\References\JsonPointer;
 
 final class PathItem extends Structure
 {
@@ -12,10 +13,10 @@ final class PathItem extends Structure
 
     private string $uri;
 
-    public function __construct(string $uri, array $data)
+    public function __construct(string $uri, array $data, JsonPointer $pointer = null)
     {
         $this->uri = $uri;
-        $this->data = $data;
+        parent::__construct($data, $pointer);
     }
 
     public function uri(): string
@@ -36,7 +37,7 @@ final class PathItem extends Structure
             return null;
         }
 
-        return new Parameters($parameters);
+        return new Parameters($parameters, $this->pointer()?->append('parameters'));
     }
 
     public function servers(): ?Servers
@@ -47,7 +48,7 @@ final class PathItem extends Structure
             return null;
         }
 
-        return new Servers($servers);
+        return new Servers($servers, $this->pointer()?->append('servers'));
     }
 
     public function operations(): ?Operations
@@ -64,6 +65,6 @@ final class PathItem extends Structure
             return null;
         }
 
-        return new Operations($operations);
+        return new Operations($operations, $this->pointer());
     }
 }

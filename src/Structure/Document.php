@@ -5,6 +5,7 @@ namespace Apiboard\OpenAPI\Structure;
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 use Apiboard\OpenAPI\Contents\Json;
 use Apiboard\OpenAPI\Contents\Yaml;
+use Apiboard\OpenAPI\References\JsonPointer;
 use Stringable;
 
 final class Document extends Structure implements Stringable
@@ -41,7 +42,9 @@ final class Document extends Structure implements Stringable
 
     public function paths(): Paths
     {
-        return new Paths($this->data['paths']);
+        $pointer = new JsonPointer('/paths');
+
+        return new Paths($this->data['paths'], $pointer);
     }
 
     public function servers(): ?Servers
@@ -52,7 +55,9 @@ final class Document extends Structure implements Stringable
             return null;
         }
 
-        return new Servers($servers);
+        $pointer = new JsonPointer('/servers');
+
+        return new Servers($servers, $pointer);
     }
 
     public function components(): ?Components
@@ -63,7 +68,9 @@ final class Document extends Structure implements Stringable
             return null;
         }
 
-        return new Components($components);
+        $pointer = new JsonPointer('/components');
+
+        return new Components($components, $pointer);
     }
 
     public function security(): ?Security
@@ -74,7 +81,9 @@ final class Document extends Structure implements Stringable
             return null;
         }
 
-        return new Security($security);
+        $pointer = new JsonPointer('/security');
+
+        return new Security($security, $pointer);
     }
 
     public function webhooks(): ?Webhooks
@@ -85,7 +94,9 @@ final class Document extends Structure implements Stringable
             return null;
         }
 
-        return new Webhooks($webhooks);
+        $pointer = new JsonPointer('/webhooks');
+
+        return new Webhooks($webhooks, $pointer);
     }
 
     public function tags(): ?Tags
@@ -96,6 +107,8 @@ final class Document extends Structure implements Stringable
             return null;
         }
 
-        return new Tags($tags);
+        $pointer = new JsonPointer('/tags');
+
+        return new Tags($tags, $pointer);
     }
 }

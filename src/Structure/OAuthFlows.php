@@ -16,7 +16,7 @@ final class OAuthFlows extends Structure
             return null;
         }
 
-        return new OAuthFlow('implicit', $flow);
+        return new OAuthFlow('implicit', $flow, $this->pointer()?->append('implicit'));
     }
 
     public function password(): ?OAuthFlow
@@ -27,7 +27,7 @@ final class OAuthFlows extends Structure
             return null;
         }
 
-        return new OAuthFlow('password', $flow);
+        return new OAuthFlow('password', $flow, $this->pointer()?->append('password'));
     }
 
     public function clientCredentials(): ?OAuthFlow
@@ -38,7 +38,7 @@ final class OAuthFlows extends Structure
             return null;
         }
 
-        return new OAuthFlow('clientCredentials', $flow);
+        return new OAuthFlow('clientCredentials', $flow, $this->pointer()?->append('clientCredentials'));
     }
 
     public function authorizationCode(): ?OAuthFlow
@@ -49,6 +49,6 @@ final class OAuthFlows extends Structure
             return null;
         }
 
-        return new OAuthFlow('authorizationCode', $flow);
+        return new OAuthFlow('authorizationCode', $flow, $this->pointer()?->append('authorizationCode'));
     }
 }

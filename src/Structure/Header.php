@@ -7,6 +7,7 @@ use Apiboard\OpenAPI\Concerns\CanBeDescribed;
 use Apiboard\OpenAPI\Concerns\CanBeRequired;
 use Apiboard\OpenAPI\Concerns\HasASchema;
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
+use Apiboard\OpenAPI\References\JsonPointer;
 
 final class Header extends Structure
 {
@@ -18,10 +19,10 @@ final class Header extends Structure
 
     private string $name;
 
-    public function __construct(string $name, array $data)
+    public function __construct(string $name, array $data, JsonPointer $pointer = null)
     {
         $this->name = $name;
-        $this->data = $data;
+        parent::__construct($data, $pointer);
     }
 
     public function name(): string

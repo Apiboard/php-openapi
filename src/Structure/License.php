@@ -3,6 +3,7 @@
 namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
+use Apiboard\OpenAPI\References\JsonPointer;
 
 final class License extends Structure
 {
@@ -16,5 +17,10 @@ final class License extends Structure
     public function url(): string
     {
         return $this->data['url'];
+    }
+
+    public function pointer(): ?JsonPointer
+    {
+        return new JsonPointer('/info/license');
     }
 }

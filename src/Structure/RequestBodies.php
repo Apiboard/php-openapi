@@ -4,6 +4,7 @@ namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\CanBeUsedAsArray;
 use Apiboard\OpenAPI\Concerns\HasReferences;
+use Apiboard\OpenAPI\References\JsonPointer;
 use Apiboard\OpenAPI\References\Reference;
 use ArrayAccess;
 use Countable;
@@ -14,19 +15,17 @@ final class RequestBodies extends Structure implements ArrayAccess, Countable, I
     use CanBeUsedAsArray;
     use HasReferences;
 
-    public function __construct(array $data)
+    public function __construct(array $data, JsonPointer $pointer = null)
     {
-        $this->data = array_map(function (array|RequestBody $value) {
-            if ($value instanceof RequestBody) {
-                return $value;
-            }
+        foreach ($data as $key => $value) {
+            $data[$key] = match (true) {
+                $value instanceof RequestBody => $value,
+                $this->isReference($value) => new Reference($value['$ref']),
+                default => new RequestBody($value, $pointer?->append($key))
+            };
+        }
 
-            if ($this->isReference($value)) {
-                return new Reference($value['$ref']);
-            }
-
-            return new RequestBody($value);
-        }, $data);
+        parent::__construct($data, $pointer);
     }
 
     public function offsetGet(mixed $offset): RequestBody|Reference|null

@@ -1,17 +1,20 @@
 <?php
 
+use Apiboard\OpenAPI\References\JsonPointer;
 use Apiboard\OpenAPI\References\Reference;
 use Apiboard\OpenAPI\Structure\Response;
 use Apiboard\OpenAPI\Structure\Responses;
 
 test('it can retrieve responses by their status code', function () {
+    $pointer = new JsonPointer('/paths/my-uri/get/responses');
     $responses = new Responses([
         '200' => [],
-    ]);
+    ], $pointer);
 
     $result = $responses['200'];
 
     expect($result)->toBeInstanceOf(Response::class);
+    expect($result->pointer()->value())->toEqual('/paths/my-uri/get/responses/200');
 });
 
 test('it can retrieve referenced responses by their status code', function () {

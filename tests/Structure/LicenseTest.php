@@ -1,5 +1,6 @@
 <?php
 
+use Apiboard\OpenAPI\References\JsonPointer;
 use Apiboard\OpenAPI\Structure\License;
 
 test('it can return the name', function () {
@@ -20,4 +21,14 @@ test('it can return the url', function () {
     $result = $license->url();
 
     expect($result)->toBe('https://licenses.com/mit');
+});
+
+test('it can return its fixed JSON pointer', function () {
+    $pointer = new JsonPointer('/something/else');
+    $info = new License([], $pointer);
+
+    $result = $info->pointer();
+
+    expect($result)->not->toBeNull();
+    expect($result->value())->toEqual('/info/license');
 });

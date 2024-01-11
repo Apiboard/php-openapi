@@ -3,6 +3,7 @@
 namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\CanBeUsedAsArray;
+use Apiboard\OpenAPI\References\JsonPointer;
 use ArrayAccess;
 use Countable;
 use Iterator;
@@ -11,13 +12,13 @@ final class MediaTypes extends Structure implements ArrayAccess, Countable, Iter
 {
     use CanBeUsedAsArray;
 
-    public function __construct(array $data)
+    public function __construct(array $data, JsonPointer $pointer = null)
     {
         foreach ($data as $contentType => $value) {
-            $data[$contentType] = new MediaType($contentType, $value);
+            $data[$contentType] = new MediaType($contentType, $value, $pointer?->append($contentType));
         }
 
-        $this->data = $data;
+        parent::__construct($data, $pointer);
     }
 
     public function offsetGet(mixed $contentType): ?MediaType

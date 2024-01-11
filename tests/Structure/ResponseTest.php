@@ -1,5 +1,6 @@
 <?php
 
+use Apiboard\OpenAPI\References\JsonPointer;
 use Apiboard\OpenAPI\Structure\Headers;
 use Apiboard\OpenAPI\Structure\Links;
 use Apiboard\OpenAPI\Structure\MediaTypes;
@@ -63,4 +64,22 @@ test('it returns null when data is not available', function (string $data) {
     'headers',
     'content',
     'links',
+]);
+
+test('it can return the correct JSON Pointer', function (string $data, string $expectedPointer) {
+    $pointer = new JsonPointer('/paths/my-uri/get/responses/200');
+    $path = new Response('200', [
+        'headers' => [],
+        'content' => [],
+        'links' => [],
+    ], $pointer);
+
+    $result = $path->{$data}();
+
+    expect($result->pointer())->not->toBeNull();
+    expect($result->pointer()->value())->toEqual($expectedPointer);
+})->with([
+    ['headers', '/paths/my-uri/get/responses/200/headers'],
+    ['content', '/paths/my-uri/get/responses/200/content'],
+    ['links', '/paths/my-uri/get/responses/200/links'],
 ]);

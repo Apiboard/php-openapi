@@ -1,6 +1,7 @@
 <?php
 
 use Apiboard\OpenAPI\Concerns\HasASchema;
+use Apiboard\OpenAPI\References\JsonPointer;
 use Apiboard\OpenAPI\References\Reference;
 use Apiboard\OpenAPI\Structure\Header;
 use Apiboard\OpenAPI\Structure\Parameter;
@@ -14,6 +15,13 @@ test('it can return the schema', function () {
             'schema' => [],
         ];
 
+        protected JsonPointer $pointer;
+
+        public function __construct()
+        {
+            $this->pointer = new JsonPointer('/my/pointer');
+        }
+
         public function toArray(): array
         {
             return $this->data;
@@ -23,6 +31,7 @@ test('it can return the schema', function () {
     $result = $class->schema();
 
     expect($result)->toBeInstanceOf(Schema::class);
+    expect($result->pointer()->value())->toBe('/my/pointer/schema');
 });
 
 test('it can return a referenced schema', function () {

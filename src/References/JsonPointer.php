@@ -4,6 +4,8 @@ namespace Apiboard\OpenAPI\References;
 
 class JsonPointer
 {
+    private string $value;
+
     private string $filename;
 
     /**
@@ -13,6 +15,8 @@ class JsonPointer
 
     public function __construct(string $value)
     {
+        $this->value = $value;
+
         $splitRef = explode('#', $value, 2);
 
         $this->filename = $splitRef[0];
@@ -20,6 +24,22 @@ class JsonPointer
         if (array_key_exists(1, $splitRef)) {
             $this->propertyPaths = $this->decodePropertyPaths($splitRef[1]);
         }
+    }
+
+    public function value(): string
+    {
+        return $this->value;
+    }
+
+    public function append(string ...$values): self
+    {
+        $properties = $this->propertyPaths;
+
+        foreach ($values as $value) {
+            array_push($properties, $this->encodePath($value));
+        }
+
+        return new self($this->filename . '/' .  implode('/', $properties));
     }
 
     /**
@@ -37,6 +57,11 @@ class JsonPointer
         }
 
         return $paths;
+    }
+
+    private function encodePath(string $path): string
+    {
+        return strtr($path, ['/' => '~1', '~' => '~0', '%' => '%25']);
     }
 
     private function decodePath(string $path): string

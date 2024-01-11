@@ -1,5 +1,6 @@
 <?php
 
+use Apiboard\OpenAPI\References\JsonPointer;
 use Apiboard\OpenAPI\References\Reference;
 use Apiboard\OpenAPI\Structure\DataTypes;
 use Apiboard\OpenAPI\Structure\Examples;
@@ -54,27 +55,32 @@ test('it can return the data types', function (array $data, int $count) {
 ]);
 
 test('it can return the examples', function () {
+    $pointer = new JsonPointer('/components/schemas/something');
     $schema = new Schema([
         'examples' => [],
-    ]);
+    ], $pointer);
 
     $result = $schema->examples();
 
     expect($result)->toBeInstanceOf(Examples::class);
+    expect($result->pointer()->value())->toBe('/components/schemas/something/examples');
 });
 
 test('it can return the examples from a 3.0.X example format', function () {
+    $pointer = new JsonPointer('/components/schemas/something');
     $schema = new Schema([
         'example' => 'An example!',
-    ]);
+    ], $pointer);
 
     $result = $schema->examples();
 
     expect($result)->toBeInstanceOf(Examples::class);
+    expect($result->pointer()->value())->toBe('/components/schemas/something/example');
     expect($result[0]->value())->toBe('An example!');
 });
 
 test('it can return the examples combined with a 3.0.X example format', function () {
+    $pointer = new JsonPointer('/components/schemas/something');
     $schema = new Schema([
         'examples' => [
             [
@@ -82,13 +88,14 @@ test('it can return the examples combined with a 3.0.X example format', function
             ],
         ],
         'example' => 'An example!',
-    ]);
+    ], $pointer);
 
     $result = $schema->examples();
 
     expect($result)
         ->toBeInstanceOf(Examples::class)
         ->toHaveCount(2);
+    expect($result->pointer()->value())->toBe('/components/schemas/something/examples');
 });
 
 test('it can return the read only state', function () {
@@ -112,28 +119,32 @@ test('it can return the write only state', function () {
 });
 
 test('it can return the properties', function () {
+    $pointer = new JsonPointer('/components/schemas/something');
     $schema = new Schema([
         'properties' => [
             'something' => [],
         ],
-    ]);
+    ], $pointer);
 
     $result = $schema->properties();
 
     expect($result)->toBeArray();
     expect($result['something'])->toBeInstanceOf(Schema::class);
+    expect($result['something']->pointer()->value())->toBe('/components/schemas/something/properties/something');
 });
 
 test('it can return the items', function () {
+    $pointer = new JsonPointer('/components/schemas/something');
     $schema = new Schema([
         'items' => [
             [],
         ],
-    ]);
+    ], $pointer);
 
     $result = $schema->items();
 
     expect($result)->toBeInstanceOf(Schema::class);
+    expect($result->pointer()->value())->toBe('/components/schemas/something/items');
 });
 
 test('it can return the items as reference', function () {
@@ -291,13 +302,15 @@ test('it return the required state as false by default', function () {
 });
 
 test('it can return if is has polymorphism', function (string $morphKey) {
+    $pointer = new JsonPointer('/components/schemas/something');
     $schema = new Schema([
         $morphKey => [],
-    ]);
+    ], $pointer);
 
     $result = $schema->polymorphism();
 
     expect($result)->toBeInstanceOf(Polymorphism::class);
+    expect($result->pointer()->value())->toBe('/components/schemas/something/' . $morphKey);
 })->with([
     'allOf',
     'oneOf',

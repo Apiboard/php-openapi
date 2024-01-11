@@ -3,6 +3,7 @@
 namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
+use Apiboard\OpenAPI\References\JsonPointer;
 
 final class Response extends Structure
 {
@@ -10,10 +11,10 @@ final class Response extends Structure
 
     private string $statusCode;
 
-    public function __construct(string $statusCode, array $data)
+    public function __construct(string $statusCode, array $data, JsonPointer $pointer = null)
     {
         $this->statusCode = $statusCode;
-        $this->data = $data;
+        parent::__construct($data, $pointer);
     }
 
     public function statusCode(): string
@@ -34,7 +35,7 @@ final class Response extends Structure
             return null;
         }
 
-        return new Headers($headers);
+        return new Headers($headers, $this->pointer()?->append('headers'));
     }
 
     public function content(): ?MediaTypes
@@ -45,7 +46,7 @@ final class Response extends Structure
             return null;
         }
 
-        return new MediaTypes($content);
+        return new MediaTypes($content, $this->pointer()?->append('content'));
     }
 
     public function links(): ?Links
@@ -56,6 +57,6 @@ final class Response extends Structure
             return null;
         }
 
-        return new Links($links);
+        return new Links($links, $this->pointer()?->append('links'));
     }
 }

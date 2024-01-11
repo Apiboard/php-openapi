@@ -1,17 +1,20 @@
 <?php
 
+use Apiboard\OpenAPI\References\JsonPointer;
 use Apiboard\OpenAPI\References\Reference;
 use Apiboard\OpenAPI\Structure\Parameter;
 use Apiboard\OpenAPI\Structure\Parameters;
 
 test('it retrieve parameters by key', function () {
+    $pointer = new JsonPointer('/paths/my-uri');
     $parameters = new Parameters([
         0 => [],
-    ]);
+    ], $pointer);
 
     $result = $parameters[0];
 
     expect($result)->toBeInstanceOf(Parameter::class);
+    expect($result->pointer()->value())->toBe('/paths/my-uri/0');
 });
 
 test('it can retrieve referenced parameters by key', function () {
@@ -35,7 +38,7 @@ test('it can retrieve parameter by their location', function (string $location) 
             '$ref' => '#/some/ref',
         ],
     ]);
-    $location = 'in'.ucfirst($location);
+    $location = 'in' . ucfirst($location);
 
     $result = $parameters->{$location}();
 

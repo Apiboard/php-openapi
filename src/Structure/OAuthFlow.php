@@ -3,6 +3,7 @@
 namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
+use Apiboard\OpenAPI\References\JsonPointer;
 
 final class OAuthFlow extends Structure
 {
@@ -10,10 +11,10 @@ final class OAuthFlow extends Structure
 
     private string $type;
 
-    public function __construct(string $type, array $data)
+    public function __construct(string $type, array $data, JsonPointer $pointer = null)
     {
         $this->type = $type;
-        $this->data = $data;
+        parent::__construct($data, $pointer);
     }
 
     public function type(): string

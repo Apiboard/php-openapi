@@ -46,7 +46,7 @@ final class SecurityScheme extends Structure
     public function flows(): ?OAuthFlows
     {
         if ($this->type() === 'oauth2') {
-            return new OAuthFlows($this->data['flows']);
+            return new OAuthFlows($this->data['flows'], $this->pointer()?->append('flows'));
         }
 
         return null;

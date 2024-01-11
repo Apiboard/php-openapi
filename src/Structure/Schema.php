@@ -90,6 +90,9 @@ final class Schema extends Structure
         return $this->data['multipleOf'] ?? null;
     }
 
+    /**
+     * @return null|array<array-key, Schema>
+     */
     public function properties(): ?array
     {
         $properties = $this->data['properties'] ?? null;
@@ -98,7 +101,11 @@ final class Schema extends Structure
             return null;
         }
 
-        return array_map(fn (array $schema) => new self($schema), $properties);
+        foreach ($properties as $property => $schema) {
+            $properties[$property] = new self($schema, $this->pointer()?->append('properties', $property));
+        }
+
+        return $properties;
     }
 
     public function items(): Schema|Reference|null
@@ -113,7 +120,7 @@ final class Schema extends Structure
             return new Reference($items['$ref']);
         }
 
-        return new self($items);
+        return new self($items, $this->pointer()?->append('items'));
     }
 
     public function minItems(): ?int
@@ -151,25 +158,42 @@ final class Schema extends Structure
         $examples = $this->data['examples'] ?? null;
         $example = $this->data['example'] ?? null;
 
-        if ($example !== null) {
-            $examples = array_merge($examples ?? [], [
-                ['value' => $example],
-            ]);
-        }
-
-        if ($examples === null) {
+        if (is_null($examples) && is_null($example)) {
             return null;
         }
 
-        return new Examples($examples);
+        if (is_null($examples) && is_null($example) === false) {
+            return new Examples(
+                [
+                    ['value' => $example],
+                ],
+                $this->pointer()?->append('example'),
+            );
+        }
+
+        if (is_array($examples) && is_null($example)) {
+            return new Examples($examples, $this->pointer()?->append('examples'));
+        }
+
+        $examples = array_merge($examples, [
+            ['value' => $example],
+        ]);
+
+        return new Examples($examples, $this->pointer()?->append('examples'));
     }
 
     public function polymorphism(): ?Polymorphism
     {
+        $make = fn (string $type) => new Polymorphism(
+            $type,
+            $this->data,
+            $this->pointer()?->append($type),
+        );
+
         return match (true) {
-            array_key_exists('allOf', $this->data) => new Polymorphism('allOf', $this->data),
-            array_key_exists('oneOf', $this->data) => new Polymorphism('oneOf', $this->data),
-            array_key_exists('anyOf', $this->data) => new Polymorphism('anyOf', $this->data),
+            array_key_exists('allOf', $this->data) => $make('allOf'),
+            array_key_exists('oneOf', $this->data) => $make('oneOf'),
+            array_key_exists('anyOf', $this->data) => $make('anyOf'),
             default => null,
         };
     }

@@ -1,5 +1,6 @@
 <?php
 
+use Apiboard\OpenAPI\References\JsonPointer;
 use Apiboard\OpenAPI\Structure\Operations;
 use Apiboard\OpenAPI\Structure\Parameters;
 use Apiboard\OpenAPI\Structure\PathItem;
@@ -72,4 +73,22 @@ test('it returns null when data is unavailable', function (string $data) {
     'operations',
     'servers',
     'parameters',
+]);
+
+test('it can return the correct JSON Pointer', function (string $data, string $expectedPointer) {
+    $pointer = new JsonPointer('/paths/my-uri');
+    $path = new PathItem('/my-uri', [
+        'servers' => [],
+        'parameters' => [],
+        'get' => [],
+    ], $pointer);
+
+    $result = $path->{$data}();
+
+    expect($result->pointer())->not->toBeNull();
+    expect($result->pointer()->value())->toEqual($expectedPointer);
+})->with([
+    ['operations', '/paths/my-uri'],
+    ['servers', '/paths/my-uri/servers'],
+    ['parameters', '/paths/my-uri/parameters'],
 ]);
