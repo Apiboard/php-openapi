@@ -14,13 +14,13 @@ class Security extends Structure implements ArrayAccess, Countable, Iterator
 
     public function __construct(array $data, JsonPointer $pointer = null)
     {
-        $data = array_map(
-            fn (array $value) => new SecurityRequirement(
+        foreach ($data as $key => $value) {
+            $data[$key] =  new SecurityRequirement(
                 array_keys($value)[0] ?? 'None',
-                array_values($value)
-            ),
-            $data,
-        );
+                array_values($value),
+                $pointer?->append($key),
+            );
+        }
 
         parent::__construct($data, $pointer);
     }
