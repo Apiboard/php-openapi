@@ -58,13 +58,13 @@ final class MediaType extends Structure
 
     public function examples(): ?Examples
     {
-        $encoding = $this->data['examples'] ?? null;
+        $examples = $this->data['examples'] ?? null;
 
-        if ($encoding === null) {
+        if ($examples === null) {
             return null;
         }
 
-        return new Examples($encoding, $this->pointer()?->append('examples'));
+        return new Examples($examples, $this->pointer()?->append('examples'));
     }
 
     public function toArray(): array
