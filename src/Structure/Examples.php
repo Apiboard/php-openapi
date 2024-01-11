@@ -20,7 +20,7 @@ final class Examples extends Structure implements ArrayAccess, Countable, Iterat
         foreach ($data as $key => $value) {
             $data[$key] = match ($this->isReference($value)) {
                 true => new Reference($value['$ref']),
-                default => new Example($value),
+                default => new Example($value, $pointer?->append($key)),
             };
         }
 
