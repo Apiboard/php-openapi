@@ -1,7 +1,7 @@
 <?php
 
 use Apiboard\OpenAPI\References\JsonPointer;
-use Apiboard\OpenAPI\References\Reference;
+use Apiboard\OpenAPI\References\JsonReference;
 use Apiboard\OpenAPI\Structure\PathItem;
 use Apiboard\OpenAPI\Structure\Paths;
 
@@ -26,7 +26,7 @@ test('it can retrieve referenced paths by their uri', function () {
 
     $result = $paths['/my-path'];
 
-    expect($result)->toBeInstanceOf(Reference::class);
+    expect($result)->toBeInstanceOf(JsonReference::class);
 });
 
 test('it returns null for unknown paths', function () {

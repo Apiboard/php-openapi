@@ -1,7 +1,7 @@
 <?php
 
 use Apiboard\OpenAPI\References\JsonPointer;
-use Apiboard\OpenAPI\References\Reference;
+use Apiboard\OpenAPI\References\JsonReference;
 use Apiboard\OpenAPI\Structure\Link;
 use Apiboard\OpenAPI\Structure\Links;
 
@@ -26,5 +26,5 @@ test('it can retrieve referenced links by their name', function () {
 
     $result = $links['my-link'];
 
-    expect($result)->toBeInstanceOf(Reference::class);
+    expect($result)->toBeInstanceOf(JsonReference::class);
 });

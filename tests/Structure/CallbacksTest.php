@@ -1,6 +1,6 @@
 <?php
 
-use Apiboard\OpenAPI\References\Reference;
+use Apiboard\OpenAPI\References\JsonReference;
 use Apiboard\OpenAPI\Structure\Callbacks;
 use Apiboard\OpenAPI\Structure\PathItem;
 
@@ -23,7 +23,7 @@ test('it can retrieve references callbacks by their expression', function () {
 
     $result = $callbacks['expression'];
 
-    expect($result)->toBeInstanceOf(Reference::class);
+    expect($result)->toBeInstanceOf(JsonReference::class);
 });
 
 test('it does not include vendor extensions', function () {

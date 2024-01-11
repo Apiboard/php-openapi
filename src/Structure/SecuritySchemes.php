@@ -5,7 +5,7 @@ namespace Apiboard\OpenAPI\Structure;
 use Apiboard\OpenAPI\Concerns\CanBeUsedAsArray;
 use Apiboard\OpenAPI\Concerns\HasReferences;
 use Apiboard\OpenAPI\References\JsonPointer;
-use Apiboard\OpenAPI\References\Reference;
+use Apiboard\OpenAPI\References\JsonReference;
 use ArrayAccess;
 use Countable;
 use Iterator;
@@ -19,7 +19,7 @@ final class SecuritySchemes extends Structure implements ArrayAccess, Countable,
     {
         foreach ($data as $name => $value) {
             $data[$name] = match ($this->isReference($value)) {
-                true => new Reference($value['$ref']),
+                true => new JsonReference($value['$ref']),
                 default => new SecurityScheme($value, $pointer?->append($name)),
             };
         }
@@ -27,12 +27,12 @@ final class SecuritySchemes extends Structure implements ArrayAccess, Countable,
         parent::__construct($data, $pointer);
     }
 
-    public function offsetGet(mixed $type): SecurityScheme|Reference|null
+    public function offsetGet(mixed $type): SecurityScheme|JsonReference|null
     {
         return $this->data[$type] ?? null;
     }
 
-    public function current(): SecurityScheme|Reference
+    public function current(): SecurityScheme|JsonReference
     {
         return $this->iterator->current();
     }

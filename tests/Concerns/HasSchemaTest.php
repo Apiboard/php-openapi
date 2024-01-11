@@ -2,7 +2,7 @@
 
 use Apiboard\OpenAPI\Concerns\HasASchema;
 use Apiboard\OpenAPI\References\JsonPointer;
-use Apiboard\OpenAPI\References\Reference;
+use Apiboard\OpenAPI\References\JsonReference;
 use Apiboard\OpenAPI\Structure\Header;
 use Apiboard\OpenAPI\Structure\Parameter;
 use Apiboard\OpenAPI\Structure\Schema;
@@ -52,7 +52,7 @@ test('it can return a referenced schema', function () {
 
     $result = $class->schema();
 
-    expect($result)->toBeInstanceOf(Reference::class);
+    expect($result)->toBeInstanceOf(JsonReference::class);
 });
 
 test('it is used in structure classes that have schemas', function ($class) {

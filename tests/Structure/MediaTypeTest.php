@@ -1,7 +1,7 @@
 <?php
 
 use Apiboard\OpenAPI\References\JsonPointer;
-use Apiboard\OpenAPI\References\Reference;
+use Apiboard\OpenAPI\References\JsonReference;
 use Apiboard\OpenAPI\Structure\Encoding;
 use Apiboard\OpenAPI\Structure\Examples;
 use Apiboard\OpenAPI\Structure\MediaType;
@@ -26,7 +26,7 @@ test('it can return the referenced schema', function () {
 
     $result = $mediaType->schema();
 
-    expect($result)->toBeInstanceOf(Reference::class);
+    expect($result)->toBeInstanceOf(JsonReference::class);
 });
 
 test('it can return the encoding', function () {

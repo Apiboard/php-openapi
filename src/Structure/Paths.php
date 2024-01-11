@@ -6,7 +6,7 @@ use Apiboard\OpenAPI\Concerns\CanBeUsedAsArray;
 use Apiboard\OpenAPI\Concerns\HasReferences;
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 use Apiboard\OpenAPI\References\JsonPointer;
-use Apiboard\OpenAPI\References\Reference;
+use Apiboard\OpenAPI\References\JsonReference;
 use ArrayAccess;
 use Countable;
 use Iterator;
@@ -21,7 +21,7 @@ final class Paths extends Structure implements ArrayAccess, Countable, Iterator
     {
         foreach ($data as $uri => $value) {
             $data[$uri] = match (true) {
-                $this->isReference($value) => new Reference($value['$ref']),
+                $this->isReference($value) => new JsonReference($value['$ref']),
                 $this->isVendorExtension($uri) => $value,
                 default => new PathItem($uri, $value, $pointer?->append($uri)),
             };
@@ -30,7 +30,7 @@ final class Paths extends Structure implements ArrayAccess, Countable, Iterator
         parent::__construct($data, $pointer);
     }
 
-    public function offsetGet(mixed $uri): PathItem|Reference|null
+    public function offsetGet(mixed $uri): PathItem|JsonReference|null
     {
         if ($this->isVendorExtension($uri)) {
             return null;
@@ -39,7 +39,7 @@ final class Paths extends Structure implements ArrayAccess, Countable, Iterator
         return $this->data[$uri] ?? null;
     }
 
-    public function current(): PathItem|Reference
+    public function current(): PathItem|JsonReference
     {
         return $this->iterator->current();
     }

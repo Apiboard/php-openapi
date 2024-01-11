@@ -3,7 +3,7 @@
 use Apiboard\OpenAPI\Concerns\HasReferences;
 use Apiboard\OpenAPI\Contents\Json;
 use Apiboard\OpenAPI\Contents\Yaml;
-use Apiboard\OpenAPI\References\Reference;
+use Apiboard\OpenAPI\References\JsonReference;
 use Apiboard\OpenAPI\Structure\Callbacks;
 use Apiboard\OpenAPI\Structure\Examples;
 use Apiboard\OpenAPI\Structure\Headers;
@@ -37,7 +37,7 @@ test('it can return all references', function () {
     $result = $class->references();
 
     expect($result)->toHaveCount(1);
-    expect($result[0])->toBeInstanceOf(Reference::class);
+    expect($result[0])->toBeInstanceOf(JsonReference::class);
 });
 
 test('it is used in structure classes that can have references', function ($class) {
