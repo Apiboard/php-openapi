@@ -1,6 +1,5 @@
 <?php
 
-use Apiboard\OpenAPI\References\JsonPointer;
 use Apiboard\OpenAPI\References\Reference;
 use Apiboard\OpenAPI\Structure\Link;
 use Apiboard\OpenAPI\Structure\RuntimeExpression;

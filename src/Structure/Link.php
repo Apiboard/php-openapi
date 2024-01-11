@@ -4,7 +4,6 @@ namespace Apiboard\OpenAPI\Structure;
 
 use Apiboard\OpenAPI\Concerns\CanBeDescribed;
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
-use Apiboard\OpenAPI\References\JsonPointer;
 use Apiboard\OpenAPI\References\JsonReference;
 
 final class Link extends Structure
