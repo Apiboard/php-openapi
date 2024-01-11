@@ -4,7 +4,7 @@ namespace Apiboard\OpenAPI\References;
 
 use Symfony\Component\Filesystem\Path;
 
-final class Reference
+final class JsonReference
 {
     private string $value;
 

@@ -5,7 +5,7 @@ namespace Apiboard\OpenAPI\Structure;
 use Apiboard\OpenAPI\Concerns\CanBeUsedAsArray;
 use Apiboard\OpenAPI\Concerns\HasReferences;
 use Apiboard\OpenAPI\References\JsonPointer;
-use Apiboard\OpenAPI\References\Reference;
+use Apiboard\OpenAPI\References\JsonReference;
 use ArrayAccess;
 use Countable;
 use Iterator;
@@ -19,7 +19,7 @@ final class Headers extends Structure implements ArrayAccess, Countable, Iterato
     {
         foreach ($data as $name => $value) {
             $data[$name] = match ($this->isReference($value)) {
-                true => new Reference($value['$ref']),
+                true => new JsonReference($value['$ref']),
                 default => new Header($name, $value, $pointer?->append($name)),
             };
         }
@@ -27,12 +27,12 @@ final class Headers extends Structure implements ArrayAccess, Countable, Iterato
         parent::__construct($data, $pointer);
     }
 
-    public function offsetGet(mixed $name): Header|Reference|null
+    public function offsetGet(mixed $name): Header|JsonReference|null
     {
         return $this->data[$name] ?? null;
     }
 
-    public function current(): Header|Reference
+    public function current(): Header|JsonReference
     {
         return $this->iterator->current();
     }

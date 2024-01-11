@@ -5,6 +5,7 @@ namespace Apiboard\OpenAPI\Structure;
 use Apiboard\OpenAPI\Concerns\CanBeDescribed;
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 use Apiboard\OpenAPI\References\JsonPointer;
+use Apiboard\OpenAPI\References\JsonReference;
 
 final class Link extends Structure
 {
@@ -16,7 +17,7 @@ final class Link extends Structure
         return $this->data['operationId'] ?? null;
     }
 
-    public function operationRef(): ?JsonPointer
+    public function operationRef(): ?JsonReference
     {
         $operationRef = $this->data['operationRef'] ?? null;
 
@@ -24,7 +25,7 @@ final class Link extends Structure
             return null;
         }
 
-        return new JsonPointer($operationRef);
+        return new JsonReference($operationRef);
     }
 
     public function parameters(): ?array

@@ -1,7 +1,7 @@
 <?php
 
 use Apiboard\OpenAPI\References\JsonPointer;
-use Apiboard\OpenAPI\References\Reference;
+use Apiboard\OpenAPI\References\JsonReference;
 use Apiboard\OpenAPI\Structure\Response;
 use Apiboard\OpenAPI\Structure\Responses;
 
@@ -26,7 +26,7 @@ test('it can retrieve referenced responses by their status code', function () {
 
     $result = $responses['200'];
 
-    expect($result)->toBeInstanceOf(Reference::class);
+    expect($result)->toBeInstanceOf(JsonReference::class);
 });
 
 test('it does not include vendor extensions', function () {
