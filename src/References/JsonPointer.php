@@ -6,8 +6,6 @@ class JsonPointer
 {
     private string $value;
 
-    private string $filename;
-
     /**
      * @var array<array-key,string>
      */
@@ -16,14 +14,7 @@ class JsonPointer
     public function __construct(string $value)
     {
         $this->value = $value;
-
-        $splitRef = explode('#', $value, 2);
-
-        $this->filename = $splitRef[0];
-
-        if (array_key_exists(1, $splitRef)) {
-            $this->propertyPaths = $this->decodePropertyPaths($splitRef[1]);
-        }
+        $this->propertyPaths = $this->decodePropertyPaths($value);
     }
 
     public function value(): string
@@ -35,11 +26,11 @@ class JsonPointer
     {
         $properties = $this->propertyPaths;
 
-        foreach ($values as $value) {
-            array_push($properties, $this->encodePath($value));
-        }
+        array_push($properties, ...$values);
 
-        return new self($this->filename . '/' .  implode('/', $properties));
+        $properties = array_map(fn (string $value) => $this->encodePath($value), $properties);
+
+        return new self('/' . implode('/', $properties));
     }
 
     /**
@@ -67,11 +58,6 @@ class JsonPointer
     private function decodePath(string $path): string
     {
         return strtr($path, ['~1' => '/', '~0' => '~', '%25' => '%']);
-    }
-
-    public function getFilename(): string
-    {
-        return $this->filename;
     }
 
     /**
