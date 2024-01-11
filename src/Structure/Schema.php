@@ -6,7 +6,7 @@ use Apiboard\OpenAPI\Concerns\CanBeDeprecated;
 use Apiboard\OpenAPI\Concerns\CanBeDescribed;
 use Apiboard\OpenAPI\Concerns\HasReferences;
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
-use Apiboard\OpenAPI\References\Reference;
+use Apiboard\OpenAPI\References\JsonReference;
 
 final class Schema extends Structure
 {
@@ -108,7 +108,7 @@ final class Schema extends Structure
         return $properties;
     }
 
-    public function items(): Schema|Reference|null
+    public function items(): Schema|JsonReference|null
     {
         $items = $this->data['items'] ?? null;
 
@@ -117,7 +117,7 @@ final class Schema extends Structure
         }
 
         if ($this->isReference($items)) {
-            return new Reference($items['$ref']);
+            return new JsonReference($items['$ref']);
         }
 
         return new self($items, $this->pointer()?->append('items'));

@@ -5,7 +5,7 @@ namespace Apiboard\OpenAPI\Structure;
 use Apiboard\OpenAPI\Concerns\HasReferences;
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 use Apiboard\OpenAPI\References\JsonPointer;
-use Apiboard\OpenAPI\References\Reference;
+use Apiboard\OpenAPI\References\JsonReference;
 
 final class MediaType extends Structure
 {
@@ -25,7 +25,7 @@ final class MediaType extends Structure
         return $this->contentType;
     }
 
-    public function schema(): Schema|Reference|null
+    public function schema(): Schema|JsonReference|null
     {
         $schema = $this->data['schema'] ?? null;
 
@@ -34,7 +34,7 @@ final class MediaType extends Structure
         }
 
         if ($this->isReference($schema)) {
-            return new Reference($schema['$ref']);
+            return new JsonReference($schema['$ref']);
         }
 
         return new Schema($schema, $this->pointer()?->append('schema'));

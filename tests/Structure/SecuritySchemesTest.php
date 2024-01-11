@@ -1,7 +1,7 @@
 <?php
 
 use Apiboard\OpenAPI\References\JsonPointer;
-use Apiboard\OpenAPI\References\Reference;
+use Apiboard\OpenAPI\References\JsonReference;
 use Apiboard\OpenAPI\Structure\SecurityScheme;
 use Apiboard\OpenAPI\Structure\SecuritySchemes;
 
@@ -26,5 +26,5 @@ test('it can return a referenced security scheme by their name', function () {
 
     $result = $securitySchemes['someScheme'];
 
-    expect($result)->toBeInstanceOf(Reference::class);
+    expect($result)->toBeInstanceOf(JsonReference::class);
 });

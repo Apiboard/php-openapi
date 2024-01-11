@@ -1,7 +1,7 @@
 <?php
 
 use Apiboard\OpenAPI\References\JsonPointer;
-use Apiboard\OpenAPI\References\Reference;
+use Apiboard\OpenAPI\References\JsonReference;
 use Apiboard\OpenAPI\Structure\RequestBodies;
 use Apiboard\OpenAPI\Structure\RequestBody;
 
@@ -26,7 +26,7 @@ test('it retrieve referenced request bodies by key', function () {
 
     $result = $requestBodies[0];
 
-    expect($result)->toBeInstanceOf(Reference::class);
+    expect($result)->toBeInstanceOf(JsonReference::class);
 });
 
 test('it can retrieve only required request bodies', function () {

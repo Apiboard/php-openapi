@@ -5,7 +5,7 @@ namespace Apiboard\OpenAPI\Structure;
 use Apiboard\OpenAPI\Concerns\CanBeUsedAsArray;
 use Apiboard\OpenAPI\Concerns\HasReferences;
 use Apiboard\OpenAPI\References\JsonPointer;
-use Apiboard\OpenAPI\References\Reference;
+use Apiboard\OpenAPI\References\JsonReference;
 use ArrayAccess;
 use Countable;
 use Iterator;
@@ -20,7 +20,7 @@ final class Parameters extends Structure implements ArrayAccess, Countable, Iter
         foreach ($data as $key => $value) {
             $data[$key] = match (true) {
                 $value instanceof Parameter => $value,
-                $this->isReference($value) => new Reference($value['$ref']),
+                $this->isReference($value) => new JsonReference($value['$ref']),
                 default => new Parameter($value, $pointer?->append($key)),
             };
         }
@@ -28,12 +28,12 @@ final class Parameters extends Structure implements ArrayAccess, Countable, Iter
         parent::__construct($data, $pointer);
     }
 
-    public function offsetGet(mixed $offset): Parameter|Reference|null
+    public function offsetGet(mixed $offset): Parameter|JsonReference|null
     {
         return $this->data[$offset] ?? null;
     }
 
-    public function current(): Parameter|Reference
+    public function current(): Parameter|JsonReference
     {
         return $this->iterator->current();
     }
@@ -60,8 +60,8 @@ final class Parameters extends Structure implements ArrayAccess, Countable, Iter
 
     private function filter(callable $callback): array
     {
-        return array_filter($this->data, function (Parameter|Reference $value) use ($callback) {
-            if ($value instanceof Reference) {
+        return array_filter($this->data, function (Parameter|JsonReference $value) use ($callback) {
+            if ($value instanceof JsonReference) {
                 return false;
             }
 

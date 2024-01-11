@@ -1,6 +1,6 @@
 <?php
 
-use Apiboard\OpenAPI\References\JsonPointer;
+use Apiboard\OpenAPI\References\JsonReference;
 use Apiboard\OpenAPI\Structure\Link;
 use Apiboard\OpenAPI\Structure\RuntimeExpression;
 use Apiboard\OpenAPI\Structure\Server;
@@ -22,7 +22,7 @@ test('it can return the operation reference', function () {
 
     $result = $link->operationRef();
 
-    expect($result)->toBeInstanceOf(JsonPointer::class);
+    expect($result)->toBeInstanceOf(JsonReference::class);
 });
 
 test('it can return the parameters', function () {

@@ -1,6 +1,6 @@
 <?php
 
-use Apiboard\OpenAPI\References\Reference;
+use Apiboard\OpenAPI\References\JsonReference;
 use Apiboard\OpenAPI\Structure\Schema;
 use Apiboard\OpenAPI\Structure\Schemas;
 
@@ -23,5 +23,5 @@ test('it retrieve referenced schemas by key', function () {
 
     $result = $schemas[0];
 
-    expect($result)->toBeInstanceOf(Reference::class);
+    expect($result)->toBeInstanceOf(JsonReference::class);
 });

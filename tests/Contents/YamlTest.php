@@ -1,7 +1,7 @@
 <?php
 
 use Apiboard\OpenAPI\Contents\Yaml;
-use Apiboard\OpenAPI\References\Reference;
+use Apiboard\OpenAPI\References\JsonReference;
 
 test('it can cast empty strings to an array', function () {
     $contents = '';
@@ -41,5 +41,5 @@ EOD);
 
     expect($result)
         ->toHaveCount(2)
-        ->toBeArrayOf(Reference::class);
+        ->toBeArrayOf(JsonReference::class);
 });

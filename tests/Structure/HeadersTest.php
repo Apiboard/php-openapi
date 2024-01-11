@@ -1,7 +1,7 @@
 <?php
 
 use Apiboard\OpenAPI\References\JsonPointer;
-use Apiboard\OpenAPI\References\Reference;
+use Apiboard\OpenAPI\References\JsonReference;
 use Apiboard\OpenAPI\Structure\Header;
 use Apiboard\OpenAPI\Structure\Headers;
 
@@ -26,7 +26,7 @@ test('it can retrieve referenced headers by their name', function () {
 
     $result = $headers['X-My-Header'];
 
-    expect($result)->toBeInstanceOf(Reference::class);
+    expect($result)->toBeInstanceOf(JsonReference::class);
 });
 
 test('it returns null for unknown header names', function () {

@@ -2,14 +2,14 @@
 
 namespace Apiboard\OpenAPI\Concerns;
 
-use Apiboard\OpenAPI\References\Reference;
+use Apiboard\OpenAPI\References\JsonReference;
 
 trait HasReferences
 {
     abstract public function toArray(): array;
 
     /**
-     * @return array<Reference>
+     * @return array<JsonReference>
      */
     public function references(): array
     {
@@ -18,12 +18,12 @@ trait HasReferences
         $references = [];
 
         array_walk_recursive($properties, function (mixed $value, string $key) use (&$references) {
-            if ($value instanceof Reference) {
+            if ($value instanceof JsonReference) {
                 $references[] = $value;
             }
 
             if ($key === '$ref') {
-                $references[] = new Reference($value);
+                $references[] = new JsonReference($value);
             }
         });
 

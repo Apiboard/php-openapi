@@ -1,7 +1,7 @@
 <?php
 
 use Apiboard\OpenAPI\References\JsonPointer;
-use Apiboard\OpenAPI\References\Reference;
+use Apiboard\OpenAPI\References\JsonReference;
 use Apiboard\OpenAPI\Structure\Example;
 use Apiboard\OpenAPI\Structure\Examples;
 
@@ -26,5 +26,5 @@ test('it can retrieve referenced examples by their key', function () {
 
     $result = $examples['my-example'];
 
-    expect($result)->toBeInstanceOf(Reference::class);
+    expect($result)->toBeInstanceOf(JsonReference::class);
 });

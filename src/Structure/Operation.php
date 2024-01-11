@@ -7,7 +7,7 @@ use Apiboard\OpenAPI\Concerns\CanBeDescribed;
 use Apiboard\OpenAPI\Concerns\HasReferences;
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 use Apiboard\OpenAPI\References\JsonPointer;
-use Apiboard\OpenAPI\References\Reference;
+use Apiboard\OpenAPI\References\JsonReference;
 
 final class Operation extends Structure
 {
@@ -50,7 +50,7 @@ final class Operation extends Structure
         return new Parameters($parameters, $this->pointer()?->append('parameters'));
     }
 
-    public function requestBody(): RequestBody|Reference|null
+    public function requestBody(): RequestBody|JsonReference|null
     {
         $requestBody = $this->data['requestBody'] ?? null;
 
@@ -59,7 +59,7 @@ final class Operation extends Structure
         }
 
         if ($this->isReference($requestBody)) {
-            return new Reference($requestBody['$ref']);
+            return new JsonReference($requestBody['$ref']);
         }
 
         return new RequestBody($requestBody, $this->pointer()?->append('requestBody'));

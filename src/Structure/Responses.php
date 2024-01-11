@@ -6,7 +6,7 @@ use Apiboard\OpenAPI\Concerns\CanBeUsedAsArray;
 use Apiboard\OpenAPI\Concerns\HasReferences;
 use Apiboard\OpenAPI\Concerns\HasVendorExtensions;
 use Apiboard\OpenAPI\References\JsonPointer;
-use Apiboard\OpenAPI\References\Reference;
+use Apiboard\OpenAPI\References\JsonReference;
 use ArrayAccess;
 use Countable;
 use Iterator;
@@ -21,7 +21,7 @@ final class Responses extends Structure implements ArrayAccess, Countable, Itera
     {
         foreach ($data as $statusCode => $value) {
             match (true) {
-                $this->isReference($value) => $data[$statusCode] = new Reference($value['$ref']),
+                $this->isReference($value) => $data[$statusCode] = new JsonReference($value['$ref']),
                 $this->isVendorExtension($statusCode) => $data[$statusCode] = $value,
                 $value instanceof Response => $data[$value->statusCode()] = $value,
                 default => $data[$statusCode] = new Response($statusCode, $value, $pointer?->append($statusCode)),
@@ -31,7 +31,7 @@ final class Responses extends Structure implements ArrayAccess, Countable, Itera
         parent::__construct($data, $pointer);
     }
 
-    public function offsetGet(mixed $statusCode): Response|Reference|null
+    public function offsetGet(mixed $statusCode): Response|JsonReference|null
     {
         if ($this->isVendorExtension($statusCode)) {
             return null;
@@ -40,7 +40,7 @@ final class Responses extends Structure implements ArrayAccess, Countable, Itera
         return $this->data[$statusCode] ?? null;
     }
 
-    public function current(): Response|Reference
+    public function current(): Response|JsonReference
     {
         return $this->iterator->current();
     }

@@ -1,7 +1,7 @@
 <?php
 
 use Apiboard\OpenAPI\References\JsonPointer;
-use Apiboard\OpenAPI\References\Reference;
+use Apiboard\OpenAPI\References\JsonReference;
 use Apiboard\OpenAPI\Structure\DataTypes;
 use Apiboard\OpenAPI\Structure\Examples;
 use Apiboard\OpenAPI\Structure\Polymorphism;
@@ -156,7 +156,7 @@ test('it can return the items as reference', function () {
 
     $result = $schema->items();
 
-    expect($result)->toBeInstanceOf(Reference::class);
+    expect($result)->toBeInstanceOf(JsonReference::class);
 });
 
 test('it can return the min items', function () {
