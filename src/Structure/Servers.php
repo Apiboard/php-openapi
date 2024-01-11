@@ -14,7 +14,12 @@ final class Servers extends Structure implements ArrayAccess, Countable, Iterato
 
     public function __construct(array $data, JsonPointer $pointer = null)
     {
-        $data = array_map(fn (array $value) => new Server($value), $data);
+        foreach ($data as $key => $value) {
+            $data[$key] = match (true) {
+                $value instanceof Server => $value,
+                default => new Server($value, $pointer?->append($key)),
+            };
+        }
 
         parent::__construct($data, $pointer);
     }
