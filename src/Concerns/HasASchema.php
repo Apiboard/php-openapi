@@ -17,6 +17,6 @@ trait HasASchema
             return new Reference($schema['$ref']);
         }
 
-        return new Schema($schema);
+        return new Schema($schema, $this->pointer?->append('schema'));
     }
 }
