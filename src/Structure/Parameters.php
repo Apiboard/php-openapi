@@ -17,17 +17,13 @@ final class Parameters extends Structure implements ArrayAccess, Countable, Iter
 
     public function __construct(array $data, JsonPointer $pointer = null)
     {
-        $data = array_map(function (array|Parameter $value) {
-            if ($value instanceof Parameter) {
-                return $value;
-            }
-
-            if ($this->isReference($value)) {
-                return new Reference($value['$ref']);
-            }
-
-            return new Parameter($value);
-        }, $data);
+        foreach ($data as $key => $value) {
+            $data[$key] = match (true) {
+                $value instanceof Parameter => $value,
+                $this->isReference($value) => new Reference($value['$ref']),
+                default => new Parameter($value, $pointer?->append($key)),
+            };
+        }
 
         parent::__construct($data, $pointer);
     }
