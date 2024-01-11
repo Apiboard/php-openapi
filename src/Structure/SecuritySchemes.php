@@ -17,12 +17,12 @@ final class SecuritySchemes extends Structure implements ArrayAccess, Countable,
 
     public function __construct(array $data, JsonPointer $pointer = null)
     {
-        $data = array_map(function (array $value) {
-            return match ($this->isReference($value)) {
+        foreach ($data as $name => $value) {
+            $data[$name] = match ($this->isReference($value)) {
                 true => new Reference($value['$ref']),
-                default => new SecurityScheme($value),
+                default => new SecurityScheme($value, $pointer?->append($name)),
             };
-        }, $data);
+        }
 
         parent::__construct($data, $pointer);
     }
