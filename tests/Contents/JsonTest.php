@@ -1,7 +1,7 @@
 <?php
 
 use Apiboard\OpenAPI\Contents\Json;
-use Apiboard\OpenAPI\References\JsonReference;
+use Apiboard\OpenAPI\References\Reference;
 
 test('it can cast empty strings to an array', function () {
     $contents = '';
@@ -71,7 +71,7 @@ test('it can return all external references', function () {
 
     expect($result)
         ->toHaveCount(2)
-        ->toBeArrayOf(JsonReference::class);
+        ->toBeArrayOf(Reference::class);
 });
 
 test('casting JSON OAS contents to object casts empty security entry from array to an object', function () {

@@ -47,8 +47,8 @@ final class JsonReference
         return $this->path() === '';
     }
 
-    public function properties(): array
+    public function pointer(): JsonPointer
     {
-        return $this->pointer->getPropertyPaths();
+        return $this->pointer;
     }
 }

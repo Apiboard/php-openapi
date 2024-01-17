@@ -8,5 +8,5 @@ interface Retriever
 
     public function from(string $basePath): Retriever;
 
-    public function retrieve(string $filePath): Json|Yaml;
+    public function retrieve(string $filePath): Contents;
 }
