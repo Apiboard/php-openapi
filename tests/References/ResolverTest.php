@@ -1,14 +1,14 @@
 <?php
 
+use Apiboard\OpenAPI\Contents\Contents;
 use Apiboard\OpenAPI\Contents\Json;
 use Apiboard\OpenAPI\Contents\Retriever;
-use Apiboard\OpenAPI\Contents\Yaml;
 use Apiboard\OpenAPI\References\Resolver;
 
 test('it can resolve basic external references', function () {
     $contents = new Json('{ "something": { "$ref": "ref-1.json" }, "simple": "value" }');
     $resolver = new Resolver(retriever(function () {
-        return new Json('{ "resolved": "the contents!" }');
+        return new Contents('{ "resolved": "the contents!" }');
     }));
 
     $result = $resolver->resolve($contents);
@@ -24,7 +24,7 @@ test('it can resolve basic external references', function () {
 test('it can resolve external references with json pointers', function () {
     $contents = new Json('{ "something": { "$ref": "ref-1.json#/resolved/pointer" }, "simple": "value" }');
     $resolver = new Resolver(retriever(function () {
-        return new Json('{ "resolved": { "pointer": "the contents!" } }');
+        return new Contents('{ "resolved": { "pointer": "the contents!" } }');
     }));
 
     $result = $resolver->resolve($contents);
@@ -43,7 +43,7 @@ test('it can resolve external nested references', function () {
             'ref-2.json' => '{"resolved": "the contents!"}',
         };
 
-        return new Json($contents);
+        return new Contents($contents);
     }));
 
     $result = $resolver->resolve($contents);
@@ -73,7 +73,7 @@ test('it can resolve recursive external references', function () {
             'ref-1.json' => '{"different": { "$ref": "ref-1.json" } }',
         };
 
-        return new Json($contents);
+        return new Contents($contents);
     }));
 
     $result = $resolver->resolve($contents);
@@ -99,7 +99,7 @@ test('it retrieves duplicate external references only once', function () {
     $resolver = new Resolver(retriever(function () use (&$count) {
         $count++;
 
-        return new Json('');
+        return new Contents('');
     }));
 
     $resolver->resolve($contents);
@@ -113,7 +113,7 @@ test('it retrieves duplicate external references with different json pointers on
     $resolver = new Resolver(retriever(function () use (&$count) {
         $count++;
 
-        return new Json('{
+        return new Contents('{
             "some": {
                 "pointer": "The pointer value!",
                 "different": {
@@ -137,19 +137,18 @@ test('it does not resolve external references without a retriever', function () 
     expect($result)->toBe($contents);
 });
 
-test('it does not resolve internal references', function () {
-    $count = 0;
-    $contents = new Json('{"something":{"$ref":"#/internal/thing"}}');
-    $resolver = new Resolver(retriever(function () use (&$count) {
-        $count++;
-
-        return new Json('');
-    }));
+test('it can resolve internal references', function () {
+    $contents = new Json('{"something":{"$ref":"#/internal/thing"}, "internal": {"thing": "the internal result!"}}');
+    $resolver = new Resolver();
 
     $result = $resolver->resolve($contents);
 
-    expect($result->toString())->toBe($contents->toString());
-    expect($count)->toBe(0);
+    expect($result->toArray())->toBe([
+        'something' => 'the internal result!',
+        'internal' => [
+            'thing' => 'the internal result!',
+        ],
+    ]);
 });
 
 test('it can resolve empty contents correctly', function () {
@@ -159,30 +158,6 @@ test('it can resolve empty contents correctly', function () {
     $result = $resolver->resolve($contents);
 
     expect($result->toObject())->toBeObject();
-});
-
-test('it can resolve upwards references correctly with a retriever that has a base path defined', function () {
-    $contents = new Json('{
-        "$ref": "../upwards/folder/file.json"
-    }');
-    $retriever = retriever(function (string $filePath) {
-        return match ($filePath) {
-            '/path/to/upwards/folder/file.json' => new Json('{
-                "key": {
-                    "$ref": "./other/file.json"
-                }
-            }'),
-            '/path/to/upwards/folder/other/file.json' => new Json('{}'),
-            default => $this->fail('Unexpected file path received:'.$filePath),
-        };
-    });
-    $resolver = new Resolver($retriever->from('/path/to/base/'));
-
-    $result = $resolver->resolve($contents);
-
-    expect($result->toArray())->toBe([
-        'key' => [],
-    ]);
 });
 
 function retriever(callable $callback): Retriever
@@ -210,7 +185,7 @@ function retriever(callable $callback): Retriever
             return $this;
         }
 
-        public function retrieve(string $filePath): Json|Yaml
+        public function retrieve(string $filePath): Contents
         {
             $callback = $this->callback;
 

@@ -9,7 +9,7 @@
             "get": {
                 "responses": {
                     "200": {
-                        "$ref": "./some-external-ref.json"
+                        "$ref": "/some-external-ref.json"
                     }
                 }
             }

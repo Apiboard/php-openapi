@@ -1,5 +1,6 @@
 <?php
 
+use Apiboard\OpenAPI\Contents\Contents;
 use Apiboard\OpenAPI\Contents\Json;
 use Apiboard\OpenAPI\Contents\Retriever;
 use Apiboard\OpenAPI\Contents\Yaml;
@@ -62,15 +63,15 @@ test('it can resolve references', function () {
             return $this;
         }
 
-        public function retrieve(string $filePath): Json|Yaml
+        public function retrieve(string $filePath): Contents
         {
             if (str_contains($filePath, 'references.json')) {
-                return new Json(file_get_contents($filePath));
+                return new Contents(file_get_contents($filePath));
             }
 
             $this->called = true;
 
-            return new Json('{ "description": "OK" }');
+            return new Contents('{ "description": "OK" }');
         }
 
         public function wasCalled(): bool
@@ -103,15 +104,15 @@ test('it resolves references when parsing', function () {
             return $this;
         }
 
-        public function retrieve(string $filePath): Json|Yaml
+        public function retrieve(string $filePath): Contents
         {
             if (str_ends_with($filePath, 'references.json')) {
-                return new Json(file_get_contents($filePath));
+                return new Contents(file_get_contents($filePath));
             }
 
             $this->called = true;
 
-            return new Json('{ "description": "OK" }');
+            return new Contents('{ "description": "OK" }');
         }
 
         public function wasCalled(): bool

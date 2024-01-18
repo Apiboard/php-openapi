@@ -2,6 +2,7 @@
 
 namespace Apiboard\OpenAPI;
 
+use Apiboard\OpenAPI\Contents\Contents;
 use Apiboard\OpenAPI\Contents\Json;
 use Apiboard\OpenAPI\Contents\Retriever;
 use Apiboard\OpenAPI\Contents\Retrievers\LocalFilesystemRetriever;
@@ -26,13 +27,13 @@ final class OpenAPI
         $this->resolver = new Resolver($retriever);
         $this->validator = new \Opis\JsonSchema\Validator();
         $this->validator->resolver()
-            ->registerFile('https://apiboard.dev/oas-3.0.json', __DIR__.'/Validation/v3.0.json')
-            ->registerFile('https://apiboard.dev/oas-3.1.json', __DIR__.'/Validation/v3.1.json');
+            ->registerFile('https://apiboard.dev/oas-3.0.json', __DIR__ . '/Validation/v3.0.json')
+            ->registerFile('https://apiboard.dev/oas-3.1.json', __DIR__ . '/Validation/v3.1.json');
     }
 
     public function parse(string $filePath): Document
     {
-        $contents = $this->retriever->from($filePath)->retrieve($filePath);
+        $contents = $this->retrieve($filePath);
 
         $resolvedContents = $this->resolver->resolve($contents);
 
@@ -40,7 +41,7 @@ final class OpenAPI
 
         foreach ($this->validate($resolvedContents) as $pointer => $errors) {
             foreach ($errors as $error) {
-                $errorMessage .= "\n".$error." (~{$pointer})";
+                $errorMessage .= "\n" . $error . " (~{$pointer})";
             }
         }
 
@@ -53,7 +54,7 @@ final class OpenAPI
 
     public function resolve(string $filePath): Json|Yaml
     {
-        $contents = $this->retriever->from($filePath)->retrieve($filePath);
+        $contents = $this->retrieve($filePath);
 
         return $this->resolver->resolve($contents);
     }
@@ -74,5 +75,16 @@ final class OpenAPI
         }
 
         return (new \Opis\JsonSchema\Errors\ErrorFormatter())->format($result->error());
+    }
+
+    private function retrieve(string $filePath): Json|Yaml|Contents
+    {
+        $contents = $this->retriever->from($filePath)->retrieve($filePath);
+
+        return match (true) {
+            $contents->isJson() => new Json($contents->toString()),
+            $contents->isYaml() => new Yaml($contents->toString()),
+            default => $contents,
+        };
     }
 }
