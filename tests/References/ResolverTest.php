@@ -137,19 +137,18 @@ test('it does not resolve external references without a retriever', function () 
     expect($result)->toBe($contents);
 });
 
-test('it does not resolve internal references', function () {
-    $count = 0;
-    $contents = new Json('{"something":{"$ref":"#/internal/thing"}}');
-    $resolver = new Resolver(retriever(function () use (&$count) {
-        $count++;
-
-        return new Contents('');
-    }));
+test('it can resolve internal references', function () {
+    $contents = new Json('{"something":{"$ref":"#/internal/thing"}, "internal": {"thing": "the internal result!"}}');
+    $resolver = new Resolver();
 
     $result = $resolver->resolve($contents);
 
-    expect($result->toString())->toBe($contents->toString());
-    expect($count)->toBe(0);
+    expect($result->toArray())->toBe([
+        'something' => 'the internal result!',
+        'internal' => [
+            'thing' => 'the internal result!',
+        ],
+    ]);
 });
 
 test('it can resolve empty contents correctly', function () {

@@ -52,6 +52,17 @@ final class Json
         return new self($this->toStringFromObject($contents));
     }
 
+    public function at(JsonPointer $pointer): Contents
+    {
+        $contents = $this->toObject();
+
+        foreach ($pointer->getPropertyPaths() as $property) {
+            $contents = $contents->{$property};
+        }
+
+        return new Contents($contents);
+    }
+
     private function toStringFromObject(object $object): string
     {
         $casted = $this->castSpecificKeysToProperOASType($object);

@@ -51,4 +51,15 @@ final class Yaml
 
         return new self(\Symfony\Component\Yaml\Yaml::dump($contents));
     }
+
+    public function at(JsonPointer $pointer): Contents
+    {
+        $contents = $this->toObject();
+
+        foreach ($pointer->getPropertyPaths() as $property) {
+            $contents = $contents->{$property};
+        }
+
+        return new Contents($contents);
+    }
 }

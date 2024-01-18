@@ -15,6 +15,8 @@ final class Resolver
 
     private int $depth = 0;
 
+    private array $recursiveReferences = [];
+
     public function __construct(Retriever $retriever = null)
     {
         $this->retriever = $retriever;
@@ -23,11 +25,11 @@ final class Resolver
     public function resolve(Json|Yaml $contents): Json|Yaml
     {
         foreach ($contents->references() as $reference) {
-            if ($reference->value()->isInternal()) {
-                continue;
-            }
-
-            $resolvedContent = $this->retrieveReference($reference->value());
+            $resolvedContent = match (true) {
+                $this->isResolvedAsRcursiveReference($reference) => null,
+                $reference->value()->isInternal() => $contents->at($reference->value()->pointer()),
+                default => $this->retrieveReference($reference->value()),
+            };
 
             if ($resolvedContent === null) {
                 continue;
@@ -44,6 +46,8 @@ final class Resolver
                         '$ref' => '#' . $reference->pointer()->value(),
                     ])
                 );
+
+                $this->recursiveReferences[$reference->pointer()->value()] = $reference;
 
                 continue;
             }
@@ -75,6 +79,12 @@ final class Resolver
         }
 
         return $contents->containsJsonReference($reference->value());
+    }
+
+    private function isResolvedAsRcursiveReference(Reference $reference): bool
+    {
+        return array_key_exists($reference->pointer()->value(), $this->recursiveReferences)
+            && $reference->value()->isInternal();
     }
 
     private function stopRecursion(): bool
