@@ -10,7 +10,7 @@ OpenAPI Specification parser for PHP 8. Supports both OAS 3.0 and 3.1.
 
 - Parse OpenAPI files into a PHP object to interact with in code
 - Validate OpenAPI files against the official JSON-schema descriptions
-- Resolve external references
+- Resolve external and internal references
 
 ## Installation
 
@@ -49,14 +49,14 @@ $errors = $openAPI->validate('/path/to/my-oas.yaml');
 
 ### Resolve
 
-You can resolve external references. It returns a PHP object with the resolved contents.
+You can resolve external and internal references. It returns a PHP object with the resolved contents.
 
 ```php
 $contents = $openAPI->resolve('/path/to/my-oas.json');
 
 $document = new Apiboard\OpenAPI\Structure\Document($contents);
 ```
-When resolving external references the contents will be retrieved from the local fileystem by default. You can override the way file contents is retrieved by passing a custom class that implements the `Apiboard\OpenAPI\Contents\Retriever` interface.
+When resolving references the contents will be retrieved from the local fileystem by default. You can override the way file contents is retrieved by passing a custom class that implements the `Apiboard\OpenAPI\Contents\Retriever` interface.
 
 ```php
 
@@ -65,6 +65,8 @@ $openAPI = new OpenAPI($customRetriever);
 
 $openAPI->resolve('/path/to/my-oas.json');
 ```
+
+Circular references are resolved as an internal reference after recursing twice, this is to prevent infinite recursion.
 
 ## License
 
