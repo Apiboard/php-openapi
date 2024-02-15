@@ -25,10 +25,7 @@ final class OpenAPI
 
         $this->retriever = $retriever;
         $this->resolver = new Resolver($retriever);
-        $this->validator = new \Opis\JsonSchema\Validator();
-        $this->validator->resolver()
-            ->registerFile('https://apiboard.dev/oas-3.0.json', __DIR__ . '/Validation/v3.0.json')
-            ->registerFile('https://apiboard.dev/oas-3.1.json', __DIR__ . '/Validation/v3.1.json');
+        $this->validator = $this->configureVanillaValidator();
     }
 
     public function parse(string $filePath): Document
@@ -86,5 +83,30 @@ final class OpenAPI
             $contents->isYaml() => new Yaml($contents->toString()),
             default => $contents,
         };
+    }
+
+    private function configureVanillaValidator(): \Opis\JsonSchema\Validator
+    {
+        $validator = new \Opis\JsonSchema\Validator();
+
+        $validator->parser()
+            ->setOption('allowFilters', false)
+            ->setOption('allowMappers', false)
+            ->setOption('allowTemplates', false)
+            ->setOption('allowGlobals', false)
+            ->setOption('allowDefaults', false)
+            ->setOption('allowSlots', false)
+            ->setOption('allowPragmas', false)
+            ->setOption('allowDataKeyword', false)
+            ->setOption('allowRelativeJsonPointerInRef', false)
+            ->setOption('allowExclusiveMinMaxAsBool', false)
+            ->setOption('keepDependenciesKeyword', false)
+            ->setOption('keepAdditionalItemsKeyword', false);
+
+        $validator->resolver()
+            ->registerFile('https://apiboard.dev/oas-3.0.json', __DIR__ . '/Validation/v3.0.json')
+            ->registerFile('https://apiboard.dev/oas-3.1.json', __DIR__ . '/Validation/v3.1.json');
+
+        return $validator;
     }
 }
