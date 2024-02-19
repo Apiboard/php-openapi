@@ -20,13 +20,11 @@ final class LocalFilesystemRetriever implements Retriever
 
     public function retrieve(string $filePath): Contents
     {
-        $extension = pathinfo($filePath, PATHINFO_EXTENSION);
-
-        if (str_starts_with($filePath, '/') === false) {
+        if (Path::isRelative($filePath)) {
             $filePath = Path::canonicalize($this->basePath . $filePath);
         }
 
-        if (in_array($extension, ['json', 'yaml'])) {
+        if (Path::hasExtension($filePath, ['json', 'yaml', 'yml'])) {
             return new Contents(file_get_contents($filePath));
         }
 
