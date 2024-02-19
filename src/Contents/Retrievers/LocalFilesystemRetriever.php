@@ -11,11 +11,6 @@ final class LocalFilesystemRetriever implements Retriever
 {
     private string $basePath = '';
 
-    public function basePath(): string
-    {
-        return $this->basePath;
-    }
-
     public function from(string $basePath): Retriever
     {
         $this->basePath = dirname($basePath) . '/';
