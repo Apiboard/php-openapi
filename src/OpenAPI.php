@@ -30,6 +30,7 @@ final class OpenAPI
 
     public function parse(string $filePath): Document
     {
+
         $contents = $this->retrieve($filePath);
 
         $resolvedContents = $this->resolver->resolve($contents);
@@ -76,6 +77,12 @@ final class OpenAPI
 
     private function retrieve(string $filePath): Json|Yaml|Contents
     {
+        $extension = pathinfo($filePath, PATHINFO_EXTENSION);
+
+        if (in_array($extension, ['json', 'yaml']) === false) {
+            throw new InvalidArgumentException('Can only parse JSON or YAML files');
+        }
+
         $contents = $this->retriever->from($filePath)->retrieve($filePath);
 
         return match (true) {
