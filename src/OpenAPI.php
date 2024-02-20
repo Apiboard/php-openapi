@@ -5,7 +5,7 @@ namespace Apiboard\OpenAPI;
 use Apiboard\OpenAPI\Contents\Contents;
 use Apiboard\OpenAPI\Contents\Json;
 use Apiboard\OpenAPI\Contents\Retriever;
-use Apiboard\OpenAPI\Contents\Retrievers\LocalFilesystemRetriever;
+use Apiboard\OpenAPI\Contents\Retrievers\FilesystemRetriever;
 use Apiboard\OpenAPI\Contents\Yaml;
 use Apiboard\OpenAPI\References\Resolver;
 use Apiboard\OpenAPI\Structure\Document;
@@ -21,7 +21,7 @@ final class OpenAPI
 
     public function __construct(Retriever $retriever = null)
     {
-        $retriever = $retriever ?? new LocalFilesystemRetriever();
+        $retriever = $retriever ?? new FilesystemRetriever();
 
         $this->retriever = $retriever;
         $this->resolver = new Resolver($retriever);
@@ -30,7 +30,6 @@ final class OpenAPI
 
     public function parse(string $filePath): Document
     {
-
         $contents = $this->retrieve($filePath);
 
         $resolvedContents = $this->resolver->resolve($contents);
