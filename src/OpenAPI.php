@@ -5,7 +5,7 @@ namespace Apiboard\OpenAPI;
 use Apiboard\OpenAPI\Contents\Contents;
 use Apiboard\OpenAPI\Contents\Json;
 use Apiboard\OpenAPI\Contents\Retriever;
-use Apiboard\OpenAPI\Contents\Retrievers\LocalFilesystemRetriever;
+use Apiboard\OpenAPI\Contents\Retrievers\FilesystemRetriever;
 use Apiboard\OpenAPI\Contents\Yaml;
 use Apiboard\OpenAPI\References\Resolver;
 use Apiboard\OpenAPI\Structure\Document;
@@ -21,7 +21,7 @@ final class OpenAPI
 
     public function __construct(Retriever $retriever = null)
     {
-        $retriever = $retriever ?? new LocalFilesystemRetriever();
+        $retriever = $retriever ?? new FilesystemRetriever();
 
         $this->retriever = $retriever;
         $this->resolver = new Resolver($retriever);
@@ -76,6 +76,12 @@ final class OpenAPI
 
     private function retrieve(string $filePath): Json|Yaml|Contents
     {
+        $extension = pathinfo($filePath, PATHINFO_EXTENSION);
+
+        if (in_array($extension, ['json', 'yaml']) === false) {
+            throw new InvalidArgumentException('Can only parse JSON or YAML files');
+        }
+
         $contents = $this->retriever->from($filePath)->retrieve($filePath);
 
         return match (true) {
