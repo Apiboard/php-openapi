@@ -15,7 +15,7 @@ final class Schemas extends Structure implements ArrayAccess, Countable, Iterato
     use CanBeUsedAsArray;
     use HasReferences;
 
-    public function __construct(array $data, JsonPointer $pointer = null)
+    public function __construct(array $data, ?JsonPointer $pointer = null)
     {
         $data = array_map(function (array $value) {
             return match ($this->isReference($value)) {

@@ -17,7 +17,7 @@ final class Resolver
 
     private array $recursiveReferences = [];
 
-    public function __construct(Retriever $retriever = null)
+    public function __construct(?Retriever $retriever = null)
     {
         $this->retriever = $retriever;
     }

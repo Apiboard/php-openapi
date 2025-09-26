@@ -15,7 +15,7 @@ final class Parameters extends Structure implements ArrayAccess, Countable, Iter
     use CanBeUsedAsArray;
     use HasReferences;
 
-    public function __construct(array $data, JsonPointer $pointer = null)
+    public function __construct(array $data, ?JsonPointer $pointer = null)
     {
         foreach ($data as $key => $value) {
             $data[$key] = match (true) {

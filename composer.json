@@ -3,7 +3,7 @@
     "description": "OpenAPI Specification parser for PHP 8. Supports both OAS 3.0 and 3.1.",
     "type": "library",
     "require-dev": {
-        "pestphp/pest": "^1.22",
+        "pestphp/pest": "^2.0",
         "symfony/var-dumper": "^6.1||^7.0",
         "spatie/invade": "^1.1",
         "laravel/pint": "^1.4",

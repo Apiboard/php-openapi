@@ -14,7 +14,7 @@ final class MediaType extends Structure
 
     private string $contentType;
 
-    public function __construct(string $contentType, array $data, JsonPointer $pointer = null)
+    public function __construct(string $contentType, array $data, ?JsonPointer $pointer = null)
     {
         $this->contentType = $contentType;
         parent::__construct($data, $pointer);

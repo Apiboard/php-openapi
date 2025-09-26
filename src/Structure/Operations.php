@@ -12,7 +12,7 @@ final class Operations extends Structure implements ArrayAccess, Countable, Iter
 {
     use CanBeUsedAsArray;
 
-    public function __construct(array $data, JsonPointer $pointer = null)
+    public function __construct(array $data, ?JsonPointer $pointer = null)
     {
         foreach ($data as $method => $value) {
             $data[$method] = new Operation($method, $value, $pointer?->append($method));

@@ -12,7 +12,7 @@ class Security extends Structure implements ArrayAccess, Countable, Iterator
 {
     use CanBeUsedAsArray;
 
-    public function __construct(array $data, JsonPointer $pointer = null)
+    public function __construct(array $data, ?JsonPointer $pointer = null)
     {
         foreach ($data as $key => $value) {
             $data[$key] =  new SecurityRequirement(

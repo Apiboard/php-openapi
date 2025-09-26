@@ -13,7 +13,7 @@ final class PathItem extends Structure
 
     private string $uri;
 
-    public function __construct(string $uri, array $data, JsonPointer $pointer = null)
+    public function __construct(string $uri, array $data, ?JsonPointer $pointer = null)
     {
         $this->uri = $uri;
         parent::__construct($data, $pointer);

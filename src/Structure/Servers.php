@@ -12,7 +12,7 @@ final class Servers extends Structure implements ArrayAccess, Countable, Iterato
 {
     use CanBeUsedAsArray;
 
-    public function __construct(array $data, JsonPointer $pointer = null)
+    public function __construct(array $data, ?JsonPointer $pointer = null)
     {
         foreach ($data as $key => $value) {
             $data[$key] = match (true) {

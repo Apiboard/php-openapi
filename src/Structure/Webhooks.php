@@ -15,7 +15,7 @@ final class Webhooks extends Structure implements ArrayAccess, Countable, Iterat
     use CanBeUsedAsArray;
     use HasReferences;
 
-    public function __construct(array $data, JsonPointer $pointer = null)
+    public function __construct(array $data, ?JsonPointer $pointer = null)
     {
         foreach ($data as $uri => $value) {
             $data[$uri] = match ($this->isReference($value)) {

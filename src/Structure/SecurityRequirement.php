@@ -8,7 +8,7 @@ final class SecurityRequirement extends Structure
 {
     private string $name;
 
-    public function __construct(string $name, array $data, JsonPointer $pointer = null)
+    public function __construct(string $name, array $data, ?JsonPointer $pointer = null)
     {
         $this->name = $name;
         parent::__construct($data, $pointer);

@@ -17,7 +17,7 @@ final class Paths extends Structure implements ArrayAccess, Countable, Iterator
     use HasReferences;
     use HasVendorExtensions;
 
-    public function __construct(array $data, JsonPointer $pointer = null)
+    public function __construct(array $data, ?JsonPointer $pointer = null)
     {
         foreach ($data as $uri => $value) {
             $data[$uri] = match (true) {

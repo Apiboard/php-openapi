@@ -8,7 +8,7 @@ final class Reference
 
     private ?JsonPointer $pointer;
 
-    public function __construct(string $value, JsonPointer $pointer = null)
+    public function __construct(string $value, ?JsonPointer $pointer = null)
     {
         $this->value = new JsonReference($value);
         $this->pointer = $pointer;

@@ -18,7 +18,7 @@ final class Operation extends Structure
 
     private string $method;
 
-    public function __construct(string $method, array $data, JsonPointer $pointer = null)
+    public function __construct(string $method, array $data, ?JsonPointer $pointer = null)
     {
         $this->method = $method;
         parent::__construct($data, $pointer);

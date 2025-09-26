@@ -15,7 +15,7 @@ final class Links extends Structure implements ArrayAccess, Countable, Iterator
     use CanBeUsedAsArray;
     use HasReferences;
 
-    public function __construct(array $data, JsonPointer $pointer = null)
+    public function __construct(array $data, ?JsonPointer $pointer = null)
     {
         foreach ($data as $name => $value) {
             $data[$name] = match ($this->isReference($value)) {

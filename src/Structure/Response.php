@@ -11,7 +11,7 @@ final class Response extends Structure
 
     private string $statusCode;
 
-    public function __construct(string $statusCode, array $data, JsonPointer $pointer = null)
+    public function __construct(string $statusCode, array $data, ?JsonPointer $pointer = null)
     {
         $this->statusCode = $statusCode;
         parent::__construct($data, $pointer);

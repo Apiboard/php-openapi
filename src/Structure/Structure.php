@@ -11,7 +11,7 @@ abstract class Structure implements JsonSerializable
 
     protected ?JsonPointer $pointer;
 
-    public function __construct(array $data, JsonPointer $pointer = null)
+    public function __construct(array $data, ?JsonPointer $pointer = null)
     {
         $this->data = $data;
         $this->pointer = $pointer;

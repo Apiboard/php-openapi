@@ -12,7 +12,7 @@ final class Tags extends Structure implements ArrayAccess, Countable, Iterator
 {
     use CanBeUsedAsArray;
 
-    public function __construct(array $data, JsonPointer $pointer)
+    public function __construct(array $data, ?JsonPointer $pointer = null)
     {
         $data = array_map(fn (array $value) => new Tag($value), $data);
 

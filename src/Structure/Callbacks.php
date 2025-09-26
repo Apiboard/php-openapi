@@ -17,7 +17,7 @@ final class Callbacks extends Structure implements ArrayAccess, Countable, Itera
     use HasReferences;
     use HasVendorExtensions;
 
-    public function __construct(array $data, JsonPointer $pointer = null)
+    public function __construct(array $data, ?JsonPointer $pointer = null)
     {
         foreach ($data as $expression => $value) {
             $data[$expression] = match (true) {

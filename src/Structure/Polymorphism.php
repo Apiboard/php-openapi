@@ -8,7 +8,7 @@ final class Polymorphism extends Structure
 {
     private string $type;
 
-    public function __construct(string $type, array $data, JsonPointer $pointer = null)
+    public function __construct(string $type, array $data, ?JsonPointer $pointer = null)
     {
         $this->type = $type;
         parent::__construct($data, $pointer);
