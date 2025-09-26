@@ -10,6 +10,10 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 
+/**
+ * @implements ArrayAccess<mixed,Link|JsonReference>
+ * @implements Iterator<mixed,Link|JsonReference>
+ */
 final class Links extends Structure implements ArrayAccess, Countable, Iterator
 {
     use CanBeUsedAsArray;

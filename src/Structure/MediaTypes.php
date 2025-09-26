@@ -8,6 +8,10 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 
+/**
+ * @implements ArrayAccess<mixed,MediaType>
+ * @implements Iterator<mixed,MediaType>
+ */
 final class MediaTypes extends Structure implements ArrayAccess, Countable, Iterator
 {
     use CanBeUsedAsArray;

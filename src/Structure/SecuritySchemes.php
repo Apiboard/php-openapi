@@ -10,6 +10,10 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 
+/**
+ * @implements ArrayAccess<mixed,SecurityScheme|JsonReference>
+ * @implements Iterator<mixed,SecurityScheme|JsonReference>
+ */
 final class SecuritySchemes extends Structure implements ArrayAccess, Countable, Iterator
 {
     use CanBeUsedAsArray;

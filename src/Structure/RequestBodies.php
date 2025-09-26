@@ -10,6 +10,10 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 
+/**
+ * @implements ArrayAccess<mixed,RequestBody|JsonReference>
+ * @implements Iterator<mixed,RequestBody|JsonReference>
+ */
 final class RequestBodies extends Structure implements ArrayAccess, Countable, Iterator
 {
     use CanBeUsedAsArray;
@@ -43,6 +47,9 @@ final class RequestBodies extends Structure implements ArrayAccess, Countable, I
         return new self($this->filter(fn (RequestBody $requestBody) => $requestBody->required()));
     }
 
+    /**
+     * @param callable(RequestBody): bool $callback
+     */
     private function filter(callable $callback): array
     {
         return array_filter($this->data, function (RequestBody|JsonReference $value) use ($callback) {

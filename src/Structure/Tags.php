@@ -8,6 +8,10 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 
+/**
+ * @implements ArrayAccess<mixed,Tag>
+ * @implements Iterator<mixed,Tag>
+ */
 final class Tags extends Structure implements ArrayAccess, Countable, Iterator
 {
     use CanBeUsedAsArray;

@@ -8,6 +8,10 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 
+/**
+ * @implements ArrayAccess<mixed,Server>
+ * @implements Iterator<mixed,Server>
+ */
 final class Servers extends Structure implements ArrayAccess, Countable, Iterator
 {
     use CanBeUsedAsArray;

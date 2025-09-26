@@ -10,6 +10,10 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 
+/**
+ * @implements ArrayAccess<mixed,Parameter|JsonReference>
+ * @implements Iterator<mixed,Parameter|JsonReference>
+ */
 final class Parameters extends Structure implements ArrayAccess, Countable, Iterator
 {
     use CanBeUsedAsArray;
@@ -58,6 +62,9 @@ final class Parameters extends Structure implements ArrayAccess, Countable, Iter
         return new self($this->filter(fn (Parameter $parameter) => $parameter->required()));
     }
 
+    /**
+     * @param callable(Parameter): bool $callback
+     */
     private function filter(callable $callback): array
     {
         return array_filter($this->data, function (Parameter|JsonReference $value) use ($callback) {

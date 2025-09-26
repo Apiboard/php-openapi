@@ -7,6 +7,10 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 
+/**
+ * @implements ArrayAccess<mixed,string>
+ * @implements Iterator<mixed,string>
+ */
 final class DataTypes extends Structure implements ArrayAccess, Countable, Iterator
 {
     use CanBeUsedAsArray;

@@ -11,6 +11,10 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 
+/**
+ * @implements ArrayAccess<mixed,PathItem|JsonReference|null>
+ * @implements Iterator<mixed,PathItem|JsonReference|null>
+ */
 final class Callbacks extends Structure implements ArrayAccess, Countable, Iterator
 {
     use CanBeUsedAsArray;

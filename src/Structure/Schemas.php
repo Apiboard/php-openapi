@@ -10,6 +10,10 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 
+/**
+ * @implements ArrayAccess<mixed,Schema|JsonReference>
+ * @implements Iterator<mixed,Schema|JsonReference>
+ */
 final class Schemas extends Structure implements ArrayAccess, Countable, Iterator
 {
     use CanBeUsedAsArray;

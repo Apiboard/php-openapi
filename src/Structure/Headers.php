@@ -10,6 +10,10 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 
+/**
+ * @implements ArrayAccess<mixed,Header|JsonReference>
+ * @implements Iterator<mixed,Header|JsonReference>
+ */
 final class Headers extends Structure implements ArrayAccess, Countable, Iterator
 {
     use CanBeUsedAsArray;

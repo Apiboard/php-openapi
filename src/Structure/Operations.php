@@ -8,6 +8,10 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 
+/**
+ * @implements ArrayAccess<mixed,Operation>
+ * @implements Iterator<mixed,Operation>
+ */
 final class Operations extends Structure implements ArrayAccess, Countable, Iterator
 {
     use CanBeUsedAsArray;

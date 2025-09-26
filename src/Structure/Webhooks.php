@@ -10,6 +10,10 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 
+/**
+ * @implements ArrayAccess<mixed,PathItem|JsonReference>
+ * @implements Iterator<mixed,PathItem|JsonReference>
+ */
 final class Webhooks extends Structure implements ArrayAccess, Countable, Iterator
 {
     use CanBeUsedAsArray;

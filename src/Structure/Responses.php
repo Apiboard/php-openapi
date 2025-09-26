@@ -11,6 +11,10 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 
+/**
+ * @implements ArrayAccess<mixed,Response|JsonReference>
+ * @implements Iterator<mixed,Response|JsonReference>
+ */
 final class Responses extends Structure implements ArrayAccess, Countable, Iterator
 {
     use CanBeUsedAsArray;
