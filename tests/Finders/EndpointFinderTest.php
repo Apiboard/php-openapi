@@ -17,7 +17,7 @@ function endpointFinder(Document $document): EndpointFinder
 function assertFoundPathAndOperation(?Endpoint $result, string $method, string $path): void
 {
     expect($result)->not->toBeNull();
-    expect($result->method())->toBe($method);
+    expect($result->operation()->method())->toBe($method);
     expect($result->pathItem()->uri())->toBe($path);
 }
 

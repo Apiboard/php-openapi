@@ -4,7 +4,6 @@ namespace Apiboard\OpenAPI\Finders;
 
 use Apiboard\OpenAPI\Structure\Operation;
 use Apiboard\OpenAPI\Structure\PathItem;
-use Apiboard\OpenAPI\Structure\Server;
 
 final class Endpoint
 {
@@ -12,18 +11,15 @@ final class Endpoint
 
     private Operation $operation;
 
-    private ?Server $server;
-
-    public function __construct(PathItem $pathItem, Operation $operation, ?Server $server = null)
+    public function __construct(PathItem $pathItem, Operation $operation)
     {
         $this->pathItem = $pathItem;
         $this->operation = $operation;
-        $this->server = $server;
     }
 
-    public function method(): string
+    public function operation(): Operation
     {
-        return $this->operation->method();
+        return $this->operation;
     }
 
     public function pathItem(): PathItem
