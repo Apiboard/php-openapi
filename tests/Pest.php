@@ -51,7 +51,7 @@ expect()->extend('toBeArrayOf', function (string $class) {
 |
 */
 
-function openAPI(Retriever $retriever = null): OpenAPI
+function openAPI(?Retriever $retriever = null): OpenAPI
 {
     return new OpenAPI($retriever);
 }

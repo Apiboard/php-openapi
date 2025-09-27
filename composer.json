@@ -1,29 +1,31 @@
 {
     "name": "apiboard/php-openapi",
-    "description": "OpenAPI Specification parser for PHP 8. Supports both OAS 3.0 and 3.1.",
+    "description": "OpenAPI Specification library for PHP 8. Supports both OAS 3.0 and 3.1.",
     "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.1",
+        "symfony/yaml": "^6.1||^7.0",
+        "opis/json-schema": "^2.3",
+        "symfony/filesystem": "^6.2||^7.0",
+        "psr/http-message": "^2.0"
+    },
     "require-dev": {
         "pestphp/pest": "^2.0",
         "symfony/var-dumper": "^6.1||^7.0",
         "spatie/invade": "^1.1",
         "laravel/pint": "^1.4",
-        "php-mock/php-mock": "^2.5"
-    },
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "Apiboard\\OpenAPI\\": "src/"
-        }
-    },
-    "require": {
-        "php": ">=8.1",
-        "symfony/yaml": "^6.1||^7.0",
-        "opis/json-schema": "^2.3",
-        "symfony/filesystem": "^6.2||^7.0"
+        "php-mock/php-mock": "^2.5",
+        "nyholm/psr7": "^1.8"
     },
     "config": {
         "allow-plugins": {
             "pestphp/pest-plugin": true
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Apiboard\\OpenAPI\\": "src/"
         }
     }
 }
