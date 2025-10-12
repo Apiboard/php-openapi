@@ -1,5 +1,7 @@
 <?php
 
+use Apiboard\OpenAPI\Contents\Json;
+use Apiboard\OpenAPI\Contents\Yaml;
 use Apiboard\OpenAPI\Structure\Components;
 use Apiboard\OpenAPI\Structure\Info;
 use Apiboard\OpenAPI\Structure\Paths;
@@ -30,6 +32,14 @@ test('it can be json serialized', function () {
 
     expect($jsonSpec->jsonSerialize())->toBe([]);
     expect($yamlSpec->jsonSerialize())->toBe([]);
+});
+
+test('it can return the raw contents', function () {
+    $jsonSpec = jsonDocument('{}');
+    $yamlSpec = yamlDocument('');
+
+    expect($jsonSpec->contents())->toBeInstanceOf(Json::class);
+    expect($yamlSpec->contents())->toBeInstanceOf(Yaml::class);
 });
 
 test('it can return the OpenAPI version', function () {
