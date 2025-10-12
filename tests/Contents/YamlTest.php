@@ -1,7 +1,21 @@
 <?php
 
+use Apiboard\OpenAPI\Contents\Contents;
 use Apiboard\OpenAPI\Contents\Yaml;
+use Apiboard\OpenAPI\References\JsonPointer;
 use Apiboard\OpenAPI\References\Reference;
+
+test('it can replace contents at a json pointer location', function () {
+    $contents = <<<'EOD'
+enabled: true
+EOD;
+    $yaml = new Yaml($contents);
+    $pointer = new JsonPointer('/enabled');
+
+    $replaced = $yaml->replaceAt($pointer, new Contents(false));
+
+    expect($replaced->at($pointer)->value())->toBeFalse();
+});
 
 test('it can cast empty strings to an array', function () {
     $contents = '';

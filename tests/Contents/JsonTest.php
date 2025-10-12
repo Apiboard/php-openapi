@@ -1,7 +1,21 @@
 <?php
 
+use Apiboard\OpenAPI\Contents\Contents;
 use Apiboard\OpenAPI\Contents\Json;
+use Apiboard\OpenAPI\References\JsonPointer;
 use Apiboard\OpenAPI\References\Reference;
+
+test('it can replace contents at a json pointer location', function () {
+    $contents = '{
+        "enabled": true
+    }';
+    $json = new Json($contents);
+    $pointer = new JsonPointer('/enabled');
+
+    $replaced = $json->replaceAt($pointer, new Contents(false));
+
+    expect($replaced->at($pointer)->value())->toBeFalse();
+});
 
 test('it can cast empty strings to an array', function () {
     $contents = '';
