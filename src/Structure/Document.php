@@ -25,6 +25,11 @@ final class Document extends Structure implements Stringable
         return $this->contents->toString();
     }
 
+    public function contents(): Json|Yaml
+    {
+        return $this->contents;
+    }
+
     public function toArray(): array
     {
         return $this->contents->toArray();
