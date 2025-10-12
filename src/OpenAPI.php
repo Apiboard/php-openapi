@@ -59,8 +59,8 @@ final class OpenAPI
     public function validate(Json|Yaml $contents): array
     {
         $version = match ($contents->toArray()['openapi'] ?? '') {
-            '3.0.0', '3.0.1', '3.0.2', '3.0.3' => '3.0',
-            '3.1.0' => '3.1',
+            '3.0.0', '3.0.1', '3.0.2', '3.0.3', '3.0.4' => '3.0',
+            '3.1.0', '3.1.1' => '3.1',
             default => throw new InvalidArgumentException('Can only validate OpenAPI v3.0.X or v3.1.X'),
         };
 
