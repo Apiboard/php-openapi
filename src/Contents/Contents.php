@@ -99,6 +99,10 @@ final class Contents
             return $this->value;
         }
 
+        if (is_object($this->value)) {
+            return (array) $this->value;
+        }
+
         $array = json_decode($this->value, true, 512, JSON_UNESCAPED_SLASHES);
 
         if ($array) {
