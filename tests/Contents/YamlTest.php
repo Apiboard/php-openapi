@@ -17,6 +17,16 @@ EOD;
     expect($replaced->at($pointer)->value())->toBeFalse();
 });
 
+test('it can add contents at a json pointer location', function () {
+    $contents = '';
+    $yaml = new Yaml($contents);
+    $pointer = new JsonPointer('/enabled');
+
+    $replaced = $yaml->replaceAt($pointer, new Contents(false));
+
+    expect($replaced->at($pointer)->value())->toBeFalse();
+});
+
 test('it can cast empty strings to an array', function () {
     $contents = '';
 
