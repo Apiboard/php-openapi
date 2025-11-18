@@ -66,7 +66,11 @@ final class Contents
 
     public function isJson(): bool
     {
-        return (bool) json_decode($this->value);
+        if (is_string($this->value)) {
+            return json_validate($this->value);
+        }
+
+        return false;
     }
 
     public function isYaml(): bool
@@ -95,11 +99,7 @@ final class Contents
 
     private function castToArray(): ?array
     {
-        if (is_array($this->value)) {
-            return $this->value;
-        }
-
-        if (is_object($this->value)) {
+        if (is_string($this->value) === false) {
             return (array) $this->value;
         }
 
