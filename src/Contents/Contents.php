@@ -70,7 +70,7 @@ final class Contents
         }
 
         if ($type === 'object') {
-            return in_array('$ref', array_keys_recursive(get_object_vars($this->value))) === false;
+            return in_array('$ref', array_keys_recursive(object_to_array($this->value))) === false;
         }
 
         if ($type === 'array') {
@@ -154,5 +154,16 @@ if (function_exists('array_keys_recursive') === false) {
         }
 
         return array_values(array_unique($keys));
+    }
+}
+
+if (function_exists('object_to_array') === false) {
+    function object_to_array(mixed $data)
+    {
+        if (is_object($data)) {
+            $data = get_object_vars($data);
+        }
+
+        return is_array($data) ? array_map(__FUNCTION__, $data) : $data;
     }
 }
