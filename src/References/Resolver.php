@@ -37,7 +37,7 @@ final class Resolver
             $resolvedContent = match (true) {
                 $this->pointsToVendorExtension($reference) => null,
                 $this->isResolvedAsRcursiveReference($reference) => null,
-                $reference->value()->isInternal() => $this->resolveInternalReference($reference->value()),
+                $reference->value()->isInternal() => $this->resolveInternalPointer($reference->value()->pointer()),
                 default => $this->retrieveReference($reference->value()),
             };
 
@@ -79,10 +79,10 @@ final class Resolver
         return $contents;
     }
 
-    private function resolveInternalReference(JsonReference $jsonReference): ?Contents
+    private function resolveInternalPointer(JsonPointer $pointer): ?Contents
     {
         /** @var Contents $contents */
-        $contents = $this->cache[$jsonReference->path()] ??= $this->contents?->at($jsonReference->pointer());
+        $contents = $this->cache[$pointer->value()] ??= $this->contents?->at($pointer);
 
         return $contents;
     }
