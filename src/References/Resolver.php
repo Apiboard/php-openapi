@@ -28,7 +28,7 @@ final class Resolver
             $resolvedContent = match (true) {
                 $this->pointsToVendorExtension($reference) => null,
                 $this->isResolvedAsRcursiveReference($reference) => null,
-                $reference->value()->isInternal() => $contents->at($reference->value()->pointer()),
+                $reference->value()->isInternal() => $this->resolveReference($contents, $reference->value()),
                 default => $this->retrieveReference($reference->value()),
             };
 
@@ -61,16 +61,20 @@ final class Resolver
         return $contents;
     }
 
+    private function resolveReference(Json|Yaml $contents, JsonReference $jsonReference): ?Contents
+    {
+        /** @var Contents $contents */
+        $contents = $this->cache[$jsonReference->path()] ??= $contents->at($jsonReference->pointer());
+
+        return $contents;
+    }
+
     private function retrieveReference(JsonReference $jsonReference): ?Contents
     {
-        if ($this->retriever === null) {
-            return null;
-        }
-
-        /** @var Contents $contents */
+        /** @var ?Contents $contents */
         $contents = $this->cache[$jsonReference->path()] ??= $this->retriever?->retrieve($jsonReference->path());
 
-        return $contents->at($jsonReference->pointer());
+        return $contents?->at($jsonReference->pointer());
     }
 
     private function willRecurse(Contents $contents, Reference $reference): bool
