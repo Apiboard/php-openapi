@@ -47,7 +47,12 @@ final class Yaml
             $contentsAtPointer = &$contentsAtPointer[$property];
         }
 
-        $contentsAtPointer = $replacement->value();
+        $value = $replacement->value();
+
+        $contentsAtPointer = match(gettype($value)) {
+            'object' => (array) $value,
+            default => $value,
+        };
 
         return new self(\Symfony\Component\Yaml\Yaml::dump($contents));
     }

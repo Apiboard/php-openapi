@@ -15,6 +15,8 @@ final class Resolver
 
     private int $depth = 0;
 
+    private ?Reference $parentReference = null;
+
     private array $recursiveReferences = [];
 
     public function __construct(?Retriever $retriever = null)
@@ -25,6 +27,7 @@ final class Resolver
     public function resolve(Json|Yaml $contents): Json|Yaml
     {
         foreach ($contents->references() as $reference) {
+            /** @var ?Contents $resolvedContent */
             $resolvedContent = match (true) {
                 $this->pointsToVendorExtension($reference) => null,
                 $this->isResolvedAsRcursiveReference($reference) => null,
@@ -41,10 +44,11 @@ final class Resolver
             }
 
             if ($this->stopRecursion()) {
+                $pointer = $this->parentReference->pointer()->append(...$reference->pointer()->getPropertyPaths());
                 $contents = $contents->replaceAt(
                     $reference->pointer(),
                     new Contents((object) [
-                        '$ref' => '#' . $reference->pointer()->value(),
+                        '$ref' => '#' . $pointer->value(),
                     ])
                 );
 
@@ -53,9 +57,17 @@ final class Resolver
                 continue;
             }
 
-            $contents = $this->resolve(
-                $contents->replaceAt($reference->pointer(), $resolvedContent),
-            );
+            if ($resolvedContent->isResolved() === false) {
+                $resolvedContent = match(true) {
+                    $resolvedContent->isJson() => new Json($resolvedContent->toString()),
+                    $resolvedContent->isYaml() => new Yaml($resolvedContent->toString()),
+                };
+
+                $this->parentReference = $reference;
+                $resolvedContent = new Contents($this->resolve($resolvedContent)->toString());
+            }
+
+            $contents = $contents->replaceAt($reference->pointer(), $resolvedContent);
         }
 
         return $contents;

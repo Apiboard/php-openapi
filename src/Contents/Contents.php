@@ -27,6 +27,13 @@ final class Contents
             $data = $data[$property];
         }
 
+        $data = match(true) {
+            is_scalar($data) => $data,
+            $this->isJson() => json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES),
+            $this->isYaml() => \Symfony\Component\Yaml\Yaml::dump($data),
+            default => $data,
+        };
+
         return new self($data);
     }
 
@@ -56,12 +63,21 @@ final class Contents
 
     public function isResolved(): bool
     {
-        return match (gettype($this->value)) {
-            'string' => str_contains($this->value, '$ref'),
-            'array' => array_key_exists('$ref', $this->value),
-            'object' => array_key_exists('$ref', get_object_vars($this->value)),
-            default => true,
-        };
+        $type = gettype($this->value);
+
+        if ($type === 'string') {
+            return str_contains($this->value, '$ref') === false;
+        }
+
+        if ($type === 'object') {
+            return in_array(array_keys_recursive(get_object_vars($this->value)), '$ref') === false;
+        }
+
+        if ($type === 'array') {
+            return in_array('$ref', array_keys_recursive($this->value)) === false;
+        }
+
+        return true;
     }
 
     public function isJson(): bool
@@ -77,7 +93,7 @@ final class Contents
     {
         try {
             return (bool) \Symfony\Component\Yaml\Yaml::parse($this->value);
-        } catch (\Symfony\Component\Yaml\Exception\ParseException $e) {
+        } catch (\Symfony\Component\Yaml\Exception\ParseException|\TypeError $e) {
             return false;
         }
     }
@@ -97,10 +113,21 @@ final class Contents
         return \Symfony\Component\Yaml\Yaml::dump($data);
     }
 
+    public function toObject(): ?object
+    {
+        $data = $this->castToArray();
+
+        if ($data) {
+            return (object) $data;
+        }
+
+        return null;
+    }
+
     private function castToArray(): ?array
     {
         if (is_string($this->value) === false) {
-            return (array) $this->value;
+            return is_scalar($this->value) ? null : (array) $this->value;
         }
 
         $array = json_decode($this->value, true, 512, JSON_UNESCAPED_SLASHES);
@@ -110,5 +137,22 @@ final class Contents
         }
 
         return null;
+    }
+}
+
+if (function_exists('array_keys_recursive') === false) {
+    function array_keys_recursive(array $array): array
+    {
+        $keys = [];
+
+        foreach ($array as $key => $value) {
+            $keys[] = $key;
+
+            if (is_array($value)) {
+                $keys = array_merge($keys, array_keys_recursive($value));
+            }
+        }
+
+        return array_values(array_unique($keys));
     }
 }

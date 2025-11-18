@@ -46,8 +46,7 @@ final class Json
         foreach ($pointer->getPropertyPaths() as $property) {
             $contentsAtPointer = &$contentsAtPointer->{$property};
         }
-
-        $contentsAtPointer = $replacement->value();
+        $contentsAtPointer = $replacement->toObject() ?? $replacement->value();
 
         return new self($this->toStringFromObject($contents));
     }
