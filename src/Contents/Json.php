@@ -47,7 +47,7 @@ final class Json
             $contentsAtPointer = &$contentsAtPointer->{$property};
         }
 
-        $contentsAtPointer = $replacement->toObject() ?? $replacement->value();
+        $contentsAtPointer = $replacement->value();
 
         return new self($this->toStringFromObject($contents));
     }

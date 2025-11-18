@@ -124,17 +124,6 @@ final class Contents
         return \Symfony\Component\Yaml\Yaml::dump($data, 20);
     }
 
-    public function toObject(): ?object
-    {
-        $data = $this->castToArray();
-
-        if ($data) {
-            return (object) $data;
-        }
-
-        return null;
-    }
-
     public function toArray(): array
     {
         return $this->castToArray() ?? [];
