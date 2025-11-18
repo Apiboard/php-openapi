@@ -26,6 +26,7 @@ final class Resolver
     {
         foreach ($contents->references() as $reference) {
             $resolvedContent = match (true) {
+                $this->pointsToVendorExtension($reference) => null,
                 $this->isResolvedAsRcursiveReference($reference) => null,
                 $reference->value()->isInternal() => $contents->at($reference->value()->pointer()),
                 default => $this->retrieveReference($reference->value()),
@@ -79,6 +80,11 @@ final class Resolver
         }
 
         return $contents->containsJsonReference($reference->value());
+    }
+
+    private function pointsToVendorExtension(Reference $reference): bool
+    {
+        return str_contains($reference->pointer()->value(), 'x-');
     }
 
     private function isResolvedAsRcursiveReference(Reference $reference): bool

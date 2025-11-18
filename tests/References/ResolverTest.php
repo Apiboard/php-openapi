@@ -160,6 +160,19 @@ test('it can resolve empty contents correctly', function () {
     expect($result->toObject())->toBeObject();
 });
 
+test('it ignores resolving references for vendor extensions', function () {
+    $contents = new Json('{"x-topics": {"content": {"$ref": "./docs/getting-started.md"}}}');
+    $resolved = false;
+    $resolver = new Resolver(retriever(function () use (&$resolved) {
+        $resolved = true;
+        return new Contents('');
+    }));
+
+    $resolver->resolve($contents);
+
+    expect($resolved)->toBeFalse();
+});
+
 function retriever(callable $callback): Retriever
 {
     /** @var Retriever */
