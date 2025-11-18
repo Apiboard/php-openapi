@@ -54,7 +54,7 @@ final class Yaml
             default => $value,
         };
 
-        return new self(\Symfony\Component\Yaml\Yaml::dump($contents));
+        return new self(\Symfony\Component\Yaml\Yaml::dump($contents, 20));
     }
 
     public function at(JsonPointer $pointer): Contents

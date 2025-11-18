@@ -110,7 +110,7 @@ final class Contents
             return json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
         }
 
-        return \Symfony\Component\Yaml\Yaml::dump($data);
+        return \Symfony\Component\Yaml\Yaml::dump($data, 20);
     }
 
     public function toObject(): ?object
