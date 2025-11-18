@@ -62,7 +62,7 @@ final class Yaml
         $contents = $this->toObject();
 
         foreach ($pointer->getPropertyPaths() as $property) {
-            $contents = $contents->{$property};
+            $contents = $contents->{$property} ?? $contents[$property] ?? null;
         }
 
         return new Contents($contents);
