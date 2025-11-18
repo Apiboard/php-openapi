@@ -15,9 +15,11 @@ final class Resolver
 
     private int $depth = 0;
 
-    private ?Reference $parentReference = null;
-
     private array $recursiveReferences = [];
+
+    private Json|Yaml|null $contents = null;
+
+    private ?Reference $parentReference = null;
 
     public function __construct(?Retriever $retriever = null)
     {
@@ -26,12 +28,16 @@ final class Resolver
 
     public function resolve(Json|Yaml $contents): Json|Yaml
     {
+        if ($this->contents === null) {
+            $this->contents = $contents;
+        }
+
         foreach ($contents->references() as $reference) {
             /** @var ?Contents $resolvedContent */
             $resolvedContent = match (true) {
                 $this->pointsToVendorExtension($reference) => null,
                 $this->isResolvedAsRcursiveReference($reference) => null,
-                $reference->value()->isInternal() => $this->resolveReference($contents, $reference->value()),
+                $reference->value()->isInternal() => $this->resolveInternalReference($reference->value()),
                 default => $this->retrieveReference($reference->value()),
             };
 
@@ -73,10 +79,10 @@ final class Resolver
         return $contents;
     }
 
-    private function resolveReference(Json|Yaml $contents, JsonReference $jsonReference): ?Contents
+    private function resolveInternalReference(JsonReference $jsonReference): ?Contents
     {
         /** @var Contents $contents */
-        $contents = $this->cache[$jsonReference->path()] ??= $contents->at($jsonReference->pointer());
+        $contents = $this->cache[$jsonReference->path()] ??= $this->contents?->at($jsonReference->pointer());
 
         return $contents;
     }
