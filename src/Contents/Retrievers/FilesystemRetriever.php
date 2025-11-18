@@ -27,10 +27,11 @@ final class FilesystemRetriever implements Retriever
 
     public function retrieve(string $filePath): Contents
     {
-        return $this->try(
-            fn () => $this->local->retrieve($filePath),
-            fn () => $this->remote->retrieve($filePath),
-        );
+        if (filter_var($filePath, FILTER_VALIDATE_URL)) {
+            return $this->remote->retrieve($filePath);
+        }
+
+        return $this->local->retrieve($filePath);
     }
 
     private function try(\Closure $callback, ?\Closure $fallback = null): mixed
