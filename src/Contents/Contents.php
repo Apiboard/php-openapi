@@ -2,11 +2,14 @@
 
 namespace Apiboard\OpenAPI\Contents;
 
+use Apiboard\OpenAPI\Concerns\HasReferences;
 use Apiboard\OpenAPI\References\JsonPointer;
 use Apiboard\OpenAPI\References\JsonReference;
 
 final class Contents
 {
+    use HasReferences;
+
     private mixed $value;
 
     public function __construct(mixed $value)
@@ -19,6 +22,21 @@ final class Contents
         return $this->value;
     }
 
+    public function replaceAt(JsonPointer $pointer, Contents $replacement): self
+    {
+        $contents = $this->toArray();
+
+        $contentsAtPointer = &$contents;
+
+        foreach ($pointer->getPropertyPaths() as $property) {
+            $contentsAtPointer = &$contentsAtPointer[$property];
+        }
+
+        $contentsAtPointer = $replacement->value();
+
+        return new self($contents);
+    }
+
     public function at(JsonPointer $pointer): self
     {
         $data = $this->castToArray();
@@ -26,13 +44,6 @@ final class Contents
         foreach ($pointer->getPropertyPaths() as $property) {
             $data = $data[$property];
         }
-
-        $data = match(true) {
-            is_scalar($data) => $data,
-            $this->isJson() => json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES),
-            $this->isYaml() => \Symfony\Component\Yaml\Yaml::dump($data),
-            default => $data,
-        };
 
         return new self($data);
     }
@@ -122,6 +133,11 @@ final class Contents
         }
 
         return null;
+    }
+
+    public function toArray(): array
+    {
+        return $this->castToArray() ?? [];
     }
 
     private function castToArray(): ?array

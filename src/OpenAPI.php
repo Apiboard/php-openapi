@@ -84,9 +84,9 @@ final class OpenAPI
 
         $contents = $this->retriever->from($filePath)->retrieve($filePath);
 
-        return match (true) {
-            $contents->isJson() => new Json($contents->toString()),
-            $contents->isYaml() => new Yaml($contents->toString()),
+        return match ($extension) {
+            'json' => new Json($contents->toString()),
+            'yaml' => new Yaml($contents->toString()),
             default => $contents,
         };
     }

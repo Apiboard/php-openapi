@@ -46,6 +46,7 @@ final class Json
         foreach ($pointer->getPropertyPaths() as $property) {
             $contentsAtPointer = &$contentsAtPointer->{$property};
         }
+
         $contentsAtPointer = $replacement->toObject() ?? $replacement->value();
 
         return new self($this->toStringFromObject($contents));
@@ -59,11 +60,7 @@ final class Json
             $contents = $contents->{$property} ?? $contents[$property] ?? null;
         }
 
-        if (is_scalar($contents)) {
-            return new Contents($contents);
-        }
-
-        return new Contents($this->toStringFromObject($contents));
+        return new Contents($contents);
     }
 
     private function toStringFromObject(object $object): string

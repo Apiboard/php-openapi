@@ -47,12 +47,7 @@ final class Yaml
             $contentsAtPointer = &$contentsAtPointer[$property];
         }
 
-        $value = $replacement->value();
-
-        $contentsAtPointer = match(gettype($value)) {
-            'object' => (array) $value,
-            default => $value,
-        };
+        $contentsAtPointer = $replacement->value();
 
         return new self(\Symfony\Component\Yaml\Yaml::dump($contents, 20));
     }
@@ -65,10 +60,6 @@ final class Yaml
             $contents = $contents->{$property} ?? $contents[$property] ?? null;
         }
 
-        if (is_scalar($contents)) {
-            return new Contents($contents);
-        }
-
-        return new Contents(\Symfony\Component\Yaml\Yaml::dump(object_to_array($contents), 20));
+        return new Contents($contents);
     }
 }

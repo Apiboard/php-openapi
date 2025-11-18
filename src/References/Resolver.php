@@ -17,7 +17,7 @@ final class Resolver
 
     private array $recursiveReferences = [];
 
-    private Json|Yaml|null $contents = null;
+    private Json|Yaml|Contents|null $contents = null;
 
     private ?Reference $parentReference = null;
 
@@ -26,7 +26,7 @@ final class Resolver
         $this->retriever = $retriever;
     }
 
-    public function resolve(Json|Yaml $contents): Json|Yaml
+    public function resolve(Json|Yaml|Contents $contents): Json|Yaml|Contents
     {
         if ($this->contents === null) {
             $this->contents = $contents;
@@ -64,13 +64,8 @@ final class Resolver
             }
 
             if ($resolvedContent->isResolved() === false) {
-                $resolvedContent = match(true) {
-                    $resolvedContent->isJson() => new Json($resolvedContent->toString()),
-                    $resolvedContent->isYaml() => new Yaml($resolvedContent->toString()),
-                };
-
                 $this->parentReference = $reference;
-                $resolvedContent = new Contents($this->resolve($resolvedContent)->toString());
+                $resolvedContent = $this->resolve($resolvedContent);
             }
 
             $contents = $contents->replaceAt($reference->pointer(), $resolvedContent);
