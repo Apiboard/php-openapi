@@ -70,7 +70,7 @@ final class Contents
         }
 
         if ($type === 'object') {
-            return in_array(array_keys_recursive(get_object_vars($this->value)), '$ref') === false;
+            return in_array('$ref', array_keys_recursive(get_object_vars($this->value))) === false;
         }
 
         if ($type === 'array') {
