@@ -141,3 +141,26 @@ it('prioritizes paths with equal amount of parameters where the request path has
     assertFoundPathAndOperation($resultA, 'get', '/products/{product}/images/thumbnails/{size}');
     assertFoundPathAndOperation($resultB, 'get', '/products/{product}/images/{type}/primary');
 });
+
+it('can find endpoints by operation id', function () {
+    $document = jsonDocument('{
+        "paths" : {
+            "/products/{product}/images/{type}/{size}": {"get": {
+                "operationId": "get-product-image-by-type-and-size"
+            }},
+            "/products/{product}/images/thumbnails/{size}": {"get": {
+                "operationId": "get-product-thumbnail-size"
+            }},
+            "/products/{product}/images/{type}/primary": {"get": {
+                "operationId": "get-product-primary-size"
+            }}
+        }
+    }');
+    $finder = endpointFinder($document);
+
+    $resultA = $finder->findByOperationId('get-product-thumbnail-size');
+    $resultB = $finder->findByOperationId('get-product-primary-size');
+
+    assertFoundPathAndOperation($resultA, 'get', '/products/{product}/images/thumbnails/{size}');
+    assertFoundPathAndOperation($resultB, 'get', '/products/{product}/images/{type}/primary');
+});

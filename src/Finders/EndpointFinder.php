@@ -42,6 +42,19 @@ final class EndpointFinder
         );
     }
 
+    public function findByOperationId(string $id): ?Endpoint
+    {
+        foreach ($this->document->paths() as $pathItem) {
+            foreach ($pathItem->operations() as $operation) {
+                if ($operation->operationId() === $id) {
+                    return new Endpoint($pathItem, $operation);
+                }
+            }
+        }
+
+        return null;
+    }
+
     private function matches(PathItem $pathItem, \Psr\Http\Message\UriInterface $uri): bool
     {
         $servers = $pathItem->servers() ?? $this->document->servers();
