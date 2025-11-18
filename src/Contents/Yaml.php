@@ -47,7 +47,7 @@ final class Yaml
             $contentsAtPointer = &$contentsAtPointer[$property];
         }
 
-        $contentsAtPointer = $replacement->value();
+        $contentsAtPointer = object_to_array($replacement->value());
 
         return new self(\Symfony\Component\Yaml\Yaml::dump($contents, 20));
     }

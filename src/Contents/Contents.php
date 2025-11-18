@@ -132,7 +132,7 @@ final class Contents
     private function castToArray(): ?array
     {
         if (is_string($this->value) === false) {
-            return is_scalar($this->value) ? null : (array) $this->value;
+            return is_scalar($this->value) ? null : object_to_array($this->value);
         }
 
         $array = json_decode($this->value, true, 512, JSON_UNESCAPED_SLASHES);
