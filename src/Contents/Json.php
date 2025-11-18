@@ -59,7 +59,11 @@ final class Json
             $contents = $contents->{$property} ?? $contents[$property] ?? null;
         }
 
-        return new Contents($contents);
+        if (is_scalar($contents)) {
+            return new Contents($contents);
+        }
+
+        return new Contents($this->toStringFromObject($contents));
     }
 
     private function toStringFromObject(object $object): string

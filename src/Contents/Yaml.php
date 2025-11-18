@@ -65,6 +65,10 @@ final class Yaml
             $contents = $contents->{$property} ?? $contents[$property] ?? null;
         }
 
-        return new Contents($contents);
+        if (is_scalar($contents)) {
+            return new Contents($contents);
+        }
+
+        return new Contents(\Symfony\Component\Yaml\Yaml::dump(object_to_array($contents), 20));
     }
 }
