@@ -65,6 +65,7 @@ final class Resolver
 
             if ($resolvedContent->isResolved() === false) {
                 $this->parentReference = $reference;
+                $this->retriever->from($reference->value()->basePath());
                 $resolvedContent = $this->resolve($resolvedContent);
             }
 

@@ -141,7 +141,13 @@ final class Contents
             return $array;
         }
 
-        return \Symfony\Component\Yaml\Yaml::parse($this->value, 20);
+        $array = \Symfony\Component\Yaml\Yaml::parse($this->value, 20);
+
+        if (is_array($array)) {
+            return $array;
+        }
+
+        return null;
     }
 }
 
