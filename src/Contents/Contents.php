@@ -141,7 +141,7 @@ final class Contents
             return $array;
         }
 
-        return null;
+        return \Symfony\Component\Yaml\Yaml::parse($this->value, 20);
     }
 }
 
