@@ -8,15 +8,18 @@ use Symfony\Component\Filesystem\Path;
 
 final class RemoteFilesystemRetriever implements Retriever
 {
-    private ?string $baseUrl = null;
+    private array $url;
 
-    public function from(string $baseUrl): Retriever
+    private ?string $from = null;
+
+    public function __construct(string $baseUrl)
     {
-        $parts = parse_url($baseUrl);
-        $path = explode('/', $parts['path']);
-        array_pop($path);
+        $this->url = parse_url($baseUrl);
+    }
 
-        $this->baseUrl = $parts['scheme'] . '://' . $parts['host']  . rtrim(implode('/', $path), '/') . '/';
+    public function from(string $url): Retriever
+    {
+        $this->from = $url;
 
         return $this;
     }
@@ -25,12 +28,11 @@ final class RemoteFilesystemRetriever implements Retriever
     {
         $validUrl = filter_var($url, FILTER_VALIDATE_URL, FILTER_NULL_ON_FAILURE);
 
-        if ($validUrl === null && $this->baseUrl) {
-            $baseParts = parse_url($this->baseUrl);
-            $path = Path::canonicalize($baseParts['path'] . $url);
-            $url = $baseParts['scheme'] . '://' . $baseParts['host'] . $path;
+        if ($validUrl === null) {
+            $path = Path::canonicalize(dirname($this->url['path']) . ltrim($url, '.'));
+            $validUrl = $this->url['scheme'].'://'.$this->url['host'].$path;
         }
 
-        return new Contents(file_get_contents($url));
+        return new Contents(file_get_contents($validUrl));
     }
 }

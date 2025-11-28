@@ -25,13 +25,13 @@ final class FilesystemRetriever implements Retriever
         return $this->retriever->retrieve($filePath);
     }
 
-    private function setRetrieverFromPath(string $path): void
+    private function setRetrieverFromPath(string $pathOrUrl): void
     {
         if ($this->retriever === null) {
-            $isUrl = (bool) filter_var($path, FILTER_VALIDATE_URL);
+            $isUrl = (bool) filter_var($pathOrUrl, FILTER_VALIDATE_URL);
 
             if ($isUrl === true) {
-                $this->retriever = new RemoteFilesystemRetriever();
+                $this->retriever = new RemoteFilesystemRetriever($pathOrUrl);
             }
 
             if ($isUrl === false) {

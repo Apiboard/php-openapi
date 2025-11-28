@@ -46,16 +46,16 @@ beforeEach(fn () => $fileContentsMock->mock()->enable());
 
 afterEach(fn () => $fileContentsMock->mock()->disable());
 
-function remoteRetriever(): RemoteFilesystemRetriever
+function remoteRetriever(string $url): RemoteFilesystemRetriever
 {
-    return new RemoteFilesystemRetriever();
+    return new RemoteFilesystemRetriever($url);
 }
 
 test('it can retrieve files with urls', function () use ($fileContentsMock) {
     $url = 'https://example.com/api/spec.json';
     $fileContentsMock->addContents($url, 'the contents!');
 
-    $result = remoteRetriever()->retrieve($url);
+    $result = remoteRetriever($url)->retrieve($url);
 
     $fileContentsMock->assertCalledWith($url);
     expect($result->toString())->toEqual('the contents!');
@@ -66,7 +66,7 @@ test('it can retrieve files with relative path using the configured base path', 
     $url = './other-spec.json';
     $fileContentsMock->addContents('https://example.com/api/other-spec.json', 'the contents!');
 
-    $result = remoteRetriever()->from($baseUrl)->retrieve($url);
+    $result = remoteRetriever($baseUrl)->retrieve($url);
 
     $fileContentsMock->assertCalledWith('https://example.com/api/other-spec.json');
     expect($result->toString())->toEqual('the contents!');
