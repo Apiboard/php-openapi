@@ -43,7 +43,7 @@ final class RemoteFilesystemRetriever implements Retriever
 
     private function canonicalizedUrl(string $path): string
     {
-        $path = Path::canonicalize($this->url['path'].ltrim($path, '.'));
+        $path = Path::canonicalize($this->url['path'].'/'.ltrim($path, '.'));
 
         return $this->url['scheme'].'://'.$this->url['host'].$path;
     }
