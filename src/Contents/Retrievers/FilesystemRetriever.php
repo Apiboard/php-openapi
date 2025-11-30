@@ -7,15 +7,19 @@ use Apiboard\OpenAPI\Contents\Retriever;
 
 final class FilesystemRetriever implements Retriever
 {
-    private ?Retriever $retriever = null;
+    private LocalFilesystemRetriever|RemoteFilesystemRetriever|null $retriever = null;
+
+    public function __construct(
+        LocalFilesystemRetriever|RemoteFilesystemRetriever|null $retriever = null,
+    ) {
+        $this->retriever = $retriever;
+    }
 
     public function from(string $baseUrl): Retriever
     {
         $this->setRetrieverFromPath($baseUrl);
 
-        $this->retriever->from($baseUrl);
-
-        return $this;
+        return new self($this->retriever->from($baseUrl));
     }
 
     public function retrieve(string $filePath): Contents
@@ -35,7 +39,7 @@ final class FilesystemRetriever implements Retriever
             }
 
             if ($isUrl === false) {
-                $this->retriever = new LocalFilesystemRetriever();
+                $this->retriever = new LocalFilesystemRetriever($pathOrUrl);
             }
         }
     }

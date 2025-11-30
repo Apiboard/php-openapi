@@ -10,8 +10,6 @@ final class RemoteFilesystemRetriever implements Retriever
 {
     private array $url;
 
-    private ?string $from = null;
-
     public function __construct(string $baseUrl)
     {
         $this->url = parse_url($baseUrl);
@@ -19,9 +17,7 @@ final class RemoteFilesystemRetriever implements Retriever
 
     public function from(string $url): Retriever
     {
-        $this->from = $url;
-
-        return $this;
+        return new self($url);
     }
 
     public function retrieve(string $url): Contents

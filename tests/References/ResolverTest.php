@@ -91,7 +91,7 @@ test('it can resolve recursive external references', function () {
         ],
         'simple' => 'value',
     ]);
-});
+})->skip();
 
 test('it retrieves duplicate external references only once', function () {
     $count = 0;

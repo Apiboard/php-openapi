@@ -11,33 +11,27 @@ final class Resolver
 {
     private ?Retriever $retriever;
 
-    private array $cache = [];
+    private array $cache;
 
-    private int $depth = 0;
+    private ?Reference $parentReference;
 
-    private array $recursiveReferences = [];
-
-    private Json|Yaml|Contents|null $contents = null;
-
-    private ?Reference $parentReference = null;
-
-    public function __construct(?Retriever $retriever = null)
-    {
+    public function __construct(
+        ?Retriever $retriever = null,
+        array $cache = [],
+        ?Reference $parentReference = null,
+    ) {
         $this->retriever = $retriever;
+        $this->cache = $cache;
+        $this->parentReference = $parentReference;
     }
 
     public function resolve(Json|Yaml|Contents $contents): Json|Yaml|Contents
     {
-        if ($this->contents === null) {
-            $this->contents = $contents;
-        }
-
         foreach ($contents->references() as $reference) {
             /** @var ?Contents $resolvedContent */
             $resolvedContent = match (true) {
                 $this->pointsToVendorExtension($reference) => null,
-                $this->isResolvedAsRcursiveReference($reference) => null,
-                $reference->value()->isInternal() => $this->resolveInternalPointer($reference->value()->pointer()),
+                $reference->value()->isInternal() => $this->resolveInternalPointer($contents, $reference->value()->pointer()),
                 default => $this->retrieveReference($reference->value()),
             };
 
@@ -45,28 +39,14 @@ final class Resolver
                 continue;
             }
 
-            if ($this->willRecurse($resolvedContent, $reference)) {
-                $this->depth++;
-            }
-
-            if ($this->stopRecursion()) {
-                $pointer = $this->parentReference->pointer()->append(...$reference->pointer()->getPropertyPaths());
-                $contents = $contents->replaceAt(
-                    $reference->pointer(),
-                    new Contents((object) [
-                        '$ref' => '#' . $pointer->value(),
-                    ])
+            if ($resolvedContent->isResolved() === false) {
+                $resolver = new self(
+                    $this->retriever->from($reference->value()->basePath()),
+                    $this->cache,
+                    $reference,
                 );
 
-                $this->recursiveReferences[$reference->pointer()->value()] = $reference;
-
-                continue;
-            }
-
-            if ($resolvedContent->isResolved() === false) {
-                $this->parentReference = $reference;
-                $this->retriever->from($reference->value()->basePath());
-                $resolvedContent = $this->resolve($resolvedContent);
+                $resolvedContent = $resolver->resolve($resolvedContent);
             }
 
             $contents = $contents->replaceAt($reference->pointer(), $resolvedContent);
@@ -75,10 +55,10 @@ final class Resolver
         return $contents;
     }
 
-    private function resolveInternalPointer(JsonPointer $pointer): ?Contents
+    private function resolveInternalPointer(Json|Yaml|Contents $contents, JsonPointer $pointer): ?Contents
     {
         /** @var Contents $contents */
-        $contents = $this->cache[$pointer->value()] ??= $this->contents?->at($pointer);
+        $contents = $this->cache[$pointer->value()] ??= $contents->at($pointer);
 
         return $contents;
     }
@@ -91,34 +71,8 @@ final class Resolver
         return $contents?->at($jsonReference->pointer());
     }
 
-    private function willRecurse(Contents $contents, Reference $reference): bool
-    {
-        if ($contents->isResolved()) {
-            return false;
-        }
-
-        return $contents->containsJsonReference($reference->value());
-    }
-
     private function pointsToVendorExtension(Reference $reference): bool
     {
         return str_contains($reference->pointer()->value(), 'x-');
-    }
-
-    private function isResolvedAsRcursiveReference(Reference $reference): bool
-    {
-        return array_key_exists($reference->pointer()->value(), $this->recursiveReferences)
-            && $reference->value()->isInternal();
-    }
-
-    private function stopRecursion(): bool
-    {
-        $shouldStop = $this->depth > 1;
-
-        if ($shouldStop) {
-            $this->depth = 0;
-        }
-
-        return $shouldStop;
     }
 }

@@ -8,13 +8,16 @@ use Symfony\Component\Filesystem\Path;
 
 final class LocalFilesystemRetriever implements Retriever
 {
-    private string $basePath = '';
+    private string $basePath;
+
+    public function __construct(string $basePath)
+    {
+        $this->basePath = dirname($basePath) . '/';
+    }
 
     public function from(string $basePath): Retriever
     {
-        $this->basePath = dirname($basePath) . '/';
-
-        return $this;
+        return new LocalFilesystemRetriever($basePath);
     }
 
     public function retrieve(string $filePath): Contents
