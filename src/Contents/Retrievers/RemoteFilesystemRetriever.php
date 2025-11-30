@@ -27,7 +27,7 @@ final class RemoteFilesystemRetriever implements Retriever
             $validUrl = $this->canonicalizedUrl($url);
         }
 
-        return new self($url);
+        return new self($validUrl);
     }
 
     public function retrieve(string $url): Contents
@@ -43,7 +43,7 @@ final class RemoteFilesystemRetriever implements Retriever
 
     private function canonicalizedUrl(string $path): string
     {
-        $path = Path::canonicalize($this->url['path'].'/'.ltrim($path, '.'));
+        $path = Path::canonicalize($this->url['path'].'/'. $path);
 
         return $this->url['scheme'].'://'.$this->url['host'].$path;
     }

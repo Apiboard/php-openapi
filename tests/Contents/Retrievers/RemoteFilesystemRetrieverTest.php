@@ -61,14 +61,14 @@ test('it can retrieve files with urls', function () use ($fileContentsMock) {
     expect($result->toString())->toEqual('the contents!');
 });
 
-test('it can retrieve files with relative path using the configured base path', function () use ($fileContentsMock) {
+test('it can retrieve files with relative path using the configured base path without filename', function () use ($fileContentsMock) {
     $baseUrl = 'https://example.com/api';
-    $url = './other-spec.json';
-    $fileContentsMock->addContents('https://example.com/api/other-spec.json', 'the contents!');
+    $url = '../other-spec.json';
+    $fileContentsMock->addContents('https://example.com/other-spec.json', 'the contents!');
 
     $result = remoteRetriever($baseUrl)->retrieve($url);
 
-    $fileContentsMock->assertCalledWith('https://example.com/api/other-spec.json');
+    $fileContentsMock->assertCalledWith('https://example.com/other-spec.json');
     expect($result->toString())->toEqual('the contents!');
 });
 
