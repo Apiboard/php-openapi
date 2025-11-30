@@ -13,10 +13,20 @@ final class RemoteFilesystemRetriever implements Retriever
     public function __construct(string $baseUrl)
     {
         $this->url = parse_url($baseUrl);
+        $info = pathinfo($this->url['path']);
+        if ($info['extension'] ?? false) {
+            $this->url['path'] = $info['dirname'];
+        }
     }
 
     public function from(string $url): Retriever
     {
+        $validUrl = filter_var($url, FILTER_VALIDATE_URL, FILTER_NULL_ON_FAILURE);
+
+        if ($validUrl === null) {
+            $validUrl = $this->canonicalizedUrl($url);
+        }
+
         return new self($url);
     }
 
@@ -25,10 +35,16 @@ final class RemoteFilesystemRetriever implements Retriever
         $validUrl = filter_var($url, FILTER_VALIDATE_URL, FILTER_NULL_ON_FAILURE);
 
         if ($validUrl === null) {
-            $path = Path::canonicalize(dirname($this->url['path']) . ltrim($url, '.'));
-            $validUrl = $this->url['scheme'].'://'.$this->url['host'].$path;
+            $validUrl = $this->canonicalizedUrl($url);
         }
 
         return new Contents(file_get_contents($validUrl));
+    }
+
+    private function canonicalizedUrl(string $path): string
+    {
+        $path = Path::canonicalize($this->url['path'].ltrim($path, '.'));
+
+        return $this->url['scheme'].'://'.$this->url['host'].$path;
     }
 }
